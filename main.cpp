@@ -36,51 +36,51 @@ Sub Object 1: Steering Wheel
     Name 4 things you'll find on the:    Steering Wheel
         1) paddle shifters
         2) 'cruise control' controls
-        3) 
-        4) 
+        3) horn
+        4) multimedia controls
     Name 2 things you can do with the:   Steering Wheel
         1) adjust cruise control settings.
-        2)
+        2) adjust the volume for the music 
         
 Sub Object 2: Instrument Cluster
     Name 4 things you'll find on the:   Instrument Cluster
-        1)
-        2)
-        3)
-        4)
+        1) speedometer
+        2) tachometer
+        3) gear state
+        4) engine/car statistics
     Name 3 things you can do with the:   Instrument Cluster
-        1)
-        2)
-        3)
+        1) look for actual car velocity 
+        2) be aware for engine/car warnings
+        3) look for engine behavior
     
 Sub Object 3: Environment Controls
     Name 3 things you'll find on the:    Environment Controls
-        1)
-        2)
-        3)
+        1) Air Flow Speed
+        2) Desired Temperature
+        3) Zone split control
     Name 3 things you can do with the:   Environment Controls
-        1)
-        2)
-        3)
+        1) Have a comfortable temperature inside the car
+        2) Do the recirculating air flow faster or slower
+        3) Change temperature ahead/back seats
 
 Sub Object 4: Infotainment System
     Name 3 things you'll find on the:    Infotainment System
-        1)
-        2)
-        3)
+        1) trip map
+        2) multimedia settings
+        3) car configurable settings
     Name 3 things you can do with the:   Infotainment System
-        1)
-        2)
-        3)
+        1) Adjust the route
+        2) Select the audio source
+        3) pair my phone to the car via bluetooth
 
 Sub Object 5: Seat 
     Name 3 things you'll find on the:    Seat
-        1)
-        2)
-        3)
+        1) seat temperature
+        2) seat anthropometric adjustment
+        3) armrest
     Name 2 things you can do with the:   Seat
-        1)
-        2)
+        1) recline/stand it
+        2) move it away/closer
 */
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
