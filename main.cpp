@@ -57,59 +57,59 @@ Thing: Car Wash
  */
 
 /*
-Thing 1)
+Thing 1) Market
 5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
+    1) number of products in local inventory
+    2) number of vehicles used in logistics
+    3) number of people working in store
+    4) amount of utilities
+    5) daily income
 3 things it can do:
-    1)
-    2)
-    3)
+    1) Sell daily use products
+    2) Help customers with any issue
+    3) Deliver products
  */
 
 /*
-Thing 2)
+Thing 2) University
 5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
+    1) number of classrooms
+    2) number of laboratories
+    3) number of professors
+    4) amount of semestral income
+    5) classes taken per period  
 3 things it can do:
-    1)
-    2)
-    3)
+    1) Teach students
+    2) Do collaborate research 
+    3) Perform cultural activities
  */
 
 /*
-Thing 3)
+Thing 3) Computer
 5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
+    1) amount of used energy
+    2) amount of required memory to run multiple programs
+    3) amount of daily used disk space
+    4) number of execution errors
+    5) task executed per day
 3 things it can do:
-    1)
-    2)
-    3)
+    1) Execute Programs
+    2) Save Information
+    3) Connect with other computers
  */
 
 /*
-Thing 4)
+Thing 4) Audio Mixer
 5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
+    1) number of input channels
+    2) number of output channels
+    3) number of signal processing options
+    4) number of simultaneous processing objects
+    5) speed of DSP
 3 things it can do:
-    1)
-    2)
-    3)
+    1) Mix multiple signals into an stereo one
+    2) Split signal to be delivered at different points
+    3) Process signal (EQ, Fx, Dynamics)
  */
 
 
