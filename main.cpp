@@ -126,20 +126,10 @@ Thing 4) Audio Mixer
 Thing 10) Modem/Router
 5 properties:
     1) Ports 
-      speed (float)
-      selectable speed (bool)
     2) Antennas 
-      coberture (int)
-      polar pattern (int)
     3) Processor
-      parallel (bool)
-      speed (float)
     4) Transmission Speed
-      wireless (bool)
-      retransmittable (bool)
     5) Energy
-      save energy (bool)
-      consumption (float)
 3 things it can do:
     1) Receive the internet signal
     2) Split internet/data into several points 
