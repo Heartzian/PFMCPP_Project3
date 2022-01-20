@@ -123,17 +123,17 @@ Thing 4) Audio Mixer
  */
 
 /*
-Thing 10) Modem/Router
+Thing 10) Synthetizer
 5 properties:
-    1) Ports 
-    2) Antennas 
-    3) Processor
-    4) Transmission Speed
-    5) Energy
+    1) ADSR
+    2) Type of signal
+    3) Oscillator
+    4) Filters
+    5) Effects
 3 things it can do:
-    1) Receive the internet signal
-    2) Split internet/data into several points 
-    3) Share information between PCs
+    1) Generate a signal
+    2) Modify the generated signal
+    3) Process the modified signal
  */
 
 /*
