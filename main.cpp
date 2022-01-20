@@ -81,20 +81,6 @@ Part1 will be broken up into 5 separate steps
 */
 
 /*
-Thing 5)
-5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
-3 things it can do:
-    1)
-    2)
-    3)
- */
-
-/*
 Thing 6)
 5 properties:
     1)
@@ -124,20 +110,6 @@ Thing 7)
 
 /*
 Thing 8)
-5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
-3 things it can do:
-    1)
-    2)
-    3)
- */
-
-/*
-Thing 9)
 5 properties:
     1)
     2)
@@ -207,6 +179,34 @@ Thing 4) Audio Mixer
     1) Mix multiple signals into an stereo one
     2) Split signal to be delivered at different points
     3) Process signal (EQ, Fx, Dynamics)
+ */
+
+/*
+Thing 5) Synthetizer
+5 properties:
+    1) ADSR (float)
+    2) Type of signal (bool)
+    3) Oscillator (float)
+    4) Filters (int)
+    5) Effects (int)
+3 things it can do:
+    1) Generate a signal
+    2) Modify the generated signal
+    3) Process the modified signal
+ */
+
+/*
+Thing 9) Synthetizer
+5 properties:
+    1) ADSR (float)
+    2) Type of signal (bool)
+    3) Oscillator (float)
+    4) Filters (int)
+    5) Effects (int)
+3 things it can do:
+    1) Generate a signal
+    2) Modify the generated signal
+    3) Process the modified signal
  */
 
 /*
