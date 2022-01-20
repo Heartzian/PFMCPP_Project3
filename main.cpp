@@ -64,21 +64,6 @@ Part1 will be broken up into 5 separate steps
 3) Move the Thing 10 pseudo-code to after your Thing1-4 in the project.
 */
 
-/*
-Thing 10) Modem/Router
-5 properties:
-    1) Ports (int)
-    2) Antennas (int)
-    3) Processor (int)
-    4) Transmission Speed (float)
-    5) Energy (float)
-3 things it can do:
-    1) Receive the internet signal
-    2) Split internet/data into several points 
-    3) Share information between PCs
- */
-
-
 
 
 /*
@@ -137,6 +122,19 @@ Thing 4) Audio Mixer
     3) Process signal (EQ, Fx, Dynamics)
  */
 
+/*
+Thing 10) Modem/Router
+5 properties:
+    1) Ports (int)
+    2) Antennas (int)
+    3) Processor (int)
+    4) Transmission Speed (float)
+    5) Energy (float)
+3 things it can do:
+    1) Receive the internet signal
+    2) Split internet/data into several points 
+    3) Share information between PCs
+ */
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
