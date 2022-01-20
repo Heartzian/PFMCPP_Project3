@@ -65,37 +65,30 @@ Part1 will be broken up into 5 separate steps
 */
 
 /*
+Thing 10)
+5 properties:
+    1)
+    2)
+    3)
+    4)
+    5)
+3 things it can do:
+    1)
+    2)
+    3)
+ */
+
+
+
+
+/*
 Thing 1) Market
 5 properties:
-    1) inventory
-      Local store (int)
-      Other brands (int)
-      food classification (int)
-      expiration date (std::string)
-    2) vehicles
-      brand (std::string)
-      daily traveled distance (float)
-      days since last mainteinance (int)
-      consumed fuel (float)
-      detected problems (std::string)
-    3) workers
-      position (std::string)
-      department (std::string)
-      salary (float)
-      health insurance (std::string)
-      accumulative bonus (float)
-    4) utilities
-      month water bill (float)
-      month electricity bill (float)
-      month phone bill (float)
-      month recollection (float)
-      month maintenance (float)
-    5) income
-      received (float)
-      cost (float)
-      paid (float)
-      taxes (float)
-      donations (float)
+    1) number of products in local inventory
+    2) number of vehicles used in logistics
+    3) number of people working in store
+    4) amount of utilities
+    5) daily income
 3 things it can do:
     1) Sell daily use products
     2) Help customers with any issue
@@ -105,36 +98,11 @@ Thing 1) Market
 /*
 Thing 2) University
 5 properties:
-    1) classrooms
-      size (float)
-      air conditioner (bool)
-      computers (bool)
-      multimedia (bool)
-      automation (bool)
-    2) laboratories
-      size (float)
-      equipment (std::string)
-      security (bool)
-      emergency system (bool)
-      multimedia (bool)
-    3) professors
-      profession (std::string)
-      studies (std::string)
-      rank (std::string)
-      research (std::string)
-      salary (float)
-    4) written research
-      student thesis (int)
-      student papers (int)
-      collaborated papers (int)
-      patents (int)
-      books (int)
-    5) ludical activities
-      musical (int)
-      language (int)
-      sports (int)
-      humanities (int)
-      arts (int)
+    1) number of classrooms
+    2) number of laboratories
+    3) number of professors
+    4) amount of semestral income
+    5) classes taken per period  
 3 things it can do:
     1) Teach students
     2) Do collaborate research 
@@ -142,38 +110,13 @@ Thing 2) University
  */
 
 /*
-Thing 3) Server
+Thing 3) Computer
 5 properties:
-    1) QoS
-      reveived data (float)
-      transmitted data (float)
-      processed data (float)
-      bugs (int)
-      speed (float)
-    2) memory
-      size (float)
-      speed (float)
-      slots (int)
-      used RAM (float)
-      cache (float)
-    3) disk
-      space (float)
-      read speed (float)
-      write speed (float)
-      partitions (int)
-      used space (float)
-    4) execution errors
-      system (int)
-      user (int)
-      components (int)
-      application (int)
-      logs (int)
-    5) maintenance
-      used days (int)
-      elapsed days without maintenance (int)
-      last reported bug (int)
-      last day offline (int)
-      next preventive maintenance (int)
+    1) amount of used energy
+    2) amount of required memory to run multiple programs
+    3) amount of daily used disk space
+    4) number of execution errors
+    5) task executed per day
 3 things it can do:
     1) Execute Programs
     2) Save Information
@@ -183,55 +126,18 @@ Thing 3) Server
 /*
 Thing 4) Audio Mixer
 5 properties:
-    1) input channels
-      quantity (int)
-      impedance (float)
-      nominal level (int)
-      THD (float)
-      SNR (float)
-    2) output channels
-      quantity (int)
-      impedance (float)
-      noise level (int)
-      Max. Level (float)
-      Dynamic Range (float)
-    3) signal processing options
-      sampling rate (float)
-      bit depth (float)
-      I/O latency (float)
-      processing engines (int)
-      floating point (int)
-    4) effects
-      reverbs (int)
-      compressors (int)
-      preAmps (int)
-      delays (int)
-      adsr (int)
-    5) connectivity
-      dante (bool)
-      avr (bool)
-      a-net (bool)
-      madi (bool)
-      waves (bool)
+    1) number of input channels
+    2) number of output channels
+    3) number of signal processing options
+    4) number of simultaneous processing objects
+    5) speed of DSP
 3 things it can do:
     1) Mix multiple signals into an stereo one
     2) Split signal to be delivered at different points
     3) Process signal (EQ, Fx, Dynamics)
  */
 
-/*
-Thing 10) 
-5 properties:
-    1) 
-    2) 
-    3) 
-    4)
-    5)
-3 things it can do:
-    1)
-    2)
-    3)
- */
+
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
