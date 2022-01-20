@@ -186,9 +186,84 @@ struct CarWash //                                   1) define an empty struct fo
     */
 };
 
+struct Market
+{
+  float numProdLocalInv = 215.3f; //Display the total available products at store
+  int numLogisticVehicles = 5; //Show the total of vehicles used to deliver products
+  int numPeopleWorkingAtStore =32; //Available workers at store
+  float basicUtilities = 320.53f;  //Display the daily utilities in $ 
+  float dailyIncome = 2750; //Indicate the daily net received money after sales
 
+  struct Customer
+  {
+    int age = 38;
+    bool member = true;
+    int visitsPerWeek = 7;
+    std::string gender = "Male";
+    std::string transportation = "Scooter";
 
+    void dailyFood(int Frequency = 5);
+    float workRoutine(bool atHome = true, float time = 8.5f);
+    float monthlyExpenses(float rent = 1500, 
+                         float food = 450, 
+                         float fun = 120,
+                         float other = 230);
+  };
 
+  void prodCat(Customer Nick);
+  //The Market register customer sale information 
+  void customerNeeds(bool solved = true, bool quest = false);
+  //The Market helps customer solving their needs, has a department which recolects the information to do feedback
+  void delivery(Customer Phil, bool success = true, int time = 35);
+  //The Market uses the customer info with delivery info
+};
+
+struct University
+{
+  int numClassrooms = 80; //Available total classrooms 
+  int numLabs = 36; //Specialized available practice labs 
+  int numProfessors = 95; //Available professors to teach
+  float semIncome = 5'000'000; //Semestral Received tuitions Money 
+  int classesPerSemester = 8362; //Accumulated classes per Semester
+
+  struct Professor
+  {
+    int age = 58;
+    std::string profession = "Engineer";
+    std::string postgraduateStudies = "MsC";
+    std::string teachingRank = "Band 4";
+    int yearsExperience = 15;
+
+    float weekWorkTime(int research = 28, int teaching = 16);
+    float monthlyExpenses(float rent = 1800, 
+                         float food = 550, 
+                         float fun = 120,
+                         float other = 150);
+  };
+
+  struct Student
+  {
+    int age = 18;
+    std::string department = "Engineer";
+    std::string career = "AgroIndustrial Engineer";
+    std::string hobby = "Play Bass";
+    int semestralCredits = 9;
+
+    float weekstudyTime(int research = 28, int teaching = 16);
+    float monthlyExpenses(float food = 250, 
+                         float fun = 220,
+                         float other = 350);
+  };
+
+  float impartedClasses(Professor Frank); //Returns semestral classes time by professor 
+  int collaborativeResearch(std::string organization = "UCLA",                               std::string department = "Chemistry",                            std::string projectName = "influence                             of fertilizer on plant cultivation");
+  //Returns the quantity of collaborated projects per semester
+  int culturalActivities(Student Peter,
+                         std::string category = "Arts",
+                         std::string activity = "Museum Visit");
+  //Returns the cultural activities per semester by Student
+
+};
 /*
 Thing 1) Market
 5 properties:
