@@ -80,47 +80,6 @@ Part1 will be broken up into 5 separate steps
 3) move Thing 5-9 to between your Thing 4 and Thing 10.
 */
 
-/*
-Thing 6)
-5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
-3 things it can do:
-    1)
-    2)
-    3)
- */
-
-/*
-Thing 7)
-5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
-3 things it can do:
-    1)
-    2)
-    3)
- */
-
-/*
-Thing 8)
-5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
-3 things it can do:
-    1)
-    2)
-    3)
- */
 
 
 
@@ -176,51 +135,93 @@ Thing 4) Audio Mixer
     4) number of simultaneous processing objects (int)
     5) speed of DSP (float)
 3 things it can do:
-    1) Mix multiple signals into an stereo one
-    2) Split signal to be delivered at different points
-    3) Process signal (EQ, Fx, Dynamics)
+    1) mix multiple signals into an stereo one
+    2) split signal to be delivered at different points
+    3) process signal (EQ, Fx, Dynamics)
  */
 
 /*
-Thing 5) Synthetizer
+Thing 5) ADSR
 5 properties:
-    1) ADSR (float)
-    2) Type of signal (bool)
-    3) Oscillator (float)
-    4) Filters (int)
-    5) Effects (int)
+    1) attack time (float)
+    2) hold time (float)
+    3) decay time (float)
+    4) sustain level (float)
+    5) release time (float)
 3 things it can do:
-    1) Generate a signal
-    2) Modify the generated signal
-    3) Process the modified signal
+    1) modify the loudness of a sound 
+    2) modify the oscillator pitch
+    3) modify the filter frequency
  */
 
 /*
-Thing 9) Synthetizer
+Thing 6) LFO
 5 properties:
-    1) ADSR (float)
-    2) Type of signal (bool)
-    3) Oscillator (float)
-    4) Filters (int)
-    5) Effects (int)
+    1) rate (float)
+    2) phase offset (int)
+    3) amount (float)
+    4) waveform shape (std::string) 
+    5) bypass state (bool) 
 3 things it can do:
-    1) Generate a signal
-    2) Modify the generated signal
-    3) Process the modified signal
+    1) modulate an audio signal
+    2) toggle ON and OFF
+    3) change the interaction time between signals
  */
 
 /*
-Thing 10) Synthetizer
+Thing 7) oscillator
+5 properties:
+    1) frequency (float)
+    2) finetune (float)
+    3) waveform shape (std::string)  
+    4) pulse width (float) 
+    5) octave (int)  
+3 things it can do:
+    1) generate audio signals
+    2) load samples from ROM
+    3) playback samples from ROM
+ */
+
+/*
+Thing 8) filters
+5 properties:
+    1) gain (float)
+    2) bandwidth (float)
+    3) frequency (float)
+    4) type (std::string)
+    5) drive (float)
+3 things it can do:
+    1) boost or cut frequencies on a signal
+    2) overDrive the signal
+    3) give a better sonority to an instrument 
+ */
+
+/*
+Thing 9) reverb 
+5 properties:
+    1) time (float) 
+    2) mix (float)
+    3) type (std::string)
+    4) pre-delay (float)
+    5) size (float)
+3 things it can do:
+    1) simulate an space to a soun
+    2) give a better sound to an instrument
+    3) give depth to a band
+ */
+
+/*
+Thing 10) synthetizer
 5 properties:
     1) ADSR
-    2) Type of signal
-    3) Oscillator
-    4) Filters
-    5) Effects
+    2) LFO
+    3) oscillator
+    4) filters
+    5) reverb
 3 things it can do:
-    1) Generate a signal
-    2) Modify the generated signal
-    3) Process the modified signal
+    1) generate a signal
+    2) modify the generated signal
+    3) process the modified signal
  */
 
 /*
