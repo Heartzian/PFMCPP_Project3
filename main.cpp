@@ -65,30 +65,13 @@ Part1 will be broken up into 5 separate steps
 */
 
 /*
-Thing 10)
-5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
-3 things it can do:
-    1)
-    2)
-    3)
- */
-
-
-
-
-/*
 Thing 1) Market
 5 properties:
-    1) number of products in local inventory
-    2) number of vehicles used in logistics
-    3) number of people working in store
-    4) amount of utilities
-    5) daily income
+    1) inventory
+    2) vehicles
+    3) workers
+    4) utilities
+    5) income
 3 things it can do:
     1) Sell daily use products
     2) Help customers with any issue
@@ -98,11 +81,11 @@ Thing 1) Market
 /*
 Thing 2) University
 5 properties:
-    1) number of classrooms
-    2) number of laboratories
-    3) number of professors
-    4) amount of semestral income
-    5) classes taken per period  
+    1) classrooms
+    2) laboratories
+    3) professors
+    4) written papers
+    5) given classes
 3 things it can do:
     1) Teach students
     2) Do collaborate research 
@@ -112,11 +95,11 @@ Thing 2) University
 /*
 Thing 3) Computer
 5 properties:
-    1) amount of used energy
-    2) amount of required memory to run multiple programs
-    3) amount of daily used disk space
-    4) number of execution errors
-    5) task executed per day
+    1) energy
+    2) memory
+    3) disk
+    4) execution errors
+    5) executed task
 3 things it can do:
     1) Execute Programs
     2) Save Information
@@ -126,10 +109,10 @@ Thing 3) Computer
 /*
 Thing 4) Audio Mixer
 5 properties:
-    1) number of input channels
-    2) number of output channels
-    3) number of signal processing options
-    4) number of simultaneous processing objects
+    1) input channels
+    2) output channels
+    3) signal processing options
+    4) simultaneous processing objects
     5) speed of DSP
 3 things it can do:
     1) Mix multiple signals into an stereo one
@@ -137,7 +120,19 @@ Thing 4) Audio Mixer
     3) Process signal (EQ, Fx, Dynamics)
  */
 
-
+/*
+Thing 5) Modem/Router
+5 properties:
+    1) Ports
+    2) Antennas
+    3) Processor
+    4) Transmission Speed
+    5) Energy
+3 things it can do:
+    1) Receive the internet signal
+    2) Split internet/data into several points 
+    3) Share information between PCs
+ */
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
