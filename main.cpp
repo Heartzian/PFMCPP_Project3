@@ -65,17 +65,17 @@ Part1 will be broken up into 5 separate steps
 */
 
 /*
-Thing 10)
+Thing 10) Modem/Router
 5 properties:
-    1)
-    2)
-    3)
-    4)
-    5)
+    1) Ports (int)
+    2) Antennas (int)
+    3) Processor (int)
+    4) Transmission Speed (float)
+    5) Energy (float)
 3 things it can do:
-    1)
-    2)
-    3)
+    1) Receive the internet signal
+    2) Split internet/data into several points 
+    3) Share information between PCs
  */
 
 
@@ -137,19 +137,6 @@ Thing 4) Audio Mixer
     3) Process signal (EQ, Fx, Dynamics)
  */
 
-/*
-Thing 5) Modem/Router
-5 properties:
-    1) Ports (int)
-    2) Antennas (int)
-    3) Processor (int)
-    4) Transmission Speed (float)
-    5) Energy (float)
-3 things it can do:
-    1) Receive the internet signal
-    2) Split internet/data into several points 
-    3) Share information between PCs
- */
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
