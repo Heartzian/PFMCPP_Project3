@@ -84,11 +84,11 @@ Thing 10)
 /*
 Thing 1) Market
 5 properties:
-    1) number of products in local inventory
-    2) number of vehicles used in logistics
-    3) number of people working in store
-    4) amount of utilities
-    5) daily income
+    1) number of products in local inventory (float)
+    2) number of vehicles used in logistics (int)
+    3) number of people working in store (int)
+    4) amount of utilities (float)
+    5) daily income (float)
 3 things it can do:
     1) Sell daily use products
     2) Help customers with any issue
@@ -98,11 +98,11 @@ Thing 1) Market
 /*
 Thing 2) University
 5 properties:
-    1) number of classrooms
-    2) number of laboratories
-    3) number of professors
-    4) amount of semestral income
-    5) classes taken per period  
+    1) number of classrooms (int)
+    2) number of laboratories (int)
+    3) number of professors (int)
+    4) amount of semestral income (float)
+    5) classes taken per period (int)
 3 things it can do:
     1) Teach students
     2) Do collaborate research 
@@ -112,13 +112,13 @@ Thing 2) University
 /*
 Thing 3) Computer
 5 properties:
-    1) amount of used energy
-    2) amount of required memory to run multiple programs
-    3) amount of daily used disk space
-    4) number of execution errors
-    5) task executed per day
+    1) amount of used energy (float)
+    2) amount of required memory to run multiple programs (float)
+    3) amount of daily used disk space (float)
+    4) number of execution errors (int)
+    5) task executed per day (int)
 3 things it can do:
-    1) Execute Programs
+    1) Execute Programs 
     2) Save Information
     3) Connect with other computers
  */
@@ -126,18 +126,30 @@ Thing 3) Computer
 /*
 Thing 4) Audio Mixer
 5 properties:
-    1) number of input channels
-    2) number of output channels
-    3) number of signal processing options
-    4) number of simultaneous processing objects
-    5) speed of DSP
+    1) number of input channels (int)
+    2) number of output channels (int)
+    3) number of signal processing options (int)
+    4) number of simultaneous processing objects (int)
+    5) speed of DSP (float)
 3 things it can do:
     1) Mix multiple signals into an stereo one
     2) Split signal to be delivered at different points
     3) Process signal (EQ, Fx, Dynamics)
  */
 
-
+/*
+Thing 5) Modem/Router
+5 properties:
+    1) Ports (int)
+    2) Antennas (int)
+    3) Processor (int)
+    4) Transmission Speed (float)
+    5) Energy (float)
+3 things it can do:
+    1) Receive the internet signal
+    2) Split internet/data into several points 
+    3) Share information between PCs
+ */
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
