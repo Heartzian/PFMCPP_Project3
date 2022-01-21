@@ -262,8 +262,108 @@ struct University
                          std::string category = "Arts",
                          std::string activity = "Museum Visit");
   //Returns the cultural activities per semester by Student
-
 };
+
+struct Computer
+{
+  float energyConsumption = 35.5; //KW per month
+  float requiredRAM = 6.9; //Min. required [Gb] for usually tasks
+  float diskSpace = 89.5; //Min. required [Gb] for OS and Apps
+  int execErrors = 48; //Daily reported system reported issues
+  int execTask = 25; //Daily executed programmed tasks
+
+  struct Hardware //Computer Hardware Specs
+  {
+    float RAM = 16; //[Gb]
+    float disk = 1024; //[Gb]
+    float CPU = 4.5; //[GHz]
+    float GPU = 16; //[GHz]
+    float screen = 24; //[Inches]
+
+    bool playGames(bool specs = true);
+    bool trainAI(std::string softwareReq = "Keras");
+    bool officeWork(std::string mostlyUsedTask = "Accounting");
+  };
+
+  void programExecution(Computer officeDesktop,
+                        std::string todayTask = "Programming"); 
+  bool saveInfo(bool diskAvailable = true);
+  void connectToPCs(Computer Server, bool LANavailable = true);
+};
+
+struct AudioMixer
+{
+  int inputCh = 64; //Analog balanced inputs
+  int outputCh = 16; //Analog balanced outputs
+  int DSPRacks = 8; //Internal Available Processing Capacity
+  int parallelProcessingCH = 24; //Procesable simultaneous channels
+  float DSPspeed = 800; //[MHz] 
+
+  struct expandableProtocols //Which connections are available
+  {
+    bool MADI = true;
+    bool waves = true;
+    bool AVR = false;
+    bool aviom = true;
+    bool AES = true;
+  
+    void sends(std::string application = "Recording");
+    void sync(std::string clockSource = "External",
+              float frequency = 96'000);
+  };
+
+  void mixSignals(AudioMixer Digico,
+                  std::string application = "Touring Live Sound");
+  void splitSignal(std::string destination = "Broadcast");
+  void processSignal(AudioMixer AllenHeath,
+                     int paramEQ = 64,
+                     int graphEQ = 16,
+                     int expansionPorts = 8);
+};
+
+struct ADSR
+{
+  float attackTime = 0.01f;
+  float holdTime = 0.001f;
+  float decayTime = 0.05f;
+  float sustainLevel = 0.5f;
+  float releaseTime = 0.5f;
+
+  void loudness(float attackTime, float sustainLevel); 
+  void oscillatorPitch(float oscFreq = 440.0f, //Original Frequency
+                       float pitch = 0.35f, //Var. % from Freq.
+                       float pitchMod = 0.35f); //Var. % from pitch
+  void filterFrequency(int cutoff = 2'500, //LPF Frequency [Hz]
+                       float cutoffMod = 0.35f); //Var. % from LPF
+};
+
+struct LFO
+{
+  float rate = 20.0f; //LFO Speed variation [Hz]
+  int phaseOffset  = 0.0f; //Phase for polyphonic notes played at different time (gives independency to the LFO at every note)
+  float amount = 48; //How much the pitch/filter will change [Semitones] 
+  std::string shapeWaveform  = "Sine"; //Osc. shape direction
+  bool bypassState = false; //Let bypass the signal
+
+  void modulateSignal(std::string routeAssign = "Oscillator");
+  void toggleONOFF(bool LFO = true);
+  void signalsInteraction(float amount, int phaseOffset);
+};
+
+struct oscillator
+{
+  float frequency = 440; //[Hz]
+  float finetune = 0.01f; //Frequency fine variation
+  std::string waveformShape = "Square"; //Signal shape
+  float pulseWidth = 0.3f; //% of the positive/negative signal amplitude to be wider or smaller 
+  int octave = 2; //n times the original frequency 
+
+  void generateSignal(std::string waveformShape, float frequency);
+  void loadROMSamples(std::string selectStorageDevice = "SD",
+                      bool isAudioFormat = true);
+  void playbackROMSamples(bool anyKeyPressed = false);
+};
+
 /*
 Thing 1) Market
 5 properties:
