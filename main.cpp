@@ -186,222 +186,6 @@ struct CarWash //                                   1) define an empty struct fo
     */
 };
 
-struct Market
-{
-  float numProdLocalInv = 215.3f; //Display the total available products at store
-  int numLogisticVehicles = 5; //Show the total of vehicles used to deliver products
-  int numPeopleWorkingAtStore =32; //Available workers at store
-  float basicUtilities = 320.53f;  //Display the daily utilities in $ 
-  float dailyIncome = 2750; //Indicate the daily net received money after sales
-
-  struct Customer
-  {
-    int age = 38;
-    bool member = true;
-    int visitsPerWeek = 7;
-    std::string gender = "Male";
-    std::string transportation = "Scooter";
-
-    void dailyFood(int Frequency = 5);
-    float workRoutine(bool atHome = true, float time = 8.5f);
-    float monthlyExpenses(float rent = 1500, 
-                         float food = 450, 
-                         float fun = 120,
-                         float other = 230);
-  };
-
-  void prodCat(Customer Nick);
-  //The Market register customer sale information 
-  void customerNeeds(bool solved = true, bool quest = false);
-  //The Market helps customer solving their needs, has a department which recolects the information to do feedback
-  void delivery(Customer Phil, bool success = true, int time = 35);
-  //The Market uses the customer info with delivery info
-};
-
-struct University
-{
-  int numClassrooms = 80; //Available total classrooms 
-  int numLabs = 36; //Specialized available practice labs 
-  int numProfessors = 95; //Available professors to teach
-  float semIncome = 5'000'000; //Semestral Received tuitions Money 
-  int classesPerSemester = 8362; //Accumulated classes per Semester
-
-  struct Professor
-  {
-    int age = 58;
-    std::string profession = "Engineer";
-    std::string postgraduateStudies = "MsC";
-    std::string teachingRank = "Band 4";
-    int yearsExperience = 15;
-
-    float weekWorkTime(int research = 28, int teaching = 16);
-    float monthlyExpenses(float rent = 1800, 
-                         float food = 550, 
-                         float fun = 120,
-                         float other = 150);
-  };
-
-  struct Student
-  {
-    int age = 18;
-    std::string department = "Engineer";
-    std::string career = "AgroIndustrial Engineer";
-    std::string hobby = "Play Bass";
-    int semestralCredits = 9;
-
-    float weekstudyTime(int research = 28, int teaching = 16);
-    float monthlyExpenses(float food = 250, 
-                         float fun = 220,
-                         float other = 350);
-  };
-
-  float impartedClasses(Professor Frank); //Returns semestral classes time by professor 
-  int collaborativeResearch(std::string organization = "UCLA",                               std::string department = "Chemistry",                            std::string projectName = "influence                             of fertilizer on plant cultivation");
-  //Returns the quantity of collaborated projects per semester
-  int culturalActivities(Student Peter,
-                         std::string category = "Arts",
-                         std::string activity = "Museum Visit");
-  //Returns the cultural activities per semester by Student
-};
-
-struct Computer
-{
-  float energyConsumption = 35.5f; //KW per month
-  float requiredRAM = 6.9f; //Min. required [Gb] for usually tasks
-  float diskSpace = 89.5f; //Min. required [Gb] for OS and Apps
-  int execErrors = 48; //Daily reported system reported issues
-  int execTask = 25; //Daily executed programmed tasks
-
-  struct Hardware //Computer Hardware Specs
-  {
-    float RAM = 16; //[Gb]
-    float disk = 1024; //[Gb]
-    float CPU = 4.5; //[GHz]
-    float GPU = 16; //[GHz]
-    float screen = 24; //[Inches]
-
-    bool playGames(bool specs = true);
-    bool trainAI(std::string softwareReq = "Keras");
-    bool officeWork(std::string mostlyUsedTask = "Accounting");
-  };
-
-  void programExecution(Computer officeDesktop,
-                        std::string todayTask = "Programming"); 
-  bool saveInfo(bool diskAvailable = true);
-  void connectToPCs(Computer Server, bool LANavailable = true);
-};
-
-struct AudioMixer
-{
-  int inputCh = 64; //Analog balanced inputs
-  int outputCh = 16; //Analog balanced outputs
-  int DSPRacks = 8; //Internal Available Processing Capacity
-  int parallelProcessingCH = 24; //Procesable simultaneous channels
-  float DSPspeed = 800; //[MHz] 
-
-  struct expandableProtocols //Which connections are available
-  {
-    bool MADI = true;
-    bool waves = true;
-    bool AVR = false;
-    bool aviom = true;
-    bool AES = true;
-  
-    void sends(std::string application = "Recording");
-    void sync(std::string clockSource = "External",
-              float frequency = 96'000);
-  };
-
-  void mixSignals(AudioMixer Digico,
-                  std::string application = "Touring Live Sound");
-  void splitSignal(std::string destination = "Broadcast");
-  void processSignal(AudioMixer AllenHeath,
-                     int paramEQ = 64,
-                     int graphEQ = 16,
-                     int expansionPorts = 8);
-};
-
-struct ADSR
-{
-  float attackTime = 0.01f;
-  float holdTime = 0.001f;
-  float decayTime = 0.05f;
-  float sustainLevel = 0.5f;
-  float releaseTime = 0.5f;
-
-  void loudness(float attackTime, float sustainLevel); 
-  void oscillatorPitch(float oscFreq = 440.0f, //Original Frequency
-                       float pitch = 0.35f, //Var. % from Freq.
-                       float pitchMod = 0.35f); //Var. % from pitch
-  void filterFrequency(int cutoff = 2'500, //LPF Frequency [Hz]
-                       float cutoffMod = 0.35f); //Var. % from LPF
-};
-
-struct LFO
-{
-  float rate = 20.0f; //LFO Speed variation [Hz]
-  int phaseOffset  = 0.0f; //Phase for polyphonic notes played at different time (gives independency to the LFO at every note)
-  float amount = 48; //How much the pitch/filter will change [Semitones] 
-  std::string shapeWaveform  = "Sine"; //Osc. shape direction
-  bool bypassState = false; //Let bypass the signal
-
-  void modulateSignal(std::string routeAssign = "Oscillator");
-  void toggleONOFF(bool LFO = true);
-  void signalsInteraction(float amount, int phaseOffset);
-};
-
-struct oscillator
-{
-  float frequency = 440; //[Hz]
-  float finetune = 0.01f; //Frequency fine variation
-  std::string waveformShape = "Square"; //Signal shape
-  float pulseWidth = 0.3f; //% of the positive/negative signal amplitude to be wider or smaller 
-  int octave = 2; //n times the original frequency 
-
-  void generateSignal(oscillator Square);
-  void loadROMSamples(std::string selectStorageDevice = "SD",
-                      bool isAudioFormat = true);
-  void playbackROMSamples(bool anyKeyPressed = false);
-};
-
-struct filters
-{
-  float gain = 0.0f; //[dB] pow(10.0, (gain / 20.0))
-  float bandwidth = 0.7f; //[0 -10] 0.7=1 Oct
-  float frequency = 100.0f; //[Hz] Selected center frequency
-  std::string type = "Low Pass"; //LP HP LSh HSh BP
-  float drive = 0.0f; //Adds distortion to the signal
-
-  void boostCutFreq(filters LowPass);
-  void overDrive(float drive);
-  void presets(std::string instrument = "piano"); 
-};
-
-struct reverb
-{
-  float time = 0.1f; //[sec] 
-  float mix = 20.0f; //[%] (Wet/Dry)
-  std::string type = "Plate";
-  float preDelay = 0.1f; //First audible reflections time
-  float size = 0.1f; //[sec] Reflections time
-
-  void simulateSpace(reverb Plate);
-  void presets(std::string instrument = "Trumpets");
-  void depth(reverb depth, float pan = 75, bool stereo = true);
-};
-
-struct synthesizer
-{
-  ADSR;
-  LFO;
-  oscillator;
-  filters;
-  reverb;
-
-  void generateSignal(oscillator);
-  void modifySignal(ADSR, LFO);
-  void processSignal(filters, reverb);
-};
 /*
 Thing 1) Market
 5 properties:
@@ -414,7 +198,45 @@ Thing 1) Market
     1) Sell daily use products
     2) Help customers with any issue
     3) Deliver products
- */
+*/
+
+struct Market
+{
+    //number of products in local inventory
+    float numProdLocalInv = 215.3f;
+    //number of vehicles used in logistics
+    int numLogisticVehicles = 5; 
+    //number of people working in store
+    int numPeopleWorkingAtStore =32; 
+    //amount of utilities
+    float basicUtilities = 320.53f;  
+    //daily income
+    float dailyIncome = 2750; 
+
+    struct Customer
+    {
+        int age = 38;
+        bool member = true;
+        int visitsPerWeek = 7;
+        std::string gender = "Male";
+        std::string transportation = "Scooter";
+
+        void eatFood(int Frequency = 5);
+        float calculateWorkedTime(bool atHome = true, 
+                                  float time = 8.5f); 
+        float paymonthlyShould(float rent = 1500,  
+        float food = 450, 
+        float fun = 120,
+        float other = 230);
+    };
+
+    //Sell daily use products
+    void sellProducts(Customer Nick); 
+    //Help customers with any issue
+    void solveCustomerNeeds(Customer Jack, bool solved = true, bool quest = false); 
+    //Deliver products
+    void deliverProducts(Customer Phil, bool success = true, int time = 35);
+};
 
 /*
 Thing 2) University
@@ -430,6 +252,60 @@ Thing 2) University
     3) Perform cultural activities
  */
 
+struct University
+{
+    //number of classrooms
+    int numClassrooms = 80; 
+    //number of laboratories
+    int numLabs = 36; 
+    //number of professors
+    int numProfessors = 95; 
+    //amount of semestral income
+    float semIncome = 5'000'000; 
+    //classes taken per period
+    int classesPerSemester = 8362; 
+
+    struct Professor
+    {
+        int age = 58;
+        std::string profession = "Engineer";
+        std::string postgraduateStudies = "MsC";
+        std::string teachingRank = "Band 4";
+        int yearsExperience = 15;
+
+        float work(int research = 28, int teaching = 16);
+        float monthlyPay(float rent = 1800, 
+                         float food = 550, 
+                         float fun = 120,
+                         float other = 150);
+    };
+
+    struct Student
+    {
+        int age = 18;
+        std::string department = "Engineer";
+        std::string career = "AgroIndustrial Engineer";
+        std::string hobby = "Play Bass";
+        int semestralCredits = 9;
+
+        float weekstudyTime(int research = 28, int teaching = 16);
+        float monthlyExpenses(float food = 250, 
+        float fun = 220,
+        float other = 350);
+    };
+
+    //Teach students
+    float teachStudents(Professor Frank); 
+    //Do collaborate research 
+    int doCollaborateResearch(std::string organization = "UCLA", 
+                              std::string department = "Chemistry",
+                              std::string projectName = "influence of fertilizer on plant cultivation");
+    //Perform cultural activities
+    int performCulturalActivities(Student Peter, 
+                           std::string category = "Arts",
+                           std::string activity = "Museum Visit");
+    };
+
 /*
 Thing 3) Computer
 5 properties:
@@ -443,6 +319,47 @@ Thing 3) Computer
     2) Save Information
     3) Connect with other computers
  */
+ 
+struct Computer
+{
+    //amount of used energy
+    float energyConsumption = 35.5f; 
+    //amount of required memory to run multiple programs
+    float requiredRAM = 6.9f; 
+    //amount of daily used disk space
+    float diskSpace = 89.5f; 
+    //number of execution errors
+    int execErrors = 48; 
+    //task executed per day
+    int execTask = 25; 
+
+    //Computer Hardware Specs
+    struct Hardware 
+    {
+      //[Gb] Total RAM
+      float RAM = 16;
+      //[Gb] Total Disk space
+      float disk = 1024; 
+      //[GHz] CPU Speed
+      float CPU = 4.5;
+      //[Gb] Total GPU 
+      float GPU = 16; 
+      //[Inches] Screen Size
+      float screen = 24;
+        
+      bool playGames(bool specs = true);
+      bool trainAI(std::string softwareReq = "Keras");
+      bool workAtOffice(std::string mostlyUsedTask = "Accounting");
+    };
+
+    //Execute Programs 
+    void executePrograms(Computer officeDesktop, 
+                         std::string todayTask = "Programming"); 
+    //Save Information
+    bool saveInfo(bool diskAvailable = true);
+    //Connect with other computers
+    void connectToPCs(Computer Server, bool LANavailable = true);
+};
 
 /*
 Thing 4) Audio Mixer
@@ -457,6 +374,43 @@ Thing 4) Audio Mixer
     2) split signal to be delivered at different points
     3) process signal (EQ, Fx, Dynamics)
  */
+ 
+struct AudioMixer
+{
+    //number of input channels
+    int inputCh = 64; 
+    //number of output channels
+    int outputCh = 16; 
+    //number of signal processing options
+    int DSPRacks = 8; 
+    //number of simultaneous processing objects
+    int parallelProcessingCH = 24; 
+    //speed of DSP 
+    float DSPspeed = 800; 
+    //[MHz] 
+
+    //Which connections are available
+    struct ExpandableProtocols
+    {
+        bool MADI = true;
+        bool waves = true;
+        bool AVR = false;
+        bool aviom = true;
+        bool AES = true;
+
+        void sends(std::string application = "Recording");
+        void sync(std::string clockSource = "External",
+                  float frequency = 96'000); 
+    };
+
+    void mixSignals(AudioMixer Digico,
+                    std::string application = "Touring Live Sound");
+    void splitSignal(std::string destination = "Broadcast");
+    void processSignal(AudioMixer AllenHeath,
+                       int paramEQ = 64,
+                       int graphEQ = 16,
+                       int expansionPorts = 8);
+};
 
 /*
 Thing 5) ADSR
@@ -472,6 +426,27 @@ Thing 5) ADSR
     3) modify the filter frequency
  */
 
+struct ADSR
+{
+    //attack time 
+    float attackTime = 0.01f;
+    //hold time
+    float holdTime = 0.001f;
+    //decay time
+    float decayTime = 0.05f;
+    //sustain level
+    float sustainLevel = 0.5f;
+    //release time
+    float releaseTime = 0.5f;
+
+    //modify the loudness of a sound 
+    void modifyLoudness(float attackTime, float sustainLevel);
+    //modify the oscillator pitch
+    void modOscillatorPitch(float oscFreq = 440.0f,float pitch = 0.35f,float pitchMod = 0.35f);
+    //modify the filter frequency
+    void modFilterFrequency(int cutoff = 2'500, float cutoffMod = 0.35f);
+};
+
 /*
 Thing 6) LFO
 5 properties:
@@ -485,6 +460,24 @@ Thing 6) LFO
     2) toggle ON and OFF
     3) change the interaction time between signals
  */
+
+struct LFO
+{
+    //rate
+    float rate = 20.0f; 
+    //phase offset [Hz]
+    int phaseOffset  = 0.0f; 
+    //amount [Semitones] 
+    float amount = 48; 
+    //waveform shape 
+    std::string shapeWaveform  = "Sine"; 
+    //bypass state
+    bool bypassState = false; 
+
+    void modulateSignal(std::string routeAssign = "Oscillator");
+    void toggleONOFF(bool LFO = true);
+    void signalsInteraction(float amount, int phaseOffset);
+};
 
 /*
 Thing 7) oscillator
@@ -500,6 +493,27 @@ Thing 7) oscillator
     3) playback samples from ROM
  */
 
+struct Oscillator
+{
+    //frequency [Hz]
+    float frequency = 440; 
+    //Frequency fine tune variation
+    float finetune = 0.01f; 
+    //waveform shape (Signal shape)
+    std::string waveformShape = "Square"; 
+    //pulse width (% of the positive/negative signal amplitude to be wider or smaller )
+    float pulseWidth = 0.3f; 
+    //octave (n times the original frequency )
+    int octave = 2; 
+
+    //generate audio signals
+    void generateSignal(Oscillator Square);
+    //load samples from ROM
+    void loadROMSamples(std::string selectStorageDevice = "SD",                        bool isAudioFormat = true);
+    //playback samples from ROM
+    void playbackROMSamples(bool anyKeyPressed = false);
+};
+
 /*
 Thing 8) filters
 5 properties:
@@ -513,6 +527,27 @@ Thing 8) filters
     2) overDrive the signal
     3) give a better sonority to an instrument 
  */
+
+struct Filters 
+{
+    //gain [dB] pow(10.0, (gain / 20.0))
+    float gain = 0.0f; 
+    // bandwidth [0 -10] 0.7=1 Oct
+    float bandwidth = 0.7f; 
+    //frequency [Hz] Selected center frequency
+    float frequency = 100.0f; 
+    //type (LP HP LSh HSh BP)
+    std::string type = "Low Pass"; 
+    //drive (Adds distortion to the signal)
+    float drive = 0.0f; 
+
+    //boost or cut frequencies on a signal
+    void boostCutFreq(Filters LowPass);
+    //overDrive the signal
+    void overDriveSignal(float drive); 
+    //give a better sonority to an instrument 
+    void giveSonority(std::string instrument = "piano");
+};
 
 /*
 Thing 9) reverb 
@@ -528,8 +563,31 @@ Thing 9) reverb
     3) give depth to a band
  */
 
+struct Reverb
+{
+    //time [sec] 
+    float time = 0.1f; 
+    //mix [%] (Wet/Dry)
+    float mix = 20.0f; 
+    //type 
+    std::string type = "Plate";
+    //Pre-delay (First audible reflections time)
+    float preDelay = 0.1f; 
+    //size [sec] (Reflections time)
+    float size = 0.1f; 
+    
+    //simulate an space to a sound
+    void simulateSpace(Reverb Plate);
+    //give a better sound to an instrument
+    void giveBetterSound(std::string instrument = "Trumpets"); 
+    //give depth to a band
+    void giveDepth(reverb depth, 
+                   float pan = 75, 
+                   bool stereo = true); 
+};
+
 /*
-Thing 10) synthetizer
+Thing 10) synthesizer
 5 properties:
     1) ADSR
     2) LFO
@@ -541,6 +599,19 @@ Thing 10) synthetizer
     2) modify the generated signal
     3) process the modified signal
  */
+
+struct Synthesizer
+{
+    ADSR UserADSR;
+    LFO UserLFO;
+    Oscillator UserOscillator;
+    Filters UserFilter;
+    Reverb UserReverb;
+
+    void generateSignal(ADSR UserADSR);
+    void modifySignal(ADSR UserADSR, LFO UserLFO);
+    void processSignal(Filters UserFilters, Reverb UserLFO);
+};
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
