@@ -254,56 +254,56 @@ Thing 2) University
 
 struct University
 {
-  //number of classrooms
-  int numClassrooms = 80; 
-  //number of laboratories
-  int numLabs = 36; 
-  //number of professors
-  int numProfessors = 95; 
-  //amount of semestral income
-  float semIncome = 5'000'000; 
-  //classes taken per period
-  int classesPerSemester = 8362; 
+//number of classrooms
+int numClassrooms = 80; FIXME: indentation
+//number of laboratories
+int numLabs = 36; FIXME: indentation
+//number of professors
+int numProfessors = 95; FIXME: indentation
+//amount of semestral income
+float semIncome = 5'000'000; FIXME: indentation
+//classes taken per period
+int classesPerSemester = 8362; FIXME: indentation
 
-  struct Professor
-  {
-    int age = 58;
-    std::string profession = "Engineer";
-    std::string postgraduateStudies = "MsC";
-    std::string teachingRank = "Band 4";
-    int yearsExperience = 15;
+struct Professor FIXME: indentation
+{ FIXME: indentation
+int age = 58; FIXME: indentation
+std::string profession = "Engineer"; FIXME: indentation
+std::string postgraduateStudies = "MsC"; FIXME: indentation
+std::string teachingRank = "Band 4"; FIXME: indentation
+int yearsExperience = 15; FIXME: indentation
 
-    float work(int research = 28, int teaching = 16);
-    float computeMonthlyExpenses(float rent = 1800, 
-                                 float food = 550, 
-                                 float fun = 120,
-                                 float other = 150);
-  };
+float work(int research = 28, int teaching = 16); FIXME: indentation
+float computeMonthlyExpenses(float rent = 1800,  FIXME: indentation
+float food = 550,  FIXME: indentation
+float fun = 120, FIXME: indentation
+float other = 150); FIXME: indentation
+}; FIXME: indentation
 
-  struct Student
-  {
-    int age = 18;
-    std::string department = "Engineer";
-    std::string career = "AgroIndustrial Engineer";
-    std::string hobby = "Play Bass";
-    int semestralCredits = 9;
+struct Student FIXME: indentation
+{ FIXME: indentation
+int age = 18; FIXME: indentation
+std::string department = "Engineer"; FIXME: indentation
+std::string career = "AgroIndustrial Engineer"; FIXME: indentation
+std::string hobby = "Play Bass"; FIXME: indentation
+int semestralCredits = 9; FIXME: indentation
 
-    float weekstudyTime(int research = 28, int teaching = 16);
-    float computeMonthlyExpenses(float food = 250, 
-                                 float fun = 220,
-                                 float other = 350);
-  };
+float weekstudyTime(int research = 28, int teaching = 16); FIXME: indentation
+float computeMonthlyExpenses(float food = 250,  FIXME: indentation
+float fun = 220, FIXME: indentation
+float other = 350); FIXME: indentation
+}; FIXME: indentation
 
-  //Teach students
-  float teachStudents(Professor Frank); 
-  //Do collaborate research 
-  int doCollaborativeResearch(std::string organization = "UCLA", 
-                              std::string department = "Chemistry",
-                              std::string projectName = "influence of fertilizer on plant cultivation");
-  //Perform cultural activities
-  int performCulturalActivities(Student Peter, 
-                           std::string category = "Arts",
-                           std::string activity = "Museum Visit");
+//Teach students
+float teachStudents(Professor Frank);  FIXME: indentation
+//Do collaborate research 
+int doCollaborativeResearch(std::string organization = "UCLA",  FIXME: indentation
+std::string department = "Chemistry", FIXME: indentation
+std::string projectName = "influence of fertilizer on plant cultivation"); FIXME: indentation
+//Perform cultural activities
+int performCulturalActivities(Student Peter,  FIXME: indentation
+std::string category = "Arts", FIXME: indentation
+std::string activity = "Museum Visit"); FIXME: indentation
 };
 
 /*
@@ -322,43 +322,43 @@ Thing 3) Computer
  
 struct Computer
 {
-  //amount of used energy
-  float energyConsumption = 35.5f; 
-  //amount of required memory to run multiple programs
-  float requiredRAM = 6.9f; 
-  //amount of daily used disk space
-  float diskSpace = 89.5f; 
-  //number of execution errors
-  int execErrors = 48; 
-  //task executed per day
-  int execTask = 25; 
+//amount of used energy
+float energyConsumption = 35.5f;  FIXME: indentation
+//amount of required memory to run multiple programs
+float requiredRAM = 6.9f;  FIXME: indentation
+//amount of daily used disk space
+float diskSpace = 89.5f;  FIXME: indentation
+//number of execution errors
+int execErrors = 48;  FIXME: indentation
+//task executed per day
+int execTask = 25;  FIXME: indentation
 
-  //Computer Hardware Specs
-  struct Hardware 
-  {
-    //[Gb] Total RAM
-    float RAM = 16;
-    //[Gb] Total Disk space
-    float disk = 1024; 
-    //[GHz] CPU Speed
-    float CPU = 4.5;
-    //[Gb] Total GPU 
-    float GPU = 16; 
-    //[Inches] Screen Size
-    float screen = 24;
-        
-    bool playGames(bool specs = true);
-    bool trainAI(std::string softwareReq = "Keras");
-    bool workAtOffice(std::string mostlyUsedTask = "Accounting");
-  };
+//Computer Hardware Specs
+struct Hardware  FIXME: indentation
+{ FIXME: indentation
+//[Gb] Total RAM
+float RAM = 16; FIXME: indentation
+//[Gb] Total Disk space
+float disk = 1024;  FIXME: indentation
+//[GHz] CPU Speed
+float CPU = 4.5; FIXME: indentation
+//[Gb] Total GPU 
+float GPU = 16;  FIXME: indentation
+//[Inches] Screen Size
+float screen = 24; FIXME: indentation
 
-  //Execute Programs 
-  void executePrograms(Computer officeDesktop, 
-                       std::string todayTask = "Programming"); 
-  //Save Information
-  bool saveInfo(bool diskAvailable = true);
-  //Connect with other computers
-  void connectToPCs(Computer Server, bool LANavailable = true);
+bool playGames(bool specs = true); FIXME: indentation
+bool trainAI(std::string softwareReq = "Keras"); FIXME: indentation
+bool workAtOffice(std::string mostlyUsedTask = "Accounting"); FIXME: indentation
+};
+
+//Execute Programs 
+void executePrograms(Computer officeDesktop,  FIXME: indentation
+std::string todayTask = "Programming");  FIXME: indentation
+//Save Information
+bool saveInfo(bool diskAvailable = true); FIXME: indentation
+//Connect with other computers
+void connectToPCs(Computer Server, bool LANavailable = true); FIXME: indentation
 };
 
 /*
