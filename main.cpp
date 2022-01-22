@@ -581,7 +581,7 @@ struct Reverb
     //give a better sound to an instrument
     void giveBetterSound(std::string instrument = "Trumpets"); 
     //give depth to a band
-    void giveDepth(reverb depth, 
+    void giveDepth(Reverb depth, 
                    float pan = 75, 
                    bool stereo = true); 
 };
