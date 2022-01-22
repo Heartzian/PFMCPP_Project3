@@ -266,9 +266,9 @@ struct University
 
 struct Computer
 {
-  float energyConsumption = 35.5; //KW per month
-  float requiredRAM = 6.9; //Min. required [Gb] for usually tasks
-  float diskSpace = 89.5; //Min. required [Gb] for OS and Apps
+  float energyConsumption = 35.5f; //KW per month
+  float requiredRAM = 6.9f; //Min. required [Gb] for usually tasks
+  float diskSpace = 89.5f; //Min. required [Gb] for OS and Apps
   int execErrors = 48; //Daily reported system reported issues
   int execTask = 25; //Daily executed programmed tasks
 
@@ -358,12 +358,50 @@ struct oscillator
   float pulseWidth = 0.3f; //% of the positive/negative signal amplitude to be wider or smaller 
   int octave = 2; //n times the original frequency 
 
-  void generateSignal(std::string waveformShape, float frequency);
+  void generateSignal(oscillator Square);
   void loadROMSamples(std::string selectStorageDevice = "SD",
                       bool isAudioFormat = true);
   void playbackROMSamples(bool anyKeyPressed = false);
 };
 
+struct filters
+{
+  float gain = 0.0f; //[dB] pow(10.0, (gain / 20.0))
+  float bandwidth = 0.7f; //[0 -10] 0.7=1 Oct
+  float frequency = 100.0f; //[Hz] Selected center frequency
+  std::string type = "Low Pass"; //LP HP LSh HSh BP
+  float drive = 0.0f; //Adds distortion to the signal
+
+  void boostCutFreq(filters LowPass);
+  void overDrive(float drive);
+  void presets(std::string instrument = "piano"); 
+};
+
+struct reverb
+{
+  float time = 0.1f; //[sec] 
+  float mix = 20.0f; //[%] (Wet/Dry)
+  std::string type = "Plate";
+  float preDelay = 0.1f; //First audible reflections time
+  float size = 0.1f; //[sec] Reflections time
+
+  void simulateSpace(reverb Plate);
+  void presets(std::string instrument = "Trumpets");
+  void depth(reverb depth, float pan = 75, bool stereo = true);
+};
+
+struct synthesizer
+{
+  ADSR;
+  LFO;
+  oscillator;
+  filters;
+  reverb;
+
+  void generateSignal(oscillator);
+  void modifySignal(ADSR, LFO);
+  void processSignal(filters, reverb);
+};
 /*
 Thing 1) Market
 5 properties:
