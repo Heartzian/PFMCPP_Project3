@@ -224,10 +224,10 @@ struct Market
         void eatFood(int Frequency = 5);
         float calculateWorkedTime(bool atHome = true, 
                                   float time = 8.5f); 
-        float paymonthlyShould(float rent = 1500,  
-        float food = 450, 
-        float fun = 120,
-        float other = 230);
+        float computeMonthlyExpenses(float rent = 1500,  
+                                     float food = 450, 
+                                     float fun = 120,
+                                     float other = 230);
     };
 
     //Sell daily use products
@@ -254,57 +254,57 @@ Thing 2) University
 
 struct University
 {
-    //number of classrooms
-    int numClassrooms = 80; 
-    //number of laboratories
-    int numLabs = 36; 
-    //number of professors
-    int numProfessors = 95; 
-    //amount of semestral income
-    float semIncome = 5'000'000; 
-    //classes taken per period
-    int classesPerSemester = 8362; 
+  //number of classrooms
+  int numClassrooms = 80; 
+  //number of laboratories
+  int numLabs = 36; 
+  //number of professors
+  int numProfessors = 95; 
+  //amount of semestral income
+  float semIncome = 5'000'000; 
+  //classes taken per period
+  int classesPerSemester = 8362; 
 
-    struct Professor
-    {
-        int age = 58;
-        std::string profession = "Engineer";
-        std::string postgraduateStudies = "MsC";
-        std::string teachingRank = "Band 4";
-        int yearsExperience = 15;
+  struct Professor
+  {
+    int age = 58;
+    std::string profession = "Engineer";
+    std::string postgraduateStudies = "MsC";
+    std::string teachingRank = "Band 4";
+    int yearsExperience = 15;
 
-        float work(int research = 28, int teaching = 16);
-        float monthlyPay(float rent = 1800, 
-                         float food = 550, 
-                         float fun = 120,
-                         float other = 150);
-    };
+    float work(int research = 28, int teaching = 16);
+    float computeMonthlyExpenses(float rent = 1800, 
+                                 float food = 550, 
+                                 float fun = 120,
+                                 float other = 150);
+  };
 
-    struct Student
-    {
-        int age = 18;
-        std::string department = "Engineer";
-        std::string career = "AgroIndustrial Engineer";
-        std::string hobby = "Play Bass";
-        int semestralCredits = 9;
+  struct Student
+  {
+    int age = 18;
+    std::string department = "Engineer";
+    std::string career = "AgroIndustrial Engineer";
+    std::string hobby = "Play Bass";
+    int semestralCredits = 9;
 
-        float weekstudyTime(int research = 28, int teaching = 16);
-        float monthlyExpenses(float food = 250, 
-        float fun = 220,
-        float other = 350);
-    };
+    float weekstudyTime(int research = 28, int teaching = 16);
+    float computeMonthlyExpenses(float food = 250, 
+                                 float fun = 220,
+                                 float other = 350);
+  };
 
-    //Teach students
-    float teachStudents(Professor Frank); 
-    //Do collaborate research 
-    int doCollaborateResearch(std::string organization = "UCLA", 
+  //Teach students
+  float teachStudents(Professor Frank); 
+  //Do collaborate research 
+  int doCollaborativeResearch(std::string organization = "UCLA", 
                               std::string department = "Chemistry",
                               std::string projectName = "influence of fertilizer on plant cultivation");
-    //Perform cultural activities
-    int performCulturalActivities(Student Peter, 
+  //Perform cultural activities
+  int performCulturalActivities(Student Peter, 
                            std::string category = "Arts",
                            std::string activity = "Museum Visit");
-    };
+};
 
 /*
 Thing 3) Computer
@@ -322,43 +322,43 @@ Thing 3) Computer
  
 struct Computer
 {
-    //amount of used energy
-    float energyConsumption = 35.5f; 
-    //amount of required memory to run multiple programs
-    float requiredRAM = 6.9f; 
-    //amount of daily used disk space
-    float diskSpace = 89.5f; 
-    //number of execution errors
-    int execErrors = 48; 
-    //task executed per day
-    int execTask = 25; 
+  //amount of used energy
+  float energyConsumption = 35.5f; 
+  //amount of required memory to run multiple programs
+  float requiredRAM = 6.9f; 
+  //amount of daily used disk space
+  float diskSpace = 89.5f; 
+  //number of execution errors
+  int execErrors = 48; 
+  //task executed per day
+  int execTask = 25; 
 
-    //Computer Hardware Specs
-    struct Hardware 
-    {
-      //[Gb] Total RAM
-      float RAM = 16;
-      //[Gb] Total Disk space
-      float disk = 1024; 
-      //[GHz] CPU Speed
-      float CPU = 4.5;
-      //[Gb] Total GPU 
-      float GPU = 16; 
-      //[Inches] Screen Size
-      float screen = 24;
+  //Computer Hardware Specs
+  struct Hardware 
+  {
+    //[Gb] Total RAM
+    float RAM = 16;
+    //[Gb] Total Disk space
+    float disk = 1024; 
+    //[GHz] CPU Speed
+    float CPU = 4.5;
+    //[Gb] Total GPU 
+    float GPU = 16; 
+    //[Inches] Screen Size
+    float screen = 24;
         
-      bool playGames(bool specs = true);
-      bool trainAI(std::string softwareReq = "Keras");
-      bool workAtOffice(std::string mostlyUsedTask = "Accounting");
-    };
+    bool playGames(bool specs = true);
+    bool trainAI(std::string softwareReq = "Keras");
+    bool workAtOffice(std::string mostlyUsedTask = "Accounting");
+  };
 
-    //Execute Programs 
-    void executePrograms(Computer officeDesktop, 
-                         std::string todayTask = "Programming"); 
-    //Save Information
-    bool saveInfo(bool diskAvailable = true);
-    //Connect with other computers
-    void connectToPCs(Computer Server, bool LANavailable = true);
+  //Execute Programs 
+  void executePrograms(Computer officeDesktop, 
+                       std::string todayTask = "Programming"); 
+  //Save Information
+  bool saveInfo(bool diskAvailable = true);
+  //Connect with other computers
+  void connectToPCs(Computer Server, bool LANavailable = true);
 };
 
 /*
@@ -403,9 +403,12 @@ struct AudioMixer
                   float frequency = 96'000); 
     };
 
+    //mix multiple signals into an stereo one
     void mixSignals(AudioMixer Digico,
                     std::string application = "Touring Live Sound");
+    //split signal to be delivered at different points
     void splitSignal(std::string destination = "Broadcast");
+    //process signal (EQ, Fx, Dynamics)
     void processSignal(AudioMixer AllenHeath,
                        int paramEQ = 64,
                        int graphEQ = 16,
@@ -474,9 +477,12 @@ struct LFO
     //bypass state
     bool bypassState = false; 
 
+    //modulate an audio signal
     void modulateSignal(std::string routeAssign = "Oscillator");
+    //toggle ON and OFF
     void toggleONOFF(bool LFO = true);
-    void signalsInteraction(float amount, int phaseOffset);
+    //change the interaction time between signals
+    void changeSignalsInteraction(float amount, int phaseOffset);
 };
 
 /*
@@ -509,7 +515,8 @@ struct Oscillator
     //generate audio signals
     void generateSignal(Oscillator Square);
     //load samples from ROM
-    void loadROMSamples(std::string selectStorageDevice = "SD",                        bool isAudioFormat = true);
+    void loadROMSamples(std::string selectStorageDevice = "SD",
+                        bool isAudioFormat = true);
     //playback samples from ROM
     void playbackROMSamples(bool anyKeyPressed = false);
 };
@@ -602,14 +609,22 @@ Thing 10) synthesizer
 
 struct Synthesizer
 {
+    //ADSR
     ADSR UserADSR;
+    //LFO
     LFO UserLFO;
+    //oscillator
     Oscillator UserOscillator;
+    //filters
     Filters UserFilter;
+    //reverb
     Reverb UserReverb;
 
+    //generate a signal
     void generateSignal(ADSR UserADSR);
+    //modify the generated signal
     void modifySignal(ADSR UserADSR, LFO UserLFO);
+    //process the modified signal
     void processSignal(Filters UserFilters, Reverb UserLFO);
 };
 
