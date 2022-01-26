@@ -125,32 +125,12 @@ struct CarWash
  if your code produces a -Wpadded warning, add '-Wno-padded' to the .replit file with the other compiler flags (-Weverything -Wno-missing-prototypes etc etc)
  */
 
-
-/*
-Thing 1) Market
-5 properties:
-    1) number of products in local inventory (float)
-    2) number of vehicles used in logistics (int)
-    3) number of people working in store (int)
-    4) amount of utilities (float)
-    5) daily income (float)
-3 things it can do:
-    1) Sell daily use products
-    2) Help customers with any issue
-    3) Deliver products
-*/
-
 struct Market
 {
-    //number of products in local inventory
     float numProdLocalInv = 215.3f;
-    //number of vehicles used in logistics
     int numLogisticVehicles = 5; 
-    //number of people working in store
     int numPeopleWorkingAtStore =32; 
-    //amount of utilities
     float basicUtilities = 320.53f;  
-    //daily income
     float dailyIncome = 2750; 
 
     struct Customer
@@ -170,39 +150,17 @@ struct Market
                                      float other = 230);
     };
 
-    //Sell daily use products
     void sellProducts(Customer Nick); 
-    //Help customers with any issue
     void solveCustomerNeeds(Customer Jack, bool solved = true, bool quest = false); 
-    //Deliver products
     void deliverProducts(Customer Phil, bool success = true, int time = 35);
 };
 
-/*
-Thing 2) University
-5 properties:
-    1) number of classrooms (int)
-    2) number of laboratories (int)
-    3) number of professors (int)
-    4) amount of semestral income (float)
-    5) classes taken per period (int)
-3 things it can do:
-    1) Teach students
-    2) Do collaborate research 
-    3) Perform cultural activities
- */
-
 struct University
 {
-    //number of classrooms
     int numClassrooms = 80;
-    //number of laboratories
     int numLabs = 36;
-    //number of professors
     int numProfessors = 95;
-    //amount of semestral income
     float semIncome = 5'000'000;
-    //classes taken per period
     int classesPerSemester = 8362;
 
     struct Professor
@@ -234,57 +192,29 @@ struct University
                                      float other = 350);
     }; 
 
-    //Teach students
     float teachStudents(Professor Frank); 
-    //Do collaborate research 
     int doCollaborativeResearch(std::string organization = "UCLA", 
                                 std::string department = "Chemistry",
                                 std::string projectName = "influence of fertilizer on plant cultivation"); 
-    //Perform cultural activities
     int performCulturalActivities(Student Peter,  
                                   std::string category = "Arts",
                                   std::string activity = "Museum Visit"); 
 };
 
-/*
-Thing 3) Computer
-5 properties:
-    1) amount of used energy (float)
-    2) amount of required memory to run multiple programs (float)
-    3) amount of daily used disk space (float)
-    4) number of execution errors (int)
-    5) task executed per day (int)
-3 things it can do:
-    1) Execute Programs 
-    2) Save Information
-    3) Connect with other computers
- */
- 
 struct Computer
 {
-    //amount of used energy
     float energyConsumption = 35.5f;
-    //amount of required memory to run multiple programs
     float requiredRAM = 6.9f;
-    //amount of daily used disk space
     float diskSpace = 89.5f;
-    //number of execution errors
     int execErrors = 48;
-    //task executed per day
     int execTask = 25;
 
-    //Computer Hardware Specs
     struct Hardware  
     { 
-        //[Gb] Total RAM
         float RAM = 16; 
-        //[Gb] Total Disk space
         float disk = 1024; 
-        //[GHz] CPU Speed
         float CPU = 4.5;
-        //[Gb] Total GPU 
         float GPU = 16;
-        //[Inches] Screen Size
         float screen = 24; 
 
         bool playGames(bool specs = true); 
@@ -292,44 +222,20 @@ struct Computer
         bool workAtOffice(std::string mostlyUsedTask = "Accounting"); 
     };
 
-    //Execute Programs 
     void executePrograms(Computer officeDesktop,  
     std::string todayTask = "Programming");  
-    //Save Information
     bool saveInfo(bool diskAvailable = true); 
-    //Connect with other computers
     void connectToPCs(Computer Server, bool LANavailable = true);
 };
 
-/*
-Thing 4) Audio Mixer
-5 properties:
-    1) number of input channels (int)
-    2) number of output channels (int)
-    3) number of signal processing options (int)
-    4) number of simultaneous processing objects (int)
-    5) speed of DSP (float)
-3 things it can do:
-    1) mix multiple signals into an stereo one
-    2) split signal to be delivered at different points
-    3) process signal (EQ, Fx, Dynamics)
- */
- 
 struct AudioMixer
 {
-    //number of input channels
     int inputCh = 64; 
-    //number of output channels
     int outputCh = 16; 
-    //number of signal processing options
     int DSPRacks = 8; 
-    //number of simultaneous processing objects
     int parallelProcessingCH = 24; 
-    //speed of DSP 
     float DSPspeed = 800; 
-    //[MHz] 
 
-    //Which connections are available
     struct ExpandableProtocols
     {
         bool MADI = true;
@@ -343,228 +249,93 @@ struct AudioMixer
                   float frequency = 96'000); 
     };
 
-    //mix multiple signals into an stereo one
     void mixSignals(AudioMixer Digico,
                     std::string application = "Touring Live Sound");
-    //split signal to be delivered at different points
     void splitSignal(std::string destination = "Broadcast");
-    //process signal (EQ, Fx, Dynamics)
     void processSignal(AudioMixer AllenHeath,
                        int paramEQ = 64,
                        int graphEQ = 16,
                        int expansionPorts = 8);
 };
 
-/*
-Thing 5) ADSR
-5 properties:
-    1) attack time (float)
-    2) hold time (float)
-    3) decay time (float)
-    4) sustain level (float)
-    5) release time (float)
-3 things it can do:
-    1) modify the loudness of a sound 
-    2) modify the oscillator pitch
-    3) modify the filter frequency
- */
-
 struct ADSR
 {
-    //attack time 
     float attackTime = 0.01f;
-    //hold time
     float holdTime = 0.001f;
-    //decay time
     float decayTime = 0.05f;
-    //sustain level
     float sustainLevel = 0.5f;
-    //release time
     float releaseTime = 0.5f;
 
-    //modify the loudness of a sound 
     void modifyLoudness(float attackTime, float sustainLevel);
-    //modify the oscillator pitch
     void modOscillatorPitch(float oscFreq = 440.0f,float pitch = 0.35f,float pitchMod = 0.35f);
-    //modify the filter frequency
     void modFilterFrequency(int cutoff = 2'500, float cutoffMod = 0.35f);
 };
 
-/*
-Thing 6) LFO
-5 properties:
-    1) rate (float)
-    2) phase offset (int)
-    3) amount (float)
-    4) waveform shape (std::string) 
-    5) bypass state (bool) 
-3 things it can do:
-    1) modulate an audio signal
-    2) toggle ON and OFF
-    3) change the interaction time between signals
- */
-
 struct LFO
 {
-    //rate
     float rate = 20.0f; 
-    //phase offset [Hz]
     int phaseOffset  = 0.0f; 
-    //amount [Semitones] 
     float amount = 48; 
-    //waveform shape 
     std::string shapeWaveform  = "Sine"; 
-    //bypass state
     bool bypassState = false; 
 
-    //modulate an audio signal
     void modulateSignal(std::string routeAssign = "Oscillator");
-    //toggle ON and OFF
     void toggleONOFF(bool LFO = true);
-    //change the interaction time between signals
     void changeSignalsInteraction(float amount, int phaseOffset);
 };
 
-/*
-Thing 7) oscillator
-5 properties:
-    1) frequency (float)
-    2) finetune (float)
-    3) waveform shape (std::string)  
-    4) pulse width (float) 
-    5) octave (int)  
-3 things it can do:
-    1) generate audio signals
-    2) load samples from ROM
-    3) playback samples from ROM
- */
-
 struct Oscillator
 {
-    //frequency [Hz]
     float frequency = 440; 
-    //Frequency fine tune variation
     float finetune = 0.01f; 
-    //waveform shape (Signal shape)
     std::string waveformShape = "Square"; 
-    //pulse width (% of the positive/negative signal amplitude to be wider or smaller )
     float pulseWidth = 0.3f; 
-    //octave (n times the original frequency )
     int octave = 2; 
 
-    //generate audio signals
     void generateSignal(Oscillator Square);
-    //load samples from ROM
     void loadROMSamples(std::string selectStorageDevice = "SD",
                         bool isAudioFormat = true);
-    //playback samples from ROM
     void playbackROMSamples(bool anyKeyPressed = false);
 };
 
-/*
-Thing 8) filters
-5 properties:
-    1) gain (float)
-    2) bandwidth (float)
-    3) frequency (float)
-    4) type (std::string)
-    5) drive (float)
-3 things it can do:
-    1) boost or cut frequencies on a signal
-    2) overDrive the signal
-    3) give a better sonority to an instrument 
- */
-
 struct Filters 
 {
-    //gain [dB] pow(10.0, (gain / 20.0))
     float gain = 0.0f; 
-    // bandwidth [0 -10] 0.7=1 Oct
     float bandwidth = 0.7f; 
-    //frequency [Hz] Selected center frequency
     float frequency = 100.0f; 
-    //type (LP HP LSh HSh BP)
     std::string type = "Low Pass"; 
-    //drive (Adds distortion to the signal)
     float drive = 0.0f; 
 
-    //boost or cut frequencies on a signal
     void boostCutFreq(Filters LowPass);
-    //overDrive the signal
     void overDriveSignal(float drive); 
-    //give a better sonority to an instrument 
     void giveSonority(std::string instrument = "piano");
 };
 
-/*
-Thing 9) reverb 
-5 properties:
-    1) time (float) 
-    2) mix (float)
-    3) type (std::string)
-    4) pre-delay (float)
-    5) size (float)
-3 things it can do:
-    1) simulate an space to a soun
-    2) give a better sound to an instrument
-    3) give depth to a band
- */
-
 struct Reverb
 {
-    //time [sec] 
     float time = 0.1f; 
-    //mix [%] (Wet/Dry)
     float mix = 20.0f; 
-    //type 
     std::string type = "Plate";
-    //Pre-delay (First audible reflections time)
     float preDelay = 0.1f; 
-    //size [sec] (Reflections time)
     float size = 0.1f; 
     
-    //simulate an space to a sound
     void simulateSpace(Reverb Plate);
-    //give a better sound to an instrument
     void giveBetterSound(std::string instrument = "Trumpets"); 
-    //give depth to a band
     void giveDepth(Reverb depth, 
                    float pan = 75, 
                    bool stereo = true); 
 };
 
-/*
-Thing 10) synthesizer
-5 properties:
-    1) ADSR
-    2) LFO
-    3) oscillator
-    4) filters
-    5) reverb
-3 things it can do:
-    1) generate a signal
-    2) modify the generated signal
-    3) process the modified signal
- */
-
 struct Synthesizer
 {
-    //ADSR
     ADSR UserADSR;
-    //LFO
     LFO UserLFO;
-    //oscillator
     Oscillator UserOscillator;
-    //filters
     Filters UserFilter;
-    //reverb
     Reverb UserReverb;
 
-    //generate a signal
     void generateSignal(ADSR UserADSR);
-    //modify the generated signal
     void modifySignal(ADSR UserADSR, LFO UserLFO);
-    //process the modified signal
     void processSignal(Filters UserFilters, Reverb UserLFO);
 };
 
