@@ -182,16 +182,18 @@ struct Market
     int numPeopleWorkingAtStore =32; 
     float basicUtilities = 320.53f;  
     float dailyIncome = 2750; 
+    bool deliveryRequired = false;
 
     struct Customer
     {
         int age = 38;
         bool member = true;
         int visitsPerWeek = 7;
+        float orderedProducts;
         std::string gender = "Male";
         std::string transportation = "Scooter";
 
-        void eatFood(int Frequency = 5);
+        int eatFood(int Frequency = 5);
         float calculateWorkedTime(bool atHome = true, 
                                   float time = 8.5f); 
         float computeMonthlyExpenses(float rent = 1500,  
@@ -200,10 +202,133 @@ struct Market
                                      float other = 230);
     };
 
+    Customer Nick;
+    Customer Jack;
+
     void sellProducts(Customer Nick); 
     void solveCustomerNeeds(Customer Jack, bool solved = true, bool quest = false); 
     void deliverProducts(Customer Phil, bool success = true, int time = 35);
 };
+
+int Market::Customer::eatFood(int Frequency)
+{
+    int breakfastProds = 5;
+    int morningBreakProds = 2;
+    int lunchProds = 5;
+    int coffeeBreakProds = 2;
+    int dinnerProds = 3;
+    int dailyProds = 0;
+    if (Frequency == 5)
+    {
+        int dailyProds = breakfastProds + morningBreakProds + lunchProds + coffeeBreakProds + dinnerProds;
+    }
+    else
+    {
+        int dailyProds = breakfastProds + lunchProds + dinnerProds;
+    }
+        
+    return dailyProds;
+}
+
+float Market::Customer::calculateWorkedTime(bool atHome, float time)
+{
+    int startingTime;
+    int finishingTime;
+    int location;
+    std::cout << "Please enter actual time in 24 hrs" << std::endl;
+    std::cin >> startingTime;
+    std::cout << "Please enter actual time in 24 hrs" << std::endl;
+    std::cin >> finishingTime;
+    float workedTime = startingTime - finishingTime;
+    
+    return workedTime;
+}
+
+float Market::Customer::computeMonthlyExpenses(float rent, 
+                             float food, 
+                             float fun,
+                             float other)
+{
+    return rent + food + fun + other;
+}
+
+void sellProducts(Market::Customer Nick)
+{
+    float subTotal;
+    float totalSell;
+    float taxes = 1.19;
+    bool requiredDelivery;
+    float deliveryCharge = 0;
+    
+    float orderedProducts = Nick.eatFood(5);
+    subTotal = orderedProducts * 1.25;
+    if (Nick.member == true)
+    {
+        subTotal = subTotal * 0.9;
+    }
+    
+    std::cout << "Delivery is required? (true/false)" << std::endl;
+    std::cin >> requiredDelivery;
+    if (requiredDelivery == true)
+    {
+        bool deliveryRequired = true;
+    }
+    if (totalSell > 20)
+    {
+        deliveryCharge = 0;
+    }
+    else
+    {
+        deliveryCharge = 5;
+    }
+
+    totalSell = (subTotal * taxes) + deliveryCharge;
+    float numProdLocalInv = numProdLocalInv - orderedProducts;
+    float dailyIncome = dailyIncome + totalSell;
+    std::cout << "Today sold to Nick: " << std::endl;
+    std::cout << "Number of Products: " << orderedProducts << std::endl;
+    std::cout << "Total sold to Nick: " << totalSell << std::endl;
+}
+
+void solveCustomerNeeds(Market::Customer Jack, 
+                        bool solved, 
+                        bool quest)
+{
+    std::string question;
+    std::string whoAttended = "Samuel";
+    std::string call;
+    std::string rememberWhoAttended = "Please remember to answer the customer";
+    std::cout << "Please write your questions:" << std::endl;
+    std::cin >> question;
+    std::cout << "Dear Customer, our staff I'll be answering your questions, when we finish please fill the questionaire" << std::endl;
+    solved = false;
+    quest = false;
+    while (solved == false)
+    {
+        call = whoAttended + rememberWhoAttended;
+    } 
+}
+
+void deliverProducts(Market::Customer Nick, bool success, int time)
+{
+    int deliveryProducts = Nick.orderedProducts;
+    bool shipped = false;
+    bool prepareProducts = false;
+    if (shipped == false && prepareProducts == false)
+    {
+        std::string assignedPerson = "Steve";
+        int numPeopleWorkingAtStore = numPeopleWorkingAtStore - 1;
+    }
+    if (deliveryProducts > 10)
+    {
+        int numLogisticVehicles = numLogisticVehicles - 1; 
+        int time = 15;
+    }
+    else
+    {
+        int time = 30;
+    }
+}
 
 struct University
 {
