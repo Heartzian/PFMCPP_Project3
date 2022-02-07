@@ -177,11 +177,11 @@ void Person::run(int howFast, bool startWithLeftFoot)
 
 struct Market
 {
-    float numProdLocalInv = 215.3f;
+    double numProdLocalInv = 215.3;
     int numLogisticVehicles = 5; 
     int numPeopleWorkingAtStore =32; 
-    float basicUtilities = 320.53f;  
-    float dailyIncome = 2750; 
+    double basicUtilities = 320.53;  
+    double dailyIncome = 2750; 
     bool deliveryRequired = false;
 
     struct Customer
@@ -194,8 +194,7 @@ struct Market
         std::string transportation = "Scooter";
 
         int eatFood(int Frequency = 5);
-        float calculateWorkedTime(bool atHome = true, 
-                                  float time = 8.5f); 
+        void calculateWorkedTime(bool atHome = true); 
         float computeMonthlyExpenses(float rent = 1500,  
                                      float food = 450, 
                                      float fun = 120,
@@ -207,7 +206,7 @@ struct Market
 
     void sellProducts(Customer Nick); 
     void solveCustomerNeeds(Customer Jack, bool solved = true, bool quest = false); 
-    void deliverProducts(Customer Phil, bool success = true, int time = 35);
+    void deliverProducts(Customer Phil, int time = 35);
 };
 
 int Market::Customer::eatFood(int Frequency)
@@ -217,31 +216,38 @@ int Market::Customer::eatFood(int Frequency)
     int lunchProds = 5;
     int coffeeBreakProds = 2;
     int dinnerProds = 3;
-    int dailyProds = 0;
+    int dailyProds;
     if (Frequency == 5)
     {
-        int dailyProds = breakfastProds + morningBreakProds + lunchProds + coffeeBreakProds + dinnerProds;
+        dailyProds = breakfastProds + morningBreakProds + lunchProds + coffeeBreakProds + dinnerProds;
     }
     else
     {
-        int dailyProds = breakfastProds + lunchProds + dinnerProds;
+        dailyProds = breakfastProds + lunchProds + dinnerProds;
     }
         
     return dailyProds;
 }
 
-float Market::Customer::calculateWorkedTime(bool atHome, float time)
+void Market::Customer::calculateWorkedTime(bool atHome)
 {
     int startingTime;
     int finishingTime;
-    int location;
+    std::string place;
     std::cout << "Please enter actual time in 24 hrs" << std::endl;
     std::cin >> startingTime;
     std::cout << "Please enter actual time in 24 hrs" << std::endl;
     std::cin >> finishingTime;
     float workedTime = startingTime - finishingTime;
-    
-    return workedTime;
+    if (atHome == true)
+    {
+        place = "at Home";
+    }
+    else
+    {
+        place = "at Office";
+    }
+    std::cout << "Today you worked " << workedTime << place;
 }
 
 float Market::Customer::computeMonthlyExpenses(float rent, 
@@ -254,13 +260,13 @@ float Market::Customer::computeMonthlyExpenses(float rent,
 
 void sellProducts(Market::Customer Nick)
 {
-    float subTotal;
-    float totalSell;
-    float taxes = 1.19;
-    bool requiredDelivery;
-    float deliveryCharge = 0;
+    double subTotal;
+    double totalSell = 0;
+    double taxes = 1.19;
+    bool requiredDelivery = false;
+    double deliveryCharge = 0;
     
-    float orderedProducts = Nick.eatFood(5);
+    double orderedProducts = Nick.eatFood(5);
     subTotal = orderedProducts * 1.25;
     if (Nick.member == true)
     {
@@ -271,26 +277,25 @@ void sellProducts(Market::Customer Nick)
     std::cin >> requiredDelivery;
     if (requiredDelivery == true)
     {
-        bool deliveryRequired = true;
-    }
-    if (totalSell > 20)
-    {
-        deliveryCharge = 0;
-    }
-    else
-    {
-        deliveryCharge = 5;
+        if (totalSell > 20)
+        {
+            deliveryCharge = 0;
+        }
+        else
+        {
+            deliveryCharge = 5;
+        }
     }
 
     totalSell = (subTotal * taxes) + deliveryCharge;
-    float numProdLocalInv = numProdLocalInv - orderedProducts;
-    float dailyIncome = dailyIncome + totalSell;
+    double numProdLocalInv = numProdLocalInv - orderedProducts;
+    double dailyIncome = dailyIncome + totalSell;
     std::cout << "Today sold to Nick: " << std::endl;
     std::cout << "Number of Products: " << orderedProducts << std::endl;
     std::cout << "Total sold to Nick: " << totalSell << std::endl;
 }
 
-void solveCustomerNeeds(Market::Customer Jack, 
+void solveCustomerNeeds(Market::Customer Nick, 
                         bool solved, 
                         bool quest)
 {
@@ -309,7 +314,7 @@ void solveCustomerNeeds(Market::Customer Jack,
     } 
 }
 
-void deliverProducts(Market::Customer Nick, bool success, int time)
+void deliverProducts(Market::Customer Nick, int time)
 {
     int deliveryProducts = Nick.orderedProducts;
     bool shipped = false;
@@ -322,11 +327,11 @@ void deliverProducts(Market::Customer Nick, bool success, int time)
     if (deliveryProducts > 10)
     {
         int numLogisticVehicles = numLogisticVehicles - 1; 
-        int time = 15;
+        time = 15;
     }
     else
     {
-        int time = 30;
+        time = 30;
     }
 }
 
