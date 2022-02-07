@@ -134,7 +134,7 @@ struct CarWash
 
 void Person::Steps::stepForward()
 {
-totalSteps++; 
+totalSteps++; FIXME indentation
 }
 
 float Person::Steps::stepSize()
@@ -193,7 +193,7 @@ struct Market
         std::string gender = "Male";
         std::string transportation = "Scooter";
 
-        int eatFood(int Frequency = 5);
+        int eatFood(int Frequency = 5); FIXME: variable name capitalization
         void calculateWorkedTime(bool atHome = true, 
                                  int startTime = 800, 
                                  int finishTime = 1800); 
@@ -205,10 +205,10 @@ struct Market
 
     void sellProducts(Customer); 
     void solveCustomerNeeds(bool solved = true, bool quest = false); 
-    void deliverProducts(Customer Phil, int time = 35);
+    void deliverProducts(Customer Phil, int time = 35); FIXME: variable name capitalization
 };
 
-int Market::Customer::eatFood(int Frequency)
+int Market::Customer::eatFood(int Frequency) FIXME: variable name capitalization
 {
     int breakfastProds = 5;
     int morningBreakProds = 2;
@@ -255,7 +255,7 @@ float Market::Customer::computeMonthlyExpenses(float rent,
     return rent + food + fun + other;
 }
 
-void Market::sellProducts(Customer Nick)
+void Market::sellProducts(Customer Nick) FIXME: variable name capitalization
 {
     double subTotal;
     double totalSell = 0;
@@ -308,7 +308,7 @@ void Market::solveCustomerNeeds(bool solved,
     }
 }
 
-void Market::deliverProducts(Customer Nick, int time)
+void Market::deliverProducts(Customer Nick, int time) FIXME: variable name capitalization
 {
     float deliveryProducts = Nick.orderedProducts;
     bool shipped = false;
@@ -367,7 +367,7 @@ struct University
                                      float other = 350);
     }; 
 
-    float teachStudents(Professor Jack); 
+    float teachStudents(Professor Jack);  FIXME: variable name capitalization
     void doCollaborativeResearch(std::string organization = "UCLA",
                                 std::string department = "Chemistry",
                                 std::string projectName = "influence of fertilizer on plant cultivation"); 
@@ -401,7 +401,7 @@ float University::Student::computeMonthlyExpenses(float food = 350,
     return food + fun + other;
 }
 
-float University::teachStudents(Professor Jack)
+float University::teachStudents(Professor Jack) FIXME: variable name capitalization
 {
     int calculus = 8;
     int programming = 12;
@@ -534,11 +534,11 @@ struct AudioMixer
                    float frequency = 96'000); 
     };
 
-    int mixSignals(AudioMixer Digico,
+    int mixSignals(AudioMixer Digico, FIXME: variable name capitalization
                    std::string application = "Touring Live Sound");
-    int splitSignal(AudioMixer Studer, 
+    int splitSignal(AudioMixer Studer,  FIXME: variable name capitalization
                     std::string destination = "Broadcast");
-    void processSignal(AudioMixer Digico,
+    void processSignal(AudioMixer Digico, FIXME: variable name capitalization
                        int paramEQ = 64,
                        int graphEQ = 16);
 };
@@ -563,11 +563,11 @@ float AudioMixer::ExpandableProtocols::sync(std::string clockSource,
     return syncFrequency;
 }
 
-int AudioMixer::mixSignals(AudioMixer Digico,
+int AudioMixer::mixSignals(AudioMixer Digico, FIXME: variable name capitalization
                 std::string application)
 {
     if (application == "Touring")
-    {
+    { FIXME: all of this stuff needs to be indented inside the curly braces
     int kick = 2;
     int snare = 2;
     int HH = 1;
@@ -602,10 +602,10 @@ int AudioMixer::mixSignals(AudioMixer Digico,
     return Digico.availableInCh;
 }
 
-int AudioMixer::splitSignal(AudioMixer Studer, std::string destination)
+int AudioMixer::splitSignal(AudioMixer Studer, std::string destination) FIXME: variable name capitalization
 {
     if (destination == "Broadcasting")
-    {
+    { FIXME: indent everything inside these curly braces
     int masterOut = 2;
     int liveOut = 2;
     int subOut = 2;
@@ -618,7 +618,7 @@ int AudioMixer::splitSignal(AudioMixer Studer, std::string destination)
     return Studer.availableOutCh;
 }   
 
-void AudioMixer::processSignal(AudioMixer Digico,
+void AudioMixer::processSignal(AudioMixer Digico, FIXME: variable name capitalization
                                int paramEQ,
                                int graphEQ)
 {
@@ -683,7 +683,7 @@ struct LFO
 
     double modulateSignal(double x, 
                           std::string routeAssign = "Oscillator");
-    bool toggleONOFF(bool LFO = true);
+    bool toggleONOFF(bool LFO = true);  FIXME: bad function name and argument name. This is a much better function name and function argument name: toggleEnablement(bool shouldBeOn)
     double changeSignalsInteraction(double x, 
                                     double amount, 
                                     double phaseOffset);
@@ -729,7 +729,7 @@ struct Oscillator
     double storedROM;
     bool playButton;
 
-    double generateSignal(Oscillator Square, double x);
+    double generateSignal(Oscillator Square, double x); 
     double loadROMSamples(std::string selectStorageDevice = "SD",
                         bool isAudioFormat = true);
     void playbackROMSamples(double x, bool anyKeyPressed = false);
@@ -850,15 +850,15 @@ double Reverb::giveDepth(double x, double pan, bool stereo)
 
 struct Synthesizer
 {
-    ADSR ViolinADSR;
-    LFO VibratoLFO;
-    Oscillator Amaj;
-    Filters BandPass;
-    Reverb Plate;
+    ADSR ViolinADSR;  FIXME: variable name capitalization
+    LFO VibratoLFO; FIXME: variable name capitalization
+    Oscillator Amaj; FIXME: variable name capitalization
+    Filters BandPass; FIXME: variable name capitalization
+    Reverb Plate; FIXME: variable name capitalization
 
-    void generateSignal(ADSR ViolinADSR);
-    void modifySignal(ADSR ViolinADSR, LFO VibratoLFO);
-    void processSignal(Filters BandPass, Reverb Plate);
+    void generateSignal(ADSR ViolinADSR); FIXME: do not declare a function argument that is identical to your member variable
+    void modifySignal(ADSR ViolinADSR, LFO VibratoLFO); FIXME: do not declare a function argument that is identical to your member variable
+    void processSignal(Filters BandPass, Reverb Plate); FIXME: do not declare a function argument that is identical to your member variable
 };
 
 void Synthesizer::generateSignal(ADSR Violin)
