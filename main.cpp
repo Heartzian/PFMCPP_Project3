@@ -201,11 +201,8 @@ struct Market
                                      float other = 230);
     };
 
-    Customer Nick;
-    Customer Jack;
-
-    void sellProducts(Customer Nick); 
-    void solveCustomerNeeds(Customer Jack, bool solved = true, bool quest = false); 
+    void sellProducts(Customer); 
+    void solveCustomerNeeds(bool solved = true, bool quest = false); 
     void deliverProducts(Customer Phil, int time = 35);
 };
 
@@ -258,7 +255,7 @@ float Market::Customer::computeMonthlyExpenses(float rent,
     return rent + food + fun + other;
 }
 
-void sellProducts(Market::Customer Nick)
+void Market::sellProducts(Customer Nick)
 {
     double subTotal;
     double totalSell = 0;
@@ -274,7 +271,6 @@ void sellProducts(Market::Customer Nick)
     }
     
     std::cout << "Delivery is required? (true/false)" << std::endl;
-    std::cin >> requiredDelivery;
     if (requiredDelivery == true)
     {
         if (totalSell > 20)
@@ -288,16 +284,15 @@ void sellProducts(Market::Customer Nick)
     }
 
     totalSell = (subTotal * taxes) + deliveryCharge;
-    double numProdLocalInv = numProdLocalInv - orderedProducts;
-    double dailyIncome = dailyIncome + totalSell;
+    numProdLocalInv = numProdLocalInv - orderedProducts;
+    dailyIncome = dailyIncome + totalSell;
     std::cout << "Today sold to Nick: " << std::endl;
     std::cout << "Number of Products: " << orderedProducts << std::endl;
     std::cout << "Total sold to Nick: " << totalSell << std::endl;
 }
 
-void solveCustomerNeeds(Market::Customer Nick, 
-                        bool solved, 
-                        bool quest)
+void Market::solveCustomerNeeds(bool solved, 
+                                bool quest)
 {
     std::string question;
     std::string whoAttended = "Samuel";
@@ -311,22 +306,22 @@ void solveCustomerNeeds(Market::Customer Nick,
     while (solved == false)
     {
         call = whoAttended + rememberWhoAttended;
-    } 
+    }
 }
 
-void deliverProducts(Market::Customer Nick, int time)
+void Market::deliverProducts(Customer Nick, int time)
 {
-    int deliveryProducts = Nick.orderedProducts;
+    float deliveryProducts = Nick.orderedProducts;
     bool shipped = false;
     bool prepareProducts = false;
     if (shipped == false && prepareProducts == false)
     {
         std::string assignedPerson = "Steve";
-        int numPeopleWorkingAtStore = numPeopleWorkingAtStore - 1;
+        numPeopleWorkingAtStore = numPeopleWorkingAtStore - 1;
     }
     if (deliveryProducts > 10)
     {
-        int numLogisticVehicles = numLogisticVehicles - 1; 
+        numLogisticVehicles = numLogisticVehicles - 1; 
         time = 15;
     }
     else
