@@ -134,7 +134,7 @@ struct CarWash
 
 void Person::Steps::stepForward()
 {
-totalSteps++; FIXME indentation
+    totalSteps++;
 }
 
 float Person::Steps::stepSize()
@@ -177,103 +177,72 @@ void Person::run(int howFast, bool startWithLeftFoot)
 
 struct Market
 {
-    double numProdLocalInv = 215.3;
+    double numProdLocalInv = 215;
     int numLogisticVehicles = 5; 
     int numPeopleWorkingAtStore =32; 
-    double basicUtilities = 320.53;  
-    double dailyIncome = 2750; 
-    bool deliveryRequired = false;
+    double dailyBasicUtilitiesFee = 320.53;  
+    double dailyIncome = 0; 
+    double dailyProfit = 0;
 
     struct Customer
     {
         int age = 38;
         bool member = true;
         int visitsPerWeek = 7;
-        float orderedProducts;
         std::string gender = "Male";
-        std::string transportation = "Scooter";
+        int breakfastProds = 4;
+        int morningBreakProds = 2;
+        int lunchProds = 5;
+        int coffeeBreakProds = 2;
+        int dinnerProds = 3;
+        int productsToOrder;
+        double productsPrice;
+        double totalToPay;
 
-        int eatFood(int Frequency = 5); FIXME: variable name capitalization
-        void calculateWorkedTime(bool atHome = true, 
-                                 int startTime = 800, 
-                                 int finishTime = 1800); 
-        float computeMonthlyExpenses(float rent = 1500,  
-                                     float food = 450, 
-                                     float fun = 120,
-                                     float other = 230);
+        void selectDailyFood(); 
+        void calculateOrderPrice(); 
+        void orderProducts(bool deliveryRequired = true);
     };
 
-    void sellProducts(Customer); 
-    void solveCustomerNeeds(bool solved = true, bool quest = false); 
-    void deliverProducts(Customer Phil, int time = 35); FIXME: variable name capitalization
+    Customer nick;
+    Customer jack;
+
+    void sellProducts();
+    void adjustInventary();
+    void computeDailyProfit();
 };
 
-int Market::Customer::eatFood(int Frequency) FIXME: variable name capitalization
+void Market::Customer::selectDailyFood()
 {
-    int breakfastProds = 5;
-    int morningBreakProds = 2;
-    int lunchProds = 5;
-    int coffeeBreakProds = 2;
-    int dinnerProds = 3;
-    int dailyProds;
-    if (Frequency == 5)
-    {
-        dailyProds = breakfastProds + morningBreakProds + lunchProds + coffeeBreakProds + dinnerProds;
-    }
-    else
-    {
-        dailyProds = breakfastProds + lunchProds + dinnerProds;
-    }
-        
-    return dailyProds;
+    productsToOrder = breakfastProds + morningBreakProds + lunchProds +coffeeBreakProds + dinnerProds;
 }
 
-void Market::Customer::calculateWorkedTime(bool atHome, 
-                                           int startTime, 
-                                           int finishTime)
+void Market::Customer::calculateOrderPrice()
 {
-    std::string place;
-    std::cout << "Please enter actual time in 24 hrs" << std::endl;
-    std::cout << "Please enter actual time in 24 hrs" << std::endl;
-    float workedTime = startTime - finishTime;
-    if (atHome == true)
+    double bfProdsPrice = 0.75;
+    double mbProdsPrice = 1.25;
+    double lProdsPrice = 0.85;
+    double cbProdsPrice = 1.25;
+    double dProdsPrice = 0.9;
+    double memberDiscount = 0.9;
+    productsPrice = (breakfastProds * bfProdsPrice) +\
+                    (morningBreakProds * mbProdsPrice) +\
+                    (lunchProds * lProdsPrice) +\
+                    (coffeeBreakProds * cbProdsPrice) +\
+                    (dinnerProds * dProdsPrice);
+    if(member == true)
     {
-        place = "at Home";
+        productsPrice = productsPrice * memberDiscount;
     }
-    else
-    {
-        place = "at Office";
-    }
-    std::cout << "Today you worked " << workedTime << place;
 }
 
-float Market::Customer::computeMonthlyExpenses(float rent, 
-                                               float food, 
-                                               float fun,
-                                               float other)
+void Market::Customer::orderProducts(bool requiredDelivery)
 {
-    return rent + food + fun + other;
-}
-
-void Market::sellProducts(Customer Nick) FIXME: variable name capitalization
-{
-    double subTotal;
-    double totalSell = 0;
-    double taxes = 1.19;
-    bool requiredDelivery = false;
     double deliveryCharge = 0;
-    
-    double orderedProducts = Nick.eatFood(5);
-    subTotal = orderedProducts * 1.25;
-    if (Nick.member == true)
-    {
-        subTotal = subTotal * 0.9;
-    }
-    
-    std::cout << "Delivery is required? (true/false)" << std::endl;
+    double tax = 1.19;
     if (requiredDelivery == true)
     {
-        if (totalSell > 20)
+        if (productsPrice > 20)
         {
             deliveryCharge = 0;
         }
@@ -282,51 +251,26 @@ void Market::sellProducts(Customer Nick) FIXME: variable name capitalization
             deliveryCharge = 5;
         }
     }
-
-    totalSell = (subTotal * taxes) + deliveryCharge;
-    numProdLocalInv = numProdLocalInv - orderedProducts;
-    dailyIncome = dailyIncome + totalSell;
-    std::cout << "Today sold to Nick: " << std::endl;
-    std::cout << "Number of Products: " << orderedProducts << std::endl;
-    std::cout << "Total sold to Nick: " << totalSell << std::endl;
+    totalToPay = (productsPrice * tax) + deliveryCharge;
 }
 
-void Market::solveCustomerNeeds(bool solved, 
-                                bool quest)
-{
-    std::string question;
-    std::string whoAttended = "Samuel";
-    std::string call;
-    std::string rememberWhoAttended = "Please remember to answer the customer";
-    std::cout << "Please write your questions:" << std::endl;
-    std::cout << "Dear Customer, our staff I'll be answering your questions, when we finish please fill the questionaire" << std::endl;
-    solved = false;
-    quest = false;
-    while (solved == false)
-    {
-        call = whoAttended + rememberWhoAttended;
-    }
+void Market::sellProducts() //Nick example
+{ 
+    std::cout << "Dear Customer, you ordered " <<  nick.productsToOrder << "products, with a total cost of $" << nick.totalToPay << "which will be Delivered by Tom. Thanks for buying with us!";
+
+    numLogisticVehicles--;
+    numPeopleWorkingAtStore--;
+    dailyIncome += nick.totalToPay;
 }
 
-void Market::deliverProducts(Customer Nick, int time) FIXME: variable name capitalization
+void Market::adjustInventary()
 {
-    float deliveryProducts = Nick.orderedProducts;
-    bool shipped = false;
-    bool prepareProducts = false;
-    if (shipped == false && prepareProducts == false)
-    {
-        std::string assignedPerson = "Steve";
-        numPeopleWorkingAtStore = numPeopleWorkingAtStore - 1;
-    }
-    if (deliveryProducts > 10)
-    {
-        numLogisticVehicles = numLogisticVehicles - 1; 
-        time = 15;
-    }
-    else
-    {
-        time = 30;
-    }
+    numProdLocalInv -= nick.productsToOrder;
+}
+
+void Market::computeDailyProfit()
+{
+    dailyProfit = dailyIncome - dailyBasicUtilitiesFee;
 }
 
 struct University
@@ -367,7 +311,7 @@ struct University
                                      float other = 350);
     }; 
 
-    float teachStudents(Professor Jack);  FIXME: variable name capitalization
+    float teachStudents(Professor jack);  
     void doCollaborativeResearch(std::string organization = "UCLA",
                                 std::string department = "Chemistry",
                                 std::string projectName = "influence of fertilizer on plant cultivation"); 
@@ -401,13 +345,13 @@ float University::Student::computeMonthlyExpenses(float food = 350,
     return food + fun + other;
 }
 
-float University::teachStudents(Professor Jack) FIXME: variable name capitalization
+float University::teachStudents(Professor) 
 {
     int calculus = 8;
     int programming = 12;
     int cad = 6;
-    Jack.teachedClasses = calculus + programming + cad;
-    return Jack.teachedClasses;
+    float teachedClasses = calculus + programming + cad;
+    return teachedClasses;
 }
 
 void University::doCollaborativeResearch(std::string organization, 
@@ -534,11 +478,11 @@ struct AudioMixer
                    float frequency = 96'000); 
     };
 
-    int mixSignals(AudioMixer Digico, FIXME: variable name capitalization
+    int mixSignals(AudioMixer digico, 
                    std::string application = "Touring Live Sound");
-    int splitSignal(AudioMixer Studer,  FIXME: variable name capitalization
+    int splitSignal(AudioMixer studer,  
                     std::string destination = "Broadcast");
-    void processSignal(AudioMixer Digico, FIXME: variable name capitalization
+    void processSignal(AudioMixer digico, 
                        int paramEQ = 64,
                        int graphEQ = 16);
 };
@@ -563,69 +507,69 @@ float AudioMixer::ExpandableProtocols::sync(std::string clockSource,
     return syncFrequency;
 }
 
-int AudioMixer::mixSignals(AudioMixer Digico, FIXME: variable name capitalization
+int AudioMixer::mixSignals(AudioMixer digico,
                 std::string application)
 {
     if (application == "Touring")
-    { FIXME: all of this stuff needs to be indented inside the curly braces
-    int kick = 2;
-    int snare = 2;
-    int HH = 1;
-    int OH = 2;
-    int tom1 = 1;
-    int tom2 = 1;
-    int tom3 = 1;
-    int drumKit = kick + snare + HH + OH + tom1 + tom2 + tom3;
-    int congas = 2;
-    int timbal = 3;
-    int minorPerc = 2;
-    int drums = congas + timbal + minorPerc;
-    int sax = 2;
-    int trump = 2;
-    int tromb = 1;
-    int winds = sax + trump + tromb;
-    int bass = 1;
-    int guitLead = 1;
-    int guitHarm = 1;
-    int strings = bass + guitLead + guitHarm;
-    int chorus = 4;
-    int star = 1;
-    int spare = 1;
-    int vocals = chorus + star + spare;
-    int drumFx = 2;
-    int windsFx = 2;
-    int vocalsFx = 2;
-    int effects = drumFx + windsFx + vocalsFx;
-    int usedInCh = drumKit + drums + winds + strings + vocals + effects;
-    Digico.availableInCh = Digico.inputCh - usedInCh;
+    { 
+        int kick = 2;
+        int snare = 2;
+        int HH = 1;
+        int OH = 2;
+        int tom1 = 1;
+        int tom2 = 1;
+        int tom3 = 1;
+        int drumKit = kick + snare + HH + OH + tom1 + tom2 + tom3;
+        int congas = 2;
+        int timbal = 3;
+        int minorPerc = 2;
+        int drums = congas + timbal + minorPerc;
+        int sax = 2;
+        int trump = 2;
+        int tromb = 1;
+        int winds = sax + trump + tromb;
+        int bass = 1;
+        int guitLead = 1;
+        int guitHarm = 1;
+        int strings = bass + guitLead + guitHarm;
+        int chorus = 4;
+        int star = 1;
+        int spare = 1;
+        int vocals = chorus + star + spare;
+        int drumFx = 2;
+        int windsFx = 2;
+        int vocalsFx = 2;
+        int effects = drumFx + windsFx + vocalsFx;
+        int usedInCh = drumKit + drums + winds + strings + vocals + effects;
+        digico.availableInCh = digico.inputCh - usedInCh;
     }
-    return Digico.availableInCh;
+    return digico.availableInCh;
 }
 
-int AudioMixer::splitSignal(AudioMixer Studer, std::string destination) FIXME: variable name capitalization
+int AudioMixer::splitSignal(AudioMixer studer, std::string destination) 
 {
     if (destination == "Broadcasting")
-    { FIXME: indent everything inside these curly braces
-    int masterOut = 2;
-    int liveOut = 2;
-    int subOut = 2;
-    int monitorOut = 2;
-    int studioOut = 2;
-    int recOut = 2;
-    int usedOutCh = masterOut + liveOut + subOut + monitorOut + studioOut + recOut;
-    Studer.availableOutCh = Studer.outputCh - usedOutCh;
+    { 
+        int masterOut = 2;
+        int liveOut = 2;
+        int subOut = 2;
+        int monitorOut = 2;
+        int studioOut = 2;
+        int recOut = 2;
+        int usedOutCh = masterOut + liveOut + subOut + monitorOut + studioOut + recOut;
+        studer.availableOutCh = studer.outputCh - usedOutCh;
     }
-    return Studer.availableOutCh;
+    return studer.availableOutCh;
 }   
 
-void AudioMixer::processSignal(AudioMixer Digico, FIXME: variable name capitalization
+void AudioMixer::processSignal(AudioMixer digico, 
                                int paramEQ,
                                int graphEQ)
 {
-    int procInCh = paramEQ * (Digico.availableInCh - Digico.inputCh);
-    int procOutCh = graphEQ * (Digico.availableOutCh - Digico.outputCh);
-    Digico.availableProcessing = (procInCh + procOutCh) - Digico.DSPspeed;
-    std::cout << "Available Processing= " << Digico.availableProcessing;
+    int procInCh = paramEQ * (digico.availableInCh - digico.inputCh);
+    int procOutCh = graphEQ * (digico.availableOutCh - digico.outputCh);
+    digico.availableProcessing = (procInCh + procOutCh) - digico.DSPspeed;
+    std::cout << "Available Processing= " << digico.availableProcessing;
 }
 
 struct ADSR
@@ -683,7 +627,7 @@ struct LFO
 
     double modulateSignal(double x, 
                           std::string routeAssign = "Oscillator");
-    bool toggleONOFF(bool LFO = true);  FIXME: bad function name and argument name. This is a much better function name and function argument name: toggleEnablement(bool shouldBeOn)
+    bool toggleEnablement(bool shouldBeOn = true);  
     double changeSignalsInteraction(double x, 
                                     double amount, 
                                     double phaseOffset);
@@ -699,9 +643,9 @@ double LFO::modulateSignal(double x, std::string routeAssign)
     return x; //This is a dummy example
 }
 
-bool LFO::toggleONOFF(bool LFO)
+bool LFO::toggleEnablement(bool shouldBeOn)
 {
-    if (LFO == false)
+    if (shouldBeOn == false)
     {
         bypassState = true;
     }
@@ -850,18 +794,18 @@ double Reverb::giveDepth(double x, double pan, bool stereo)
 
 struct Synthesizer
 {
-    ADSR ViolinADSR;  FIXME: variable name capitalization
-    LFO VibratoLFO; FIXME: variable name capitalization
-    Oscillator Amaj; FIXME: variable name capitalization
-    Filters BandPass; FIXME: variable name capitalization
-    Reverb Plate; FIXME: variable name capitalization
+    ADSR violinADSR;  
+    LFO vibratoLFO; 
+    Oscillator aMaj; 
+    Filters bandPass; 
+    Reverb plate; 
 
-    void generateSignal(ADSR ViolinADSR); FIXME: do not declare a function argument that is identical to your member variable
-    void modifySignal(ADSR ViolinADSR, LFO VibratoLFO); FIXME: do not declare a function argument that is identical to your member variable
-    void processSignal(Filters BandPass, Reverb Plate); FIXME: do not declare a function argument that is identical to your member variable
+    void generateSignal(ADSR violin);
+    void modifySignal(ADSR violin, LFO vibrato); 
+    void processSignal(Filters bpf, Reverb fixedPlate);
 };
 
-void Synthesizer::generateSignal(ADSR Violin)
+/*void Synthesizer::generateSignal(ADSR Violin)
 {
     ;
 }
@@ -874,7 +818,7 @@ void Synthesizer::modifySignal(ADSR Violin, LFO Vibrato)
 void Synthesizer::processSignal(Filters BPF, Reverb Plate)
 {
     ;
-}
+}*/
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
