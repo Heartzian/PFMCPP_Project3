@@ -225,11 +225,8 @@ void Market::Customer::calculateOrderPrice()
     double cbProdsPrice = 1.25;
     double dProdsPrice = 0.9;
     double memberDiscount = 0.9;
-    productsPrice = (breakfastProds * bfProdsPrice) +\
-                    (morningBreakProds * mbProdsPrice) +\
-                    (lunchProds * lProdsPrice) +\
-                    (coffeeBreakProds * cbProdsPrice) +\
-                    (dinnerProds * dProdsPrice);
+    productsPrice = (breakfastProds * bfProdsPrice) + (morningBreakProds * mbProdsPrice) + (lunchProds * lProdsPrice) + (coffeeBreakProds * cbProdsPrice) + (dinnerProds * dProdsPrice);
+
     if(member == true)
     {
         productsPrice = productsPrice * memberDiscount;
@@ -258,8 +255,8 @@ void Market::sellProducts() //Nick example
 { 
     std::cout << "Dear Customer, you ordered " <<  nick.productsToOrder << "products, with a total cost of $" << nick.totalToPay << "which will be Delivered by Tom. Thanks for buying with us!";
 
-    numLogisticVehicles--;
-    numPeopleWorkingAtStore--;
+    --numLogisticVehicles;
+    --numPeopleWorkingAtStore;
     dailyIncome += nick.totalToPay;
 }
 
@@ -305,13 +302,13 @@ struct University
         std::string hobby = "Play Bass";
         int semestralCredits = 9;
 
-        float weekStudyTime(int research = 28, int teaching = 16);
+        float computeWeekStudyTime(int research = 28, int teaching = 16);
         float computeMonthlyExpenses(float food, 
                                      float fun = 220, 
                                      float other = 350);
     }; 
 
-    float teachStudents(Professor jack);  
+    float teachStudents();  
     void doCollaborativeResearch(std::string organization = "UCLA",
                                 std::string department = "Chemistry",
                                 std::string projectName = "influence of fertilizer on plant cultivation"); 
@@ -333,7 +330,7 @@ float University::Professor::computeMonthlyExpenses(float rent,
     return rent + food + fun + other;
 }
 
-float University::Student::weekStudyTime(int research, int teaching)
+float University::Student::computeWeekStudyTime(int research, int teaching)
 {
     return research + teaching;
 }
@@ -345,13 +342,12 @@ float University::Student::computeMonthlyExpenses(float food = 350,
     return food + fun + other;
 }
 
-float University::teachStudents(Professor) 
+float University::teachStudents() 
 {
     int calculus = 8;
     int programming = 12;
     int cad = 6;
-    float teachedClasses = calculus + programming + cad;
-    return teachedClasses;
+    return calculus + programming + cad;
 }
 
 void University::doCollaborativeResearch(std::string organization, 
@@ -389,43 +385,48 @@ struct Computer
         bool canTrainAI;
         bool canUseAtOffice;
         
-        bool playGames(bool specs = true); 
-        bool trainAI(std::string softwareReq = "Keras"); 
-        bool workAtOffice(std::string mostlyUsedTask = "Accounting"); 
+        void playGames(bool specs = true); 
+        void trainAI(std::string softwareReq = "Keras"); 
+        void workAtOffice(std::string mostlyUsedTask = "Accounting"); 
     };
 
     void executePrograms(std::string todayTask = "Programming");  
-    bool saveInfo(bool diskAvailable = true); 
+    void saveInfo(bool diskAvailable = true); 
     void connectToPCs(bool LANavailable = true);
 };
 
 //Computer OfficeDesktop;
 
-bool Computer::Hardware::playGames(bool specs)
+void Computer::Hardware::playGames(bool specs)
 {
     if (specs == true && RAM >= 4 && disk >=256 && CPU >= 3.0 && GPU >= 2)
     {
         std::cout << "You can use this computer to play games";  
+    
+    canPlayGames = true;
     }
-    return canPlayGames = true;
 }
 
-bool Computer::Hardware::trainAI(std::string softwareReq)
+void Computer::Hardware::trainAI(std::string softwareReq)
 {
     if (canPlayGames == true && GPU > 4)
     {
         std::cout << "You can use this computer to train AI using" << softwareReq;
+
+        canTrainAI = true;
     }
-    return canTrainAI = true;
+    
 }
 
-bool Computer::Hardware::workAtOffice(std::string mostlyUsedTask)
+void Computer::Hardware::workAtOffice(std::string mostlyUsedTask)
 {
     if (canPlayGames == true)
     {
         std::cout << "You can use this computer to do " << mostlyUsedTask;
+
+        canUseAtOffice = true;
     }
-    return canUseAtOffice = true;
+    
 } 
 
 void Computer::executePrograms(std::string todayTask)
@@ -436,13 +437,15 @@ void Computer::executePrograms(std::string todayTask)
     }
 }
 
-bool Computer::saveInfo(bool diskAvailable)
+void Computer::saveInfo(bool diskAvailable)
 {
     if (diskAvailable == true)
     {
         std::cout << "The file will be saved";
+
+        canSaveInfo = true;
     }
-    return canSaveInfo = true;
+    
 }
 
 void Computer::connectToPCs(bool LANavailable)
@@ -478,11 +481,11 @@ struct AudioMixer
                    float frequency = 96'000); 
     };
 
-    int mixSignals(AudioMixer digico, 
+    int mixSignals(AudioMixer brand, 
                    std::string application = "Touring Live Sound");
-    int splitSignal(AudioMixer studer,  
+    int splitSignal(AudioMixer,  
                     std::string destination = "Broadcast");
-    void processSignal(AudioMixer digico, 
+    void processSignal(AudioMixer brand, 
                        int paramEQ = 64,
                        int graphEQ = 16);
 };
@@ -507,7 +510,7 @@ float AudioMixer::ExpandableProtocols::sync(std::string clockSource,
     return syncFrequency;
 }
 
-int AudioMixer::mixSignals(AudioMixer digico,
+int AudioMixer::mixSignals(AudioMixer,
                 std::string application)
 {
     if (application == "Touring")
@@ -541,12 +544,12 @@ int AudioMixer::mixSignals(AudioMixer digico,
         int vocalsFx = 2;
         int effects = drumFx + windsFx + vocalsFx;
         int usedInCh = drumKit + drums + winds + strings + vocals + effects;
-        digico.availableInCh = digico.inputCh - usedInCh;
+        availableInCh = inputCh - usedInCh;
     }
-    return digico.availableInCh;
+    return availableInCh;
 }
 
-int AudioMixer::splitSignal(AudioMixer studer, std::string destination) 
+int AudioMixer::splitSignal(AudioMixer, std::string destination) 
 {
     if (destination == "Broadcasting")
     { 
@@ -557,19 +560,19 @@ int AudioMixer::splitSignal(AudioMixer studer, std::string destination)
         int studioOut = 2;
         int recOut = 2;
         int usedOutCh = masterOut + liveOut + subOut + monitorOut + studioOut + recOut;
-        studer.availableOutCh = studer.outputCh - usedOutCh;
+        availableOutCh = outputCh - usedOutCh;
     }
-    return studer.availableOutCh;
+    return availableOutCh;
 }   
 
-void AudioMixer::processSignal(AudioMixer digico, 
+void AudioMixer::processSignal(AudioMixer, 
                                int paramEQ,
                                int graphEQ)
 {
-    int procInCh = paramEQ * (digico.availableInCh - digico.inputCh);
-    int procOutCh = graphEQ * (digico.availableOutCh - digico.outputCh);
-    digico.availableProcessing = (procInCh + procOutCh) - digico.DSPspeed;
-    std::cout << "Available Processing= " << digico.availableProcessing;
+    int procInCh = paramEQ * (availableInCh - inputCh);
+    int procOutCh = graphEQ * (availableOutCh - outputCh);
+    availableProcessing = (procInCh + procOutCh) - DSPspeed;
+    std::cout << "Available Processing= " << availableProcessing;
 }
 
 struct ADSR
@@ -579,42 +582,35 @@ struct ADSR
     double decayTime = 0.05;
     double sustainLevel = 0.5;
     double releaseTime = 0.5;
+    double signal;
 
-    double modifyLoudness(double x, 
-                          double attackTime, 
-                          double sustainLevel);
-    double modOscillatorPitch(double x,
-                              double oscFreq = 440.0,
+    void modifyLoudness();
+    void modOscillatorPitch(double oscFreq = 440.0,
                               double pitch = 0.35,
                               double pitchMod = 0.35);
-    double modFilterFrequency(double x,
-                              int cutoff = 2'500, 
+    void modFilterFrequency(int cutoff = 2'500, 
                               double cutoffMod = 0.35);
 };
 
-double ADSR::modifyLoudness(double x, double , double)
+void ADSR::modifyLoudness()
 {
     int fs = 44'100;
     double attack = attackTime * fs;
     double sustain = sustainLevel * fs;
-    return x = attack + sustain;  //This is a dummy example (not true)  
+    signal = attack + sustain;  //This is a dummy example (not true)  
 }
 
-double ADSR::modOscillatorPitch(double x,
-                                double oscFreq,
-                                double pitch,
-                                double pitchMod)
+void ADSR::modOscillatorPitch(double oscFreq,
+                              double pitch,
+                              double pitchMod)
 {
-    x = (oscFreq * pitch) / pitchMod; //This is a dummy example
-    return x; 
+    signal = (oscFreq * pitch) / pitchMod; //This is a dummy example 
 }
 
-double ADSR::modFilterFrequency(double x,
-                                int cutoff, 
-                                double cutoffMod)
+void ADSR::modFilterFrequency(int cutoff, 
+                              double cutoffMod)
 {
-    x = cutoff * cutoffMod;
-    return x; //This is a dummy example
+    signal = cutoff * cutoffMod; //This is a dummy example
 }
 
 struct LFO
@@ -624,23 +620,20 @@ struct LFO
     double amount = 48; 
     std::string shapeWaveform  = "Sine"; 
     bool bypassState = false; 
+    double signal;
 
-    double modulateSignal(double x, 
-                          std::string routeAssign = "Oscillator");
+    void modulateSignal(std::string routeAssign = "Oscillator");
     bool toggleEnablement(bool shouldBeOn = true);  
-    double changeSignalsInteraction(double x, 
-                                    double amount, 
-                                    double phaseOffset);
+    void changeSignalsInteraction();
 };
 
-double LFO::modulateSignal(double x, std::string routeAssign)
+void LFO::modulateSignal(std::string routeAssign)
 {
     if (routeAssign == "Oscillator")
     {
         double y = 1;
-        x = x + y;
-    }
-    return x; //This is a dummy example
+        signal = signal + y; //This is a dummy example
+    } 
 }
 
 bool LFO::toggleEnablement(bool shouldBeOn)
@@ -652,14 +645,14 @@ bool LFO::toggleEnablement(bool shouldBeOn)
     return bypassState; //This is a dummy example
 }
 
-double LFO::changeSignalsInteraction(double x, double , double )
+void LFO::changeSignalsInteraction()
 {
     int fs = 44'100;
     for (int i = 0; i < fs; i++)
     {
-        x = amount - phaseOffset;
+        signal = amount - phaseOffset; //This is a dummy example
     }
-    return x; //This is a dummy example
+
 }
 
 struct Oscillator
@@ -673,15 +666,15 @@ struct Oscillator
     double storedROM;
     bool playButton;
 
-    double generateSignal(Oscillator Square, double x); 
+    double generateSignal(double x); 
     double loadROMSamples(std::string selectStorageDevice = "SD",
                         bool isAudioFormat = true);
     void playbackROMSamples(double x, bool anyKeyPressed = false);
 };
 
-double Oscillator::generateSignal(Oscillator Square, double x)
+double Oscillator::generateSignal(double x)
 {
-    if (Square.waveformShape == "Square")
+    if (waveformShape == "Square")
     {
         x = 0.5 * (frequency); //This is a dummy example
     }
@@ -701,33 +694,34 @@ double Oscillator::loadROMSamples(std::string selectStorageDevice,
 
 void Oscillator::playbackROMSamples(double x, bool anyKeyPressed)
 {
-    do 
+    if (anyKeyPressed == true)
     {
         x = storedROM + 1;
     }
-    while (anyKeyPressed == true);
+    
 }
 
-struct Filters 
+struct Filter 
 {
     double gain; 
     double bandwidth = 0.7; 
     double frequency = 100.0; 
-    std::string type = "Low Pass"; 
+    std::string type = "Low Shelf"; 
     double drive = 0.0; 
     double pianoIR;
+    double signal;
 
-    double boostCutFreq(Filters LowShelf, double x);
-    double overDriveSignal(double drive, double x); 
-    double giveSonority(double x, std::string instrument = "Piano");
+    void boostCutFreq(Filter);
+    void overDriveSignal(); 
+    void giveSonority(std::string instrument = "Piano");
 };
 
-double Filters::boostCutFreq(Filters LowShelf, double x)
+void Filter::boostCutFreq(Filter)
 {
-    LowShelf.gain=-12;
+    gain = -12;
     double fs = 44'100;
-    double theta = (2 * 3.1416 * LowShelf.frequency) / fs;
-    double miu = 10 * (LowShelf.gain/20);
+    double theta = (2 * 3.1416 * frequency) / fs;
+    double miu = 10 * (gain/20);
     double betha = 4 / (1 + miu);
     double delta = betha * (theta / 2);
     double gamma = ((1 - delta) / (1 + delta));
@@ -736,23 +730,21 @@ double Filters::boostCutFreq(Filters LowShelf, double x)
     double xn1 = 0, xn2 = 0, yn1 = 0, yn2 = 0;
     for (int n = 1; n <= fs; ++n)
     {
-        x = ((a0) + (a1 * xn1) + (a2 * xn2) - (b1 * yn1) - (b2 * yn2));
+        signal = ((a0) + (a1 * xn1) + (a2 * xn2) - (b1 * yn1) - (b2 * yn2));
     } 
-    return x; //This is a dummy example
 }
 
-double Filters::overDriveSignal(double, double x)
+void Filter::overDriveSignal()
 {
-    return x = (2.5 * (0.9 * drive)) + (2.5 * (1 - ((0.9 * drive))))-2.5;
+    signal = (2.5 * (0.9 * drive)) + (2.5 * (1 - ((0.9 * drive))))-2.5;
 }
 
-double Filters::giveSonority(double x, std::string instrument)
+void Filter::giveSonority(std::string instrument)
 {
     if (instrument == "Piano")
     {
-        x = x * pianoIR;
+        signal = signal * pianoIR;
     }
-    return x;
 }
 
 struct Reverb
@@ -762,34 +754,33 @@ struct Reverb
     std::string type = "Plate";
     double preDelay = 0.1; 
     double size = 0.1; 
+    double signal;
     
-    double simulateSpace(Reverb Plate, double x);
-    double giveBetterSound(double x, std::string instrument = "Trumpets");
-    double giveDepth(double x, double pan = 75, bool stereo = true); 
+    void simulateSpace();
+    void giveBetterSound(std::string instrument = "Trumpets");
+    void giveDepth(double pan = 75, bool stereo = true); 
 };
 
-double Reverb::simulateSpace(Reverb Plate, double x)
+void Reverb::simulateSpace()
 {
-    return x = x * (Plate.time + Plate.mix);
+    signal = signal * (time + mix);
 }
 
-double Reverb::giveBetterSound(double x, std::string instrument)
+void Reverb::giveBetterSound(std::string instrument)
 {
     if (instrument == "Trumpets")
     {
-        x = x * (preDelay + size);
+        signal = signal * (preDelay + size);
     }
-    return x;
 } 
 
-double Reverb::giveDepth(double x, double pan, bool stereo)
+void Reverb::giveDepth(double pan, bool stereo)
 {
     if (stereo == true)
     {
-        double x1 = 0;
-        x =  x + (x1 * pan) / 100; //This is a dummy example
+        double x1 = 1;
+        signal =  signal + (x1 * pan) / 100;
     }
-    return x;
 }
 
 struct Synthesizer
@@ -797,28 +788,38 @@ struct Synthesizer
     ADSR violinADSR;  
     LFO vibratoLFO; 
     Oscillator aMaj; 
-    Filters bandPass; 
+    Filter lowShelf; 
     Reverb plate; 
 
-    void generateSignal(ADSR violin);
-    void modifySignal(ADSR violin, LFO vibrato); 
-    void processSignal(Filters bpf, Reverb fixedPlate);
+    void generateSignal(ADSR instrument);
+    void modifySignal(LFO vibrato); 
+    void processSignal(Filter bpf, Reverb fixedPlate);
 };
 
-/*void Synthesizer::generateSignal(ADSR Violin)
+void Synthesizer::generateSignal(ADSR)
 {
-    ;
+    violinADSR.modifyLoudness();
+    violinADSR.modOscillatorPitch(320, 0.35, 0.35);
+    violinADSR.modFilterFrequency(500, 0.5);
 }
 
-void Synthesizer::modifySignal(ADSR Violin, LFO Vibrato)
+void Synthesizer::modifySignal(LFO)
 {
-    ;
+    vibratoLFO.modulateSignal("Oscillator");
+    vibratoLFO.toggleEnablement(true);  
+    vibratoLFO.changeSignalsInteraction();;
 }
 
-void Synthesizer::processSignal(Filters BPF, Reverb Plate)
+void Synthesizer::processSignal(Filter, Reverb)
 {
-    ;
-}*/
+    lowShelf.boostCutFreq(lowShelf);
+    lowShelf.overDriveSignal(); 
+    lowShelf.giveSonority("Piano");
+
+    plate.simulateSpace();
+    plate.giveBetterSound("Trumpets");
+    plate.giveDepth(75, true); 
+}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
