@@ -107,10 +107,60 @@ struct CarWash
     you should be able to deduce the return type of those functions based on their usage in Person::run()
     You'll need to insert the Person struct from the video in the space below.
  */
+ struct Person
+ {
+    int age;
+    int height;
+    float hairLength;
+    float GPA;
+    unsigned int SATScore;
+    float distanceTraveled;
 
+    struct Steps
+    {
+        float footSize = 0.3f;
+        float footStepLength = 0.4f;
+        float totalSteps = 0;
 
+        void stepForward(); 
+        float stepSize(); 
+    };
 
+    Steps leftFoot;
+    Steps rightFoot;
 
+    void run(int howFast, bool startWithLeftFood);
+ };
+
+void Person::Steps::stepForward()
+{
+    totalSteps++;
+}
+
+float Person::Steps::stepSize()
+{
+    return footSize + footStepLength;
+}
+
+void Person::run(int howFast, bool startWithLeftFoot)
+{
+    
+    if (startWithLeftFoot == true) 
+    { 
+        leftFoot.stepForward();
+        rightFoot.stepForward();
+    }
+    else
+    {
+        rightFoot.stepForward();
+        leftFoot.stepForward();
+    }
+
+    distanceTraveled += leftFoot.stepSize() + rightFoot.stepSize();
+
+    std::cout << "Actual traveled distance= " << distanceTraveled << std::endl;
+    std::cout << "Average Speed= " << howFast;
+}
 
  /*
  2) provide implementations for the member functions you declared in your 10 user-defined types from the previous video outside of your UDT definitions.
@@ -125,33 +175,14 @@ struct CarWash
  if your code produces a -Wpadded warning, add '-Wno-padded' to the .replit file with the other compiler flags (-Weverything -Wno-missing-prototypes etc etc)
  */
 
-
-/*
-Thing 1) Market
-5 properties:
-    1) number of products in local inventory (float)
-    2) number of vehicles used in logistics (int)
-    3) number of people working in store (int)
-    4) amount of utilities (float)
-    5) daily income (float)
-3 things it can do:
-    1) Sell daily use products
-    2) Help customers with any issue
-    3) Deliver products
-*/
-
 struct Market
 {
-    //number of products in local inventory
-    float numProdLocalInv = 215.3f;
-    //number of vehicles used in logistics
+    double numProdLocalInv = 215;
     int numLogisticVehicles = 5; 
-    //number of people working in store
     int numPeopleWorkingAtStore =32; 
-    //amount of utilities
-    float basicUtilities = 320.53f;  
-    //daily income
-    float dailyIncome = 2750; 
+    double dailyBasicUtilitiesFee = 320.53;  
+    double dailyIncome = 0; 
+    double dailyProfit = 0;
 
     struct Customer
     {
@@ -159,50 +190,92 @@ struct Market
         bool member = true;
         int visitsPerWeek = 7;
         std::string gender = "Male";
-        std::string transportation = "Scooter";
+        int breakfastProds = 4;
+        int morningBreakProds = 2;
+        int lunchProds = 5;
+        int coffeeBreakProds = 2;
+        int dinnerProds = 3;
+        int productsToOrder;
+        double productsPrice;
+        double totalToPay;
 
-        void eatFood(int Frequency = 5);
-        float calculateWorkedTime(bool atHome = true, 
-                                  float time = 8.5f); 
-        float computeMonthlyExpenses(float rent = 1500,  
-                                     float food = 450, 
-                                     float fun = 120,
-                                     float other = 230);
+        void selectDailyFood(); 
+        void calculateOrderPrice(); 
+        void orderProducts(bool deliveryRequired = true);
     };
 
-    //Sell daily use products
-    void sellProducts(Customer Nick); 
-    //Help customers with any issue
-    void solveCustomerNeeds(Customer Jack, bool solved = true, bool quest = false); 
-    //Deliver products
-    void deliverProducts(Customer Phil, bool success = true, int time = 35);
+    Customer nick;
+    Customer jack;
+
+    void sellProducts();
+    void adjustInventary();
+    void computeDailyProfit();
 };
 
-/*
-Thing 2) University
-5 properties:
-    1) number of classrooms (int)
-    2) number of laboratories (int)
-    3) number of professors (int)
-    4) amount of semestral income (float)
-    5) classes taken per period (int)
-3 things it can do:
-    1) Teach students
-    2) Do collaborate research 
-    3) Perform cultural activities
- */
+void Market::Customer::selectDailyFood()
+{
+    productsToOrder = breakfastProds + morningBreakProds + lunchProds +coffeeBreakProds + dinnerProds;
+}
+
+void Market::Customer::calculateOrderPrice()
+{
+    double bfProdsPrice = 0.75;
+    double mbProdsPrice = 1.25;
+    double lProdsPrice = 0.85;
+    double cbProdsPrice = 1.25;
+    double dProdsPrice = 0.9;
+    double memberDiscount = 0.9;
+    productsPrice = (breakfastProds * bfProdsPrice) + (morningBreakProds * mbProdsPrice) + (lunchProds * lProdsPrice) + (coffeeBreakProds * cbProdsPrice) + (dinnerProds * dProdsPrice);
+
+    if(member == true)
+    {
+        productsPrice = productsPrice * memberDiscount;
+    }
+}
+
+void Market::Customer::orderProducts(bool requiredDelivery)
+{
+    double deliveryCharge = 0;
+    double tax = 1.19;
+    if (requiredDelivery == true)
+    {
+        if (productsPrice > 20)
+        {
+            deliveryCharge = 0;
+        }
+        else
+        {
+            deliveryCharge = 5;
+        }
+    }
+    totalToPay = (productsPrice * tax) + deliveryCharge;
+}
+
+void Market::sellProducts() //Nick example
+{ 
+    std::cout << "Dear Customer, you ordered " <<  nick.productsToOrder << "products, with a total cost of $" << nick.totalToPay << "which will be Delivered by Tom. Thanks for buying with us!";
+
+    --numLogisticVehicles;
+    --numPeopleWorkingAtStore;
+    dailyIncome += nick.totalToPay;
+}
+
+void Market::adjustInventary()
+{
+    numProdLocalInv -= nick.productsToOrder;
+}
+
+void Market::computeDailyProfit()
+{
+    dailyProfit = dailyIncome - dailyBasicUtilitiesFee;
+}
 
 struct University
 {
-    //number of classrooms
     int numClassrooms = 80;
-    //number of laboratories
     int numLabs = 36;
-    //number of professors
     int numProfessors = 95;
-    //amount of semestral income
     float semIncome = 5'000'000;
-    //classes taken per period
     int classesPerSemester = 8362;
 
     struct Professor
@@ -212,6 +285,7 @@ struct University
         std::string postgraduateStudies = "MsC";
         std::string teachingRank = "Band 4";
         int yearsExperience = 15;
+        int teachedClasses;
 
         float work(int research = 28, int teaching = 16);
         float computeMonthlyExpenses(float rent = 1800,
@@ -228,345 +302,533 @@ struct University
         std::string hobby = "Play Bass";
         int semestralCredits = 9;
 
-        float weekstudyTime(int research = 28, int teaching = 16);
-        float computeMonthlyExpenses(float food = 250, 
+        float computeWeekStudyTime(int research = 28, int teaching = 16);
+        float computeMonthlyExpenses(float food, 
                                      float fun = 220, 
                                      float other = 350);
     }; 
 
-    //Teach students
-    float teachStudents(Professor Frank); 
-    //Do collaborate research 
-    int doCollaborativeResearch(std::string organization = "UCLA", 
-                                std::string department = "Chemistry",
-                                std::string projectName = "influence of fertilizer on plant cultivation"); 
-    //Perform cultural activities
-    int performCulturalActivities(Student Peter,  
-                                  std::string category = "Arts",
-                                  std::string activity = "Museum Visit"); 
+    Student peter;
+
+    float teachStudents();  
+    void doCollaborativeResearch(std::string organization = "UCLA",
+                                 std::string department = "Chemistry",
+                                 std::string projectName = "influence of fertilizer on plant cultivation"); 
+    void performCulturalActivities(Student name,
+                                   std::string category = "Arts",
+                                   std::string activity = "Music Museum Visit"); 
 };
 
-/*
-Thing 3) Computer
-5 properties:
-    1) amount of used energy (float)
-    2) amount of required memory to run multiple programs (float)
-    3) amount of daily used disk space (float)
-    4) number of execution errors (int)
-    5) task executed per day (int)
-3 things it can do:
-    1) Execute Programs 
-    2) Save Information
-    3) Connect with other computers
- */
- 
+float University::Professor::work(int research, int teaching)
+{
+    return research + teaching;
+}
+
+float University::Professor::computeMonthlyExpenses(float rent,
+                                                    float food,
+                                                    float fun, 
+                                                    float other)
+{
+    return rent + food + fun + other;
+}
+
+float University::Student::computeWeekStudyTime(int research, int teaching)
+{
+    return research + teaching;
+}
+
+float University::Student::computeMonthlyExpenses(float food = 350,
+                                                  float fun, 
+                                                  float other)
+{
+    return food + fun + other;
+}
+
+float University::teachStudents() 
+{
+    int calculus = 8;
+    int programming = 12;
+    int cad = 6;
+    return calculus + programming + cad;
+}
+
+void University::doCollaborativeResearch(std::string organization, 
+                                         std::string department,
+                                         std::string projectName)
+{
+    std::cout << "This semester the University do Collaborative Research with: " << organization << " from department " << department << " in the project named: " << projectName << std::endl;
+}
+
+void University::performCulturalActivities(Student,
+                                           std::string category,
+                                           std::string activity)
+{
+    std::cout << "This semester the University performed a Cultural Activity with a student from " << peter.career << "which likes: " << peter.hobby << " in the category: " << category << " doing the activity " << activity << std::endl;
+}
+
 struct Computer
 {
-    //amount of used energy
     float energyConsumption = 35.5f;
-    //amount of required memory to run multiple programs
     float requiredRAM = 6.9f;
-    //amount of daily used disk space
     float diskSpace = 89.5f;
-    //number of execution errors
     int execErrors = 48;
-    //task executed per day
     int execTask = 25;
+    bool programmingSoftwareInstalled = false;
+    bool canSaveInfo;
 
-    //Computer Hardware Specs
     struct Hardware  
     { 
-        //[Gb] Total RAM
-        float RAM = 16; 
-        //[Gb] Total Disk space
-        float disk = 1024; 
-        //[GHz] CPU Speed
-        float CPU = 4.5;
-        //[Gb] Total GPU 
-        float GPU = 16;
-        //[Inches] Screen Size
-        float screen = 24; 
-
-        bool playGames(bool specs = true); 
-        bool trainAI(std::string softwareReq = "Keras"); 
-        bool workAtOffice(std::string mostlyUsedTask = "Accounting"); 
+        double RAM = 16.0; 
+        double disk = 1024.0; 
+        double CPU = 4.5;
+        double GPU = 16.0;
+        double screen = 24.0;
+        bool canPlayGames;
+        bool canTrainAI;
+        bool canUseAtOffice;
+        
+        void playGames(bool specs = true); 
+        void trainAI(std::string softwareReq = "Keras"); 
+        void workAtOffice(std::string mostlyUsedTask = "Accounting"); 
     };
 
-    //Execute Programs 
-    void executePrograms(Computer officeDesktop,  
-    std::string todayTask = "Programming");  
-    //Save Information
-    bool saveInfo(bool diskAvailable = true); 
-    //Connect with other computers
-    void connectToPCs(Computer Server, bool LANavailable = true);
+    void executePrograms(std::string todayTask = "Programming");  
+    void saveInfo(bool diskAvailable = true); 
+    void connectToPCs(bool LANavailable = true);
 };
 
-/*
-Thing 4) Audio Mixer
-5 properties:
-    1) number of input channels (int)
-    2) number of output channels (int)
-    3) number of signal processing options (int)
-    4) number of simultaneous processing objects (int)
-    5) speed of DSP (float)
-3 things it can do:
-    1) mix multiple signals into an stereo one
-    2) split signal to be delivered at different points
-    3) process signal (EQ, Fx, Dynamics)
- */
- 
+//Computer OfficeDesktop;
+
+void Computer::Hardware::playGames(bool specs)
+{
+    if (specs == true && RAM >= 4 && disk >=256 && CPU >= 3.0 && GPU >= 2)
+    {
+        std::cout << "You can use this computer to play games";  
+    
+        canPlayGames = true;
+    }
+}
+
+void Computer::Hardware::trainAI(std::string softwareReq)
+{
+    if (canPlayGames == true && GPU > 4)
+    {
+        std::cout << "You can use this computer to train AI using" << softwareReq;
+
+        canTrainAI = true;
+    }
+    
+}
+
+void Computer::Hardware::workAtOffice(std::string mostlyUsedTask)
+{
+    if (canPlayGames == true)
+    {
+        std::cout << "You can use this computer to do " << mostlyUsedTask;
+
+        canUseAtOffice = true;
+    }
+    
+} 
+
+void Computer::executePrograms(std::string todayTask)
+{
+    if (programmingSoftwareInstalled == true)
+    {
+        std::cout << "This computer can be used  to" << todayTask;
+    }
+}
+
+void Computer::saveInfo(bool diskAvailable)
+{
+    if (diskAvailable == true)
+    {
+        std::cout << "The file will be saved";
+
+        canSaveInfo = true;
+    }
+    
+}
+
+void Computer::connectToPCs(bool LANavailable)
+{
+    if (LANavailable == true)
+    {
+        std::cout << "The computer is available to connect to LAN";
+    }
+}
+
 struct AudioMixer
 {
-    //number of input channels
     int inputCh = 64; 
-    //number of output channels
     int outputCh = 16; 
-    //number of signal processing options
     int DSPRacks = 8; 
-    //number of simultaneous processing objects
     int parallelProcessingCH = 24; 
-    //speed of DSP 
-    float DSPspeed = 800; 
-    //[MHz] 
+    int DSPspeed = 800; 
+    int availableInCh;
+    int availableOutCh;
+    int availableProcessing;
 
-    //Which connections are available
     struct ExpandableProtocols
     {
-        bool MADI = true;
-        bool waves = true;
-        bool AVR = false;
-        bool aviom = true;
-        bool AES = true;
+        bool MADI;
+        bool waves;
+        bool AVR;
+        bool aviom;
+        bool AES;
+        float syncFrequency;
 
         void sends(std::string application = "Recording");
-        void sync(std::string clockSource = "External",
-                  float frequency = 96'000); 
+        float sync(std::string clockSource = "External",
+                   float frequency = 96'000); 
     };
 
-    //mix multiple signals into an stereo one
-    void mixSignals(AudioMixer Digico,
-                    std::string application = "Touring Live Sound");
-    //split signal to be delivered at different points
-    void splitSignal(std::string destination = "Broadcast");
-    //process signal (EQ, Fx, Dynamics)
-    void processSignal(AudioMixer AllenHeath,
-                       int paramEQ = 64,
-                       int graphEQ = 16,
-                       int expansionPorts = 8);
+    int mixSignals(std::string application = "Touring Live Sound");
+    int splitSignal(std::string destination = "Broadcast");
+    void processSignal(int paramEQ = 64,
+                       int graphEQ = 16);
 };
 
-/*
-Thing 5) ADSR
-5 properties:
-    1) attack time (float)
-    2) hold time (float)
-    3) decay time (float)
-    4) sustain level (float)
-    5) release time (float)
-3 things it can do:
-    1) modify the loudness of a sound 
-    2) modify the oscillator pitch
-    3) modify the filter frequency
- */
+void AudioMixer::ExpandableProtocols::sends(std::string application)
+{
+    if(application == "Recording")
+    {
+        MADI = true;
+        AVR = true;
+        AES = true;
+    }
+}
+
+float AudioMixer::ExpandableProtocols::sync(std::string clockSource,
+                                            float frequency)
+{
+    if (clockSource == "External")
+    {
+        syncFrequency = frequency;
+    }
+    return syncFrequency;
+}
+
+int AudioMixer::mixSignals(std::string application)
+{
+    if (application == "Touring")
+    { 
+        int kick = 2;
+        int snare = 2;
+        int HH = 1;
+        int OH = 2;
+        int tom1 = 1;
+        int tom2 = 1;
+        int tom3 = 1;
+        int drumKit = kick + snare + HH + OH + tom1 + tom2 + tom3;
+        int congas = 2;
+        int timbal = 3;
+        int minorPerc = 2;
+        int drums = congas + timbal + minorPerc;
+        int sax = 2;
+        int trump = 2;
+        int tromb = 1;
+        int winds = sax + trump + tromb;
+        int bass = 1;
+        int guitLead = 1;
+        int guitHarm = 1;
+        int strings = bass + guitLead + guitHarm;
+        int chorus = 4;
+        int star = 1;
+        int spare = 1;
+        int vocals = chorus + star + spare;
+        int drumFx = 2;
+        int windsFx = 2;
+        int vocalsFx = 2;
+        int effects = drumFx + windsFx + vocalsFx;
+        int usedInCh = drumKit + drums + winds + strings + vocals + effects;
+        availableInCh = inputCh - usedInCh;
+    }
+    return availableInCh;
+}
+
+int AudioMixer::splitSignal(std::string destination) 
+{
+    if (destination == "Broadcasting")
+    { 
+        int masterOut = 2;
+        int liveOut = 2;
+        int subOut = 2;
+        int monitorOut = 2;
+        int studioOut = 2;
+        int recOut = 2;
+        int usedOutCh = masterOut + liveOut + subOut + monitorOut + studioOut + recOut;
+        availableOutCh = outputCh - usedOutCh;
+    }
+    return availableOutCh;
+}   
+
+void AudioMixer::processSignal(int paramEQ,
+                               int graphEQ)
+{
+    int procInCh = paramEQ * (availableInCh - inputCh);
+    int procOutCh = graphEQ * (availableOutCh - outputCh);
+    availableProcessing = (procInCh + procOutCh) - DSPspeed;
+    std::cout << "Available Processing= " << availableProcessing;
+}
 
 struct ADSR
 {
-    //attack time 
-    float attackTime = 0.01f;
-    //hold time
-    float holdTime = 0.001f;
-    //decay time
-    float decayTime = 0.05f;
-    //sustain level
-    float sustainLevel = 0.5f;
-    //release time
-    float releaseTime = 0.5f;
+    double attackTime = 0.01;
+    double holdTime = 0.01;
+    double decayTime = 0.05;
+    double sustainLevel = 0.5;
+    double releaseTime = 0.5;
+    double signal;
 
-    //modify the loudness of a sound 
-    void modifyLoudness(float attackTime, float sustainLevel);
-    //modify the oscillator pitch
-    void modOscillatorPitch(float oscFreq = 440.0f,float pitch = 0.35f,float pitchMod = 0.35f);
-    //modify the filter frequency
-    void modFilterFrequency(int cutoff = 2'500, float cutoffMod = 0.35f);
+    void modifyLoudness();
+    void modOscillatorPitch(double oscFreq = 440.0,
+                              double pitch = 0.35,
+                              double pitchMod = 0.35);
+    void modFilterFrequency(int cutoff = 2'500, 
+                              double cutoffMod = 0.35);
 };
 
-/*
-Thing 6) LFO
-5 properties:
-    1) rate (float)
-    2) phase offset (int)
-    3) amount (float)
-    4) waveform shape (std::string) 
-    5) bypass state (bool) 
-3 things it can do:
-    1) modulate an audio signal
-    2) toggle ON and OFF
-    3) change the interaction time between signals
- */
+void ADSR::modifyLoudness()
+{
+    int fs = 44'100;
+    double attack = attackTime * fs;
+    double sustain = sustainLevel * fs;
+    signal = attack + sustain;  //This is a dummy example (not true)  
+}
+
+void ADSR::modOscillatorPitch(double oscFreq,
+                              double pitch,
+                              double pitchMod)
+{
+    signal = (oscFreq * pitch) / pitchMod; //This is a dummy example 
+}
+
+void ADSR::modFilterFrequency(int cutoff, 
+                              double cutoffMod)
+{
+    signal = cutoff * cutoffMod; //This is a dummy example
+}
 
 struct LFO
 {
-    //rate
     float rate = 20.0f; 
-    //phase offset [Hz]
     int phaseOffset  = 0.0f; 
-    //amount [Semitones] 
-    float amount = 48; 
-    //waveform shape 
+    double amount = 48; 
     std::string shapeWaveform  = "Sine"; 
-    //bypass state
     bool bypassState = false; 
+    double signal;
 
-    //modulate an audio signal
     void modulateSignal(std::string routeAssign = "Oscillator");
-    //toggle ON and OFF
-    void toggleONOFF(bool LFO = true);
-    //change the interaction time between signals
-    void changeSignalsInteraction(float amount, int phaseOffset);
+    bool toggleEnablement(bool shouldBeOn = true);  
+    void changeSignalsInteraction();
 };
 
-/*
-Thing 7) oscillator
-5 properties:
-    1) frequency (float)
-    2) finetune (float)
-    3) waveform shape (std::string)  
-    4) pulse width (float) 
-    5) octave (int)  
-3 things it can do:
-    1) generate audio signals
-    2) load samples from ROM
-    3) playback samples from ROM
- */
+void LFO::modulateSignal(std::string routeAssign)
+{
+    if (routeAssign == "Oscillator")
+    {
+        double y = 1;
+        signal = signal + y; //This is a dummy example
+    } 
+}
+
+bool LFO::toggleEnablement(bool shouldBeOn)
+{
+    if (shouldBeOn == false)
+    {
+        bypassState = true;
+    }
+    return bypassState; //This is a dummy example
+}
+
+void LFO::changeSignalsInteraction()
+{
+    int fs = 44'100;
+    for (int i = 0; i < fs; i++)
+    {
+        signal = amount - phaseOffset; //This is a dummy example
+    }
+
+}
 
 struct Oscillator
 {
-    //frequency [Hz]
-    float frequency = 440; 
-    //Frequency fine tune variation
+    double frequency = 440; 
     float finetune = 0.01f; 
-    //waveform shape (Signal shape)
     std::string waveformShape = "Square"; 
-    //pulse width (% of the positive/negative signal amplitude to be wider or smaller )
     float pulseWidth = 0.3f; 
-    //octave (n times the original frequency )
     int octave = 2; 
+    double loadedROM;
+    double storedROM;
+    bool playingTone;
+    bool playButton;
+    double signal;
 
-    //generate audio signals
-    void generateSignal(Oscillator Square);
-    //load samples from ROM
-    void loadROMSamples(std::string selectStorageDevice = "SD",
+    void generateTone(); 
+    double loadROMSamples(std::string selectStorageDevice = "SD",
                         bool isAudioFormat = true);
-    //playback samples from ROM
     void playbackROMSamples(bool anyKeyPressed = false);
 };
 
-/*
-Thing 8) filters
-5 properties:
-    1) gain (float)
-    2) bandwidth (float)
-    3) frequency (float)
-    4) type (std::string)
-    5) drive (float)
-3 things it can do:
-    1) boost or cut frequencies on a signal
-    2) overDrive the signal
-    3) give a better sonority to an instrument 
- */
-
-struct Filters 
+void Oscillator::generateTone()
 {
-    //gain [dB] pow(10.0, (gain / 20.0))
-    float gain = 0.0f; 
-    // bandwidth [0 -10] 0.7=1 Oct
-    float bandwidth = 0.7f; 
-    //frequency [Hz] Selected center frequency
-    float frequency = 100.0f; 
-    //type (LP HP LSh HSh BP)
-    std::string type = "Low Pass"; 
-    //drive (Adds distortion to the signal)
-    float drive = 0.0f; 
+    if (waveformShape == "Square")
+    {
+        signal = 0.5 * (frequency); //This is a dummy example
+        playingTone = true;
+    }
+}
 
-    //boost or cut frequencies on a signal
-    void boostCutFreq(Filters LowPass);
-    //overDrive the signal
-    void overDriveSignal(float drive); 
-    //give a better sonority to an instrument 
-    void giveSonority(std::string instrument = "piano");
+double Oscillator::loadROMSamples(std::string selectStorageDevice,
+                                  bool isAudioFormat)
+{
+    if (selectStorageDevice == "SD")
+    {
+        if(isAudioFormat == true)
+        loadedROM = true;
+    }
+    return storedROM;
+}
+
+void Oscillator::playbackROMSamples(bool anyKeyPressed)
+{
+    if (anyKeyPressed == true)
+    {
+        signal = storedROM + 1;
+    }
+    
+}
+
+struct Filter 
+{
+    double gain; 
+    double bandwidth = 0.7; 
+    double frequency = 100.0; 
+    std::string type = "Low Shelf"; 
+    double drive = 0.0; 
+    double pianoIR;
+    double signal;
+
+    void boostCutFreq();
+    void overDriveSignal(); 
+    void giveSonority(std::string instrument = "Piano");
 };
 
-/*
-Thing 9) reverb 
-5 properties:
-    1) time (float) 
-    2) mix (float)
-    3) type (std::string)
-    4) pre-delay (float)
-    5) size (float)
-3 things it can do:
-    1) simulate an space to a soun
-    2) give a better sound to an instrument
-    3) give depth to a band
- */
+void Filter::boostCutFreq()
+{
+    gain = -12;
+    double fs = 44'100;
+    double theta = (2 * 3.1416 * frequency) / fs;
+    double miu = 10 * (gain/20);
+    double betha = 4 / (1 + miu);
+    double delta = betha * (theta / 2);
+    double gamma = ((1 - delta) / (1 + delta));
+    double a0 = (1 - gamma) / 2, a1 = (1 - gamma) / 2, a2 = 0;
+    double b1 = -gamma, b2 = 0;
+    double xn1 = 0, xn2 = 0, yn1 = 0, yn2 = 0;
+    for (int n = 1; n <= fs; ++n)
+    {
+        signal = ((a0) + (a1 * xn1) + (a2 * xn2) - (b1 * yn1) - (b2 * yn2));
+    } 
+}
+
+void Filter::overDriveSignal()
+{
+    signal = (2.5 * (0.9 * drive)) + (2.5 * (1 - ((0.9 * drive))))-2.5;
+}
+
+void Filter::giveSonority(std::string instrument)
+{
+    if (instrument == "Piano")
+    {
+        signal = signal * pianoIR;
+    }
+}
 
 struct Reverb
 {
-    //time [sec] 
-    float time = 0.1f; 
-    //mix [%] (Wet/Dry)
-    float mix = 20.0f; 
-    //type 
+    double time = 0.1; 
+    double mix = 20.0; 
     std::string type = "Plate";
-    //Pre-delay (First audible reflections time)
-    float preDelay = 0.1f; 
-    //size [sec] (Reflections time)
-    float size = 0.1f; 
+    double preDelay = 0.1; 
+    double size = 0.1; 
+    double signal;
     
-    //simulate an space to a sound
-    void simulateSpace(Reverb Plate);
-    //give a better sound to an instrument
-    void giveBetterSound(std::string instrument = "Trumpets"); 
-    //give depth to a band
-    void giveDepth(Reverb depth, 
-                   float pan = 75, 
-                   bool stereo = true); 
+    void simulateSpace();
+    void giveBetterSound(std::string instrument = "Trumpets");
+    void giveDepth(double pan = 75, bool stereo = true); 
 };
 
-/*
-Thing 10) synthesizer
-5 properties:
-    1) ADSR
-    2) LFO
-    3) oscillator
-    4) filters
-    5) reverb
-3 things it can do:
-    1) generate a signal
-    2) modify the generated signal
-    3) process the modified signal
- */
+void Reverb::simulateSpace()
+{
+    signal = signal * (time + mix);
+}
+
+void Reverb::giveBetterSound(std::string instrument)
+{
+    if (instrument == "Trumpets")
+    {
+        signal = signal * (preDelay + size);
+    }
+} 
+
+void Reverb::giveDepth(double pan, bool stereo)
+{
+    if (stereo == true)
+    {
+        double x1 = 1;
+        signal =  signal + (x1 * pan) / 100;
+    }
+}
 
 struct Synthesizer
 {
-    //ADSR
-    ADSR UserADSR;
-    //LFO
-    LFO UserLFO;
-    //oscillator
-    Oscillator UserOscillator;
-    //filters
-    Filters UserFilter;
-    //reverb
-    Reverb UserReverb;
+    ADSR violinADSR;  
+    LFO vibratoLFO; 
+    Oscillator aMaj; 
+    Filter lowShelf; 
+    Reverb plate; 
 
-    //generate a signal
-    void generateSignal(ADSR UserADSR);
-    //modify the generated signal
-    void modifySignal(ADSR UserADSR, LFO UserLFO);
-    //process the modified signal
-    void processSignal(Filters UserFilters, Reverb UserLFO);
+    void startSignal();
+    void modifySignal(); 
+    void processSignal();
 };
+
+void Synthesizer::startSignal()
+{
+    if (aMaj.playingTone == true)
+    {
+        aMaj.generateTone(); 
+    }
+    else
+    {
+        aMaj.loadROMSamples("SD", true);
+        aMaj.playbackROMSamples(false);
+    }
+    
+    violinADSR.modifyLoudness();
+    violinADSR.modOscillatorPitch(320, 0.35, 0.35);
+    violinADSR.modFilterFrequency(500, 0.5);
+}
+
+void Synthesizer::modifySignal()
+{
+    vibratoLFO.modulateSignal("Oscillator");
+    vibratoLFO.toggleEnablement(true);  
+    vibratoLFO.changeSignalsInteraction();;
+}
+
+void Synthesizer::processSignal()
+{
+    lowShelf.boostCutFreq();
+    lowShelf.overDriveSignal(); 
+    lowShelf.giveSonority("Piano");
+
+    plate.simulateSpace();
+    plate.giveBetterSound("Trumpets");
+    plate.giveDepth(75, true); 
+}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
