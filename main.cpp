@@ -308,13 +308,15 @@ struct University
                                      float other = 350);
     }; 
 
+    Student peter;
+
     float teachStudents();  
     void doCollaborativeResearch(std::string organization = "UCLA",
-                                std::string department = "Chemistry",
-                                std::string projectName = "influence of fertilizer on plant cultivation"); 
-    void performCulturalActivities(Student Peter,  
-                                  std::string category = "Arts",
-                                  std::string activity = "Music Museum Visit"); 
+                                 std::string department = "Chemistry",
+                                 std::string projectName = "influence of fertilizer on plant cultivation"); 
+    void performCulturalActivities(Student name,
+                                   std::string category = "Arts",
+                                   std::string activity = "Music Museum Visit"); 
 };
 
 float University::Professor::work(int research, int teaching)
@@ -351,17 +353,17 @@ float University::teachStudents()
 }
 
 void University::doCollaborativeResearch(std::string organization, 
-                                std::string department,
-                                std::string projectName)
+                                         std::string department,
+                                         std::string projectName)
 {
     std::cout << "This semester the University do Collaborative Research with: " << organization << " from department " << department << " in the project named: " << projectName << std::endl;
 }
 
-void University::performCulturalActivities(Student Peter,  
-                                  std::string category,
-                                  std::string activity)
+void University::performCulturalActivities(Student,
+                                           std::string category,
+                                           std::string activity)
 {
-    std::cout << "This semester the University performed a Cultural Activity with a student from " << Peter.career << "which likes: " << Peter.hobby << " in the category: " << category << " doing the activity " << activity << std::endl;
+    std::cout << "This semester the University performed a Cultural Activity with a student from " << peter.career << "which likes: " << peter.hobby << " in the category: " << category << " doing the activity " << activity << std::endl;
 }
 
 struct Computer
@@ -403,7 +405,7 @@ void Computer::Hardware::playGames(bool specs)
     {
         std::cout << "You can use this computer to play games";  
     
-    canPlayGames = true;
+        canPlayGames = true;
     }
 }
 
@@ -481,12 +483,9 @@ struct AudioMixer
                    float frequency = 96'000); 
     };
 
-    int mixSignals(AudioMixer brand, 
-                   std::string application = "Touring Live Sound");
-    int splitSignal(AudioMixer,  
-                    std::string destination = "Broadcast");
-    void processSignal(AudioMixer brand, 
-                       int paramEQ = 64,
+    int mixSignals(std::string application = "Touring Live Sound");
+    int splitSignal(std::string destination = "Broadcast");
+    void processSignal(int paramEQ = 64,
                        int graphEQ = 16);
 };
 
@@ -501,7 +500,7 @@ void AudioMixer::ExpandableProtocols::sends(std::string application)
 }
 
 float AudioMixer::ExpandableProtocols::sync(std::string clockSource,
-                                           float frequency)
+                                            float frequency)
 {
     if (clockSource == "External")
     {
@@ -510,8 +509,7 @@ float AudioMixer::ExpandableProtocols::sync(std::string clockSource,
     return syncFrequency;
 }
 
-int AudioMixer::mixSignals(AudioMixer,
-                std::string application)
+int AudioMixer::mixSignals(std::string application)
 {
     if (application == "Touring")
     { 
@@ -549,7 +547,7 @@ int AudioMixer::mixSignals(AudioMixer,
     return availableInCh;
 }
 
-int AudioMixer::splitSignal(AudioMixer, std::string destination) 
+int AudioMixer::splitSignal(std::string destination) 
 {
     if (destination == "Broadcasting")
     { 
@@ -565,8 +563,7 @@ int AudioMixer::splitSignal(AudioMixer, std::string destination)
     return availableOutCh;
 }   
 
-void AudioMixer::processSignal(AudioMixer, 
-                               int paramEQ,
+void AudioMixer::processSignal(int paramEQ,
                                int graphEQ)
 {
     int procInCh = paramEQ * (availableInCh - inputCh);
@@ -664,21 +661,23 @@ struct Oscillator
     int octave = 2; 
     double loadedROM;
     double storedROM;
+    bool playingTone;
     bool playButton;
+    double signal;
 
-    double generateSignal(double x); 
+    void generateTone(); 
     double loadROMSamples(std::string selectStorageDevice = "SD",
                         bool isAudioFormat = true);
-    void playbackROMSamples(double x, bool anyKeyPressed = false);
+    void playbackROMSamples(bool anyKeyPressed = false);
 };
 
-double Oscillator::generateSignal(double x)
+void Oscillator::generateTone()
 {
     if (waveformShape == "Square")
     {
-        x = 0.5 * (frequency); //This is a dummy example
+        signal = 0.5 * (frequency); //This is a dummy example
+        playingTone = true;
     }
-    return x; 
 }
 
 double Oscillator::loadROMSamples(std::string selectStorageDevice,
@@ -692,11 +691,11 @@ double Oscillator::loadROMSamples(std::string selectStorageDevice,
     return storedROM;
 }
 
-void Oscillator::playbackROMSamples(double x, bool anyKeyPressed)
+void Oscillator::playbackROMSamples(bool anyKeyPressed)
 {
     if (anyKeyPressed == true)
     {
-        x = storedROM + 1;
+        signal = storedROM + 1;
     }
     
 }
@@ -711,12 +710,12 @@ struct Filter
     double pianoIR;
     double signal;
 
-    void boostCutFreq(Filter);
+    void boostCutFreq();
     void overDriveSignal(); 
     void giveSonority(std::string instrument = "Piano");
 };
 
-void Filter::boostCutFreq(Filter)
+void Filter::boostCutFreq()
 {
     gain = -12;
     double fs = 44'100;
@@ -791,28 +790,38 @@ struct Synthesizer
     Filter lowShelf; 
     Reverb plate; 
 
-    void generateSignal(ADSR instrument);
-    void modifySignal(LFO vibrato); 
-    void processSignal(Filter bpf, Reverb fixedPlate);
+    void startSignal();
+    void modifySignal(); 
+    void processSignal();
 };
 
-void Synthesizer::generateSignal(ADSR)
+void Synthesizer::startSignal()
 {
+    if (aMaj.playingTone == true)
+    {
+        aMaj.generateTone(); 
+    }
+    else
+    {
+        aMaj.loadROMSamples("SD", true);
+        aMaj.playbackROMSamples(false);
+    }
+    
     violinADSR.modifyLoudness();
     violinADSR.modOscillatorPitch(320, 0.35, 0.35);
     violinADSR.modFilterFrequency(500, 0.5);
 }
 
-void Synthesizer::modifySignal(LFO)
+void Synthesizer::modifySignal()
 {
     vibratoLFO.modulateSignal("Oscillator");
     vibratoLFO.toggleEnablement(true);  
     vibratoLFO.changeSignalsInteraction();;
 }
 
-void Synthesizer::processSignal(Filter, Reverb)
+void Synthesizer::processSignal()
 {
-    lowShelf.boostCutFreq(lowShelf);
+    lowShelf.boostCutFreq();
     lowShelf.overDriveSignal(); 
     lowShelf.giveSonority("Piano");
 
