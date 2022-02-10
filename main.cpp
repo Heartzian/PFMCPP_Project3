@@ -74,6 +74,7 @@ int main()
 
 struct Market
 {
+    Market();
     double numProdLocalInv = 215;
     int numLogisticVehicles = 5; 
     int numPeopleWorkingAtStore =32; 
@@ -108,6 +109,11 @@ struct Market
     void adjustInventary();
     void computeDailyProfit();
 };
+
+Market::Market()
+{
+    std::cout << "Market being constructed!" << std::endl;
+}
 
 void Market::Customer::selectDailyFood()
 {
@@ -169,6 +175,7 @@ void Market::computeDailyProfit()
 
 struct University
 {
+    University();
     int numClassrooms = 80;
     int numLabs = 36;
     int numProfessors = 95;
@@ -215,6 +222,11 @@ struct University
                                    std::string category = "Arts",
                                    std::string activity = "Music Museum Visit"); 
 };
+
+University::University()
+{
+    std::cout << "University being constructed!" << std::endl;
+}
 
 float University::Professor::work(int research, int teaching)
 {
@@ -265,6 +277,7 @@ void University::performCulturalActivities(Student,
 
 struct Computer
 {
+    Computer();
     float energyConsumption = 35.5f;
     float requiredRAM = 6.9f;
     float diskSpace = 89.5f;
@@ -294,7 +307,10 @@ struct Computer
     void connectToPCs(bool LANavailable = true);
 };
 
-//Computer OfficeDesktop;
+Computer::Computer()
+{
+    std::cout << "Computer being constructed!" << std::endl;
+}
 
 void Computer::Hardware::playGames(bool specs)
 {
@@ -357,6 +373,7 @@ void Computer::connectToPCs(bool LANavailable)
 
 struct AudioMixer
 {
+    AudioMixer();
     int inputCh = 64; 
     int outputCh = 16; 
     int DSPRacks = 8; 
@@ -386,6 +403,10 @@ struct AudioMixer
                        int graphEQ = 16);
 };
 
+AudioMixer::AudioMixer()
+{
+    std::cout << "AudioMixer being constructed!" << std::endl;
+}
 void AudioMixer::ExpandableProtocols::sends(std::string application)
 {
     if(application == "Recording")
@@ -471,6 +492,7 @@ void AudioMixer::processSignal(int paramEQ,
 
 struct ADSR
 {
+    ADSR();
     double attackTime = 0.01;
     double holdTime = 0.01;
     double decayTime = 0.05;
@@ -485,6 +507,11 @@ struct ADSR
     void modFilterFrequency(int cutoff = 2'500, 
                               double cutoffMod = 0.35);
 };
+
+ADSR::ADSR()
+{
+    std::cout << "ADSR being constructed!" << std::endl;
+}
 
 void ADSR::modifyLoudness()
 {
@@ -509,6 +536,7 @@ void ADSR::modFilterFrequency(int cutoff,
 
 struct LFO
 {
+    LFO();
     float rate = 20.0f; 
     int phaseOffset  = 0.0f; 
     double amount = 48; 
@@ -520,6 +548,11 @@ struct LFO
     bool toggleEnablement(bool shouldBeOn = true);  
     void changeSignalsInteraction();
 };
+
+LFO::LFO()
+{
+    std::cout << "LFO being constructed!" << std::endl;
+}
 
 void LFO::modulateSignal(std::string routeAssign)
 {
@@ -551,6 +584,7 @@ void LFO::changeSignalsInteraction()
 
 struct Oscillator
 {
+    Oscillator();
     double frequency = 440; 
     float finetune = 0.01f; 
     std::string waveformShape = "Square"; 
@@ -567,6 +601,11 @@ struct Oscillator
                         bool isAudioFormat = true);
     void playbackROMSamples(bool anyKeyPressed = false);
 };
+
+Oscillator::Oscillator()
+{
+    std::cout << "Oscillator being constructed!" << std::endl;
+}
 
 void Oscillator::generateTone()
 {
@@ -599,6 +638,7 @@ void Oscillator::playbackROMSamples(bool anyKeyPressed)
 
 struct Filter 
 {
+    Filter();
     double gain; 
     double bandwidth = 0.7; 
     double frequency = 100.0; 
@@ -611,6 +651,11 @@ struct Filter
     void overDriveSignal(); 
     void giveSonority(std::string instrument = "Piano");
 };
+
+Filter::Filter()
+{
+    std::cout << "Filter being constructed!" << std::endl;
+}
 
 void Filter::boostCutFreq()
 {
@@ -645,6 +690,7 @@ void Filter::giveSonority(std::string instrument)
 
 struct Reverb
 {
+    Reverb();
     double time = 0.1; 
     double mix = 20.0; 
     std::string type = "Plate";
@@ -656,6 +702,11 @@ struct Reverb
     void giveBetterSound(std::string instrument = "Trumpets");
     void giveDepth(double pan = 75, bool stereo = true); 
 };
+
+Reverb::Reverb()
+{
+    std::cout << "Reverb being constructed!" << std::endl;
+}
 
 void Reverb::simulateSpace()
 {
@@ -681,6 +732,7 @@ void Reverb::giveDepth(double pan, bool stereo)
 
 struct Synthesizer
 {
+    Synthesizer();
     ADSR violinADSR;  
     LFO vibratoLFO; 
     Oscillator aMaj; 
@@ -691,6 +743,11 @@ struct Synthesizer
     void modifySignal(); 
     void processSignal();
 };
+
+Synthesizer::Synthesizer()
+{
+    std::cout << "Synthesizer being constructed!" << std::endl;
+}
 
 void Synthesizer::startSignal()
 {
