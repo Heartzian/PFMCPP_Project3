@@ -74,13 +74,13 @@ int main()
 
 struct Market
 {
-    Market();
     double numProdLocalInv = 215;
     int numLogisticVehicles = 5; 
     int numPeopleWorkingAtStore =32; 
     double dailyBasicUtilitiesFee = 320.53;  
     double dailyIncome = 0; 
     double dailyProfit = 0;
+    Market();
 
     struct Customer
     {
@@ -171,16 +171,17 @@ void Market::adjustInventary()
 void Market::computeDailyProfit()
 {
     dailyProfit = dailyIncome - dailyBasicUtilitiesFee;
+    std::cout << "Market::computeDailyProfit()" << dailyProfit << std::endl;
 }
 
 struct University
 {
-    University();
     int numClassrooms = 80;
     int numLabs = 36;
     int numProfessors = 95;
     float semIncome = 5'000'000;
     int classesPerSemester = 8362;
+    University();
 
     struct Professor
     {
@@ -195,7 +196,7 @@ struct University
         float computeMonthlyExpenses(float rent = 1800,
                                      float food = 550,
                                      float fun = 120, 
-                                     float other = 150); 
+                                     float other = 150);
     };
 
     struct Student
@@ -221,6 +222,7 @@ struct University
     void performCulturalActivities(Student name,
                                    std::string category = "Arts",
                                    std::string activity = "Music Museum Visit"); 
+    void calculatedHoursPerSemester();
 };
 
 University::University()
@@ -275,9 +277,13 @@ void University::performCulturalActivities(Student,
     std::cout << "This semester the University performed a Cultural Activity with a student from " << peter.career << "which likes: " << peter.hobby << " in the category: " << category << " doing the activity " << activity << std::endl;
 }
 
+void University::calculatedHoursPerSemester()
+{
+    std::cout << "University::calculatedHoursPerSemester()" << classesPerSemester << std::endl;
+}
+
 struct Computer
 {
-    Computer();
     float energyConsumption = 35.5f;
     float requiredRAM = 6.9f;
     float diskSpace = 89.5f;
@@ -285,6 +291,7 @@ struct Computer
     int execTask = 25;
     bool programmingSoftwareInstalled = false;
     bool canSaveInfo;
+    Computer();
 
     struct Hardware  
     { 
@@ -305,6 +312,7 @@ struct Computer
     void executePrograms(std::string todayTask = "Programming");  
     void saveInfo(bool diskAvailable = true); 
     void connectToPCs(bool LANavailable = true);
+    void calculatePCWattsPerHour();
 };
 
 Computer::Computer()
@@ -371,17 +379,22 @@ void Computer::connectToPCs(bool LANavailable)
     }
 }
 
+void Computer::calculatePCWattsPerHour()
+{
+    std::cout << "Computer::calculatePCWattsPerHour()" << energyConsumption << std::endl;
+}
+
 struct AudioMixer
 {
-    AudioMixer();
-    int inputCh = 64; 
-    int outputCh = 16; 
+    int inputCh = 256; 
+    int outputCh = 128; 
     int DSPRacks = 8; 
     int parallelProcessingCH = 24; 
     int DSPspeed = 800; 
     int availableInCh;
     int availableOutCh;
     int availableProcessing;
+    AudioMixer();
 
     struct ExpandableProtocols
     {
@@ -401,6 +414,7 @@ struct AudioMixer
     int splitSignal(std::string destination = "Broadcast");
     void processSignal(int paramEQ = 64,
                        int graphEQ = 16);
+    void dreamFutureMixer();
 };
 
 AudioMixer::AudioMixer()
@@ -490,15 +504,20 @@ void AudioMixer::processSignal(int paramEQ,
     std::cout << "Available Processing= " << availableProcessing;
 }
 
+void AudioMixer::dreamFutureMixer()
+{
+std::cout << "AudioMixer::dreamFutureMixer() [Input/Outputs]" << inputCh << " / " << outputCh << std::endl;
+}
+
 struct ADSR
 {
-    ADSR();
-    double attackTime = 0.01;
+    double attackTime = 0.000001;
     double holdTime = 0.01;
     double decayTime = 0.05;
     double sustainLevel = 0.5;
     double releaseTime = 0.5;
     double signal;
+    ADSR();
 
     void modifyLoudness();
     void modOscillatorPitch(double oscFreq = 440.0,
@@ -506,6 +525,7 @@ struct ADSR
                               double pitchMod = 0.35);
     void modFilterFrequency(int cutoff = 2'500, 
                               double cutoffMod = 0.35);
+    void followTheImpulse();
 };
 
 ADSR::ADSR()
@@ -534,19 +554,25 @@ void ADSR::modFilterFrequency(int cutoff,
     signal = cutoff * cutoffMod; //This is a dummy example
 }
 
+void ADSR::followTheImpulse()
+{
+    std::cout << "ADSR::followTheImpulse()" << attackTime << std::endl;
+}
+
 struct LFO
 {
-    LFO();
     float rate = 20.0f; 
     int phaseOffset  = 0.0f; 
     double amount = 48; 
     std::string shapeWaveform  = "Sine"; 
     bool bypassState = false; 
     double signal;
+    LFO();
 
     void modulateSignal(std::string routeAssign = "Oscillator");
     bool toggleEnablement(bool shouldBeOn = true);  
     void changeSignalsInteraction();
+    void findThePhase();
 };
 
 LFO::LFO()
@@ -582,9 +608,13 @@ void LFO::changeSignalsInteraction()
 
 }
 
+void LFO::findThePhase()
+{
+    std::cout << "LFO::findThePhase()" << phaseOffset << std::endl;
+}
+
 struct Oscillator
 {
-    Oscillator();
     double frequency = 440; 
     float finetune = 0.01f; 
     std::string waveformShape = "Square"; 
@@ -595,11 +625,13 @@ struct Oscillator
     bool playingTone;
     bool playButton;
     double signal;
+    Oscillator();
 
     void generateTone(); 
     double loadROMSamples(std::string selectStorageDevice = "SD",
                         bool isAudioFormat = true);
     void playbackROMSamples(bool anyKeyPressed = false);
+    void tuneWithThePianoMainFreq();
 };
 
 Oscillator::Oscillator()
@@ -636,20 +668,26 @@ void Oscillator::playbackROMSamples(bool anyKeyPressed)
     
 }
 
+void Oscillator::tuneWithThePianoMainFreq()
+{
+    std::cout << "Oscillator::tuneWithThePianoMainFreq()" << frequency << std::endl;
+}
+
 struct Filter 
 {
-    Filter();
-    double gain; 
+    double gain = -12; 
     double bandwidth = 0.7; 
     double frequency = 100.0; 
     std::string type = "Low Shelf"; 
     double drive = 0.0; 
     double pianoIR;
     double signal;
+    Filter();
 
     void boostCutFreq();
     void overDriveSignal(); 
     void giveSonority(std::string instrument = "Piano");
+    void useTheSameFrequency();
 };
 
 Filter::Filter()
@@ -659,7 +697,6 @@ Filter::Filter()
 
 void Filter::boostCutFreq()
 {
-    gain = -12;
     double fs = 44'100;
     double theta = (2 * 3.1416 * frequency) / fs;
     double miu = 10 * (gain/20);
@@ -688,19 +725,25 @@ void Filter::giveSonority(std::string instrument)
     }
 }
 
+void Filter::useTheSameFrequency()
+{
+    std::cout << "Filter::useTheSameFrequency()" << frequency << std::endl;
+}
+
 struct Reverb
 {
-    Reverb();
     double time = 0.1; 
     double mix = 20.0; 
     std::string type = "Plate";
     double preDelay = 0.1; 
-    double size = 0.1; 
+    double size = 200; 
     double signal;
+    Reverb();
     
     void simulateSpace();
     void giveBetterSound(std::string instrument = "Trumpets");
     void giveDepth(double pan = 75, bool stereo = true); 
+    void addMoreReverb();
 };
 
 Reverb::Reverb()
@@ -730,18 +773,24 @@ void Reverb::giveDepth(double pan, bool stereo)
     }
 }
 
+void Reverb::addMoreReverb()
+{
+    std::cout << "addMoreReverb()" << size << "just in case" << std::endl;
+}
+
 struct Synthesizer
 {
-    Synthesizer();
     ADSR violinADSR;  
     LFO vibratoLFO; 
     Oscillator aMaj; 
     Filter lowShelf; 
     Reverb plate; 
+    Synthesizer();
 
     void startSignal();
     void modifySignal(); 
     void processSignal();
+    void checkAllIsOK();
 };
 
 Synthesizer::Synthesizer()
@@ -782,6 +831,11 @@ void Synthesizer::processSignal()
     plate.simulateSpace();
     plate.giveBetterSound("Trumpets");
     plate.giveDepth(75, true); 
+}
+
+void Synthesizer::checkAllIsOK()
+{
+    std::cout << "Synthesizer::checkAllIsOK()" << "I don't know what to put here!! :(" << std::endl;
 }
 
 /*
