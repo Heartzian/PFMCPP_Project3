@@ -506,7 +506,7 @@ void AudioMixer::processSignal(int paramEQ,
 
 void AudioMixer::dreamFutureMixer()
 {
-std::cout << "AudioMixer::dreamFutureMixer() [Input/Outputs] " << inputCh << "/" << outputCh << std::endl;
+    std::cout << "AudioMixer::dreamFutureMixer() [Input/Outputs] " << inputCh << "/" << outputCh << std::endl;
 }
 
 struct ADSR
