@@ -170,8 +170,8 @@ void Market::adjustInventary()
 
 void Market::computeDailyProfit()
 {
-    dailyProfit = dailyIncome - dailyBasicUtilitiesFee;
-    std::cout << "Market::computeDailyProfit()" << dailyProfit << std::endl;
+    //dailyProfit = dailyIncome - dailyBasicUtilitiesFee;
+    std::cout << "Market::computeDailyProfit() " << dailyProfit << std::endl;
 }
 
 struct University
@@ -279,7 +279,7 @@ void University::performCulturalActivities(Student,
 
 void University::calculatedHoursPerSemester()
 {
-    std::cout << "University::calculatedHoursPerSemester()" << classesPerSemester << std::endl;
+    std::cout << "University::calculatedHoursPerSemester() " << classesPerSemester << std::endl;
 }
 
 struct Computer
@@ -381,7 +381,7 @@ void Computer::connectToPCs(bool LANavailable)
 
 void Computer::calculatePCWattsPerHour()
 {
-    std::cout << "Computer::calculatePCWattsPerHour()" << energyConsumption << std::endl;
+    std::cout << "Computer::calculatePCWattsPerHour() " << energyConsumption << std::endl;
 }
 
 struct AudioMixer
@@ -506,7 +506,7 @@ void AudioMixer::processSignal(int paramEQ,
 
 void AudioMixer::dreamFutureMixer()
 {
-std::cout << "AudioMixer::dreamFutureMixer() [Input/Outputs]" << inputCh << " / " << outputCh << std::endl;
+std::cout << "AudioMixer::dreamFutureMixer() [Input/Outputs] " << inputCh << "/" << outputCh << std::endl;
 }
 
 struct ADSR
@@ -556,7 +556,7 @@ void ADSR::modFilterFrequency(int cutoff,
 
 void ADSR::followTheImpulse()
 {
-    std::cout << "ADSR::followTheImpulse()" << attackTime << std::endl;
+    std::cout << "ADSR::followTheImpulse() " << attackTime << std::endl;
 }
 
 struct LFO
@@ -610,7 +610,7 @@ void LFO::changeSignalsInteraction()
 
 void LFO::findThePhase()
 {
-    std::cout << "LFO::findThePhase()" << phaseOffset << std::endl;
+    std::cout << "LFO::findThePhase() " << phaseOffset << std::endl;
 }
 
 struct Oscillator
@@ -670,14 +670,14 @@ void Oscillator::playbackROMSamples(bool anyKeyPressed)
 
 void Oscillator::tuneWithThePianoMainFreq()
 {
-    std::cout << "Oscillator::tuneWithThePianoMainFreq()" << frequency << std::endl;
+    std::cout << "Oscillator::tuneWithThePianoMainFreq() " << frequency << std::endl;
 }
 
 struct Filter 
 {
     double gain = -12; 
     double bandwidth = 0.7; 
-    double frequency = 100.0; 
+    double frequency = 440.0; 
     std::string type = "Low Shelf"; 
     double drive = 0.0; 
     double pianoIR;
@@ -687,7 +687,7 @@ struct Filter
     void boostCutFreq();
     void overDriveSignal(); 
     void giveSonority(std::string instrument = "Piano");
-    void useTheSameFrequency();
+    void usePianoTuningFrequency();
 };
 
 Filter::Filter()
@@ -725,9 +725,9 @@ void Filter::giveSonority(std::string instrument)
     }
 }
 
-void Filter::useTheSameFrequency()
+void Filter::usePianoTuningFrequency()
 {
-    std::cout << "Filter::useTheSameFrequency()" << frequency << std::endl;
+    std::cout << "Filter::useTheSameFrequency() " << frequency << std::endl;
 }
 
 struct Reverb
@@ -775,7 +775,7 @@ void Reverb::giveDepth(double pan, bool stereo)
 
 void Reverb::addMoreReverb()
 {
-    std::cout << "addMoreReverb()" << size << "just in case" << std::endl;
+    std::cout << "addMoreReverb() " << size << "s. (just in case)" << std::endl;
 }
 
 struct Synthesizer
@@ -835,7 +835,7 @@ void Synthesizer::processSignal()
 
 void Synthesizer::checkAllIsOK()
 {
-    std::cout << "Synthesizer::checkAllIsOK()" << "I don't know what to put here!! :(" << std::endl;
+    std::cout << "Synthesizer::checkAllIsOK() " << "I don't know what should I write here!! :(" << std::endl;
 }
 
 /*
@@ -857,6 +857,38 @@ int main()
 {
     Example::main();
     
+    Market superStarMarket;
+    superStarMarket.computeDailyProfit();
+    //std::cout << "Is superStarMarket member var 'dailyProfit' equal to 0? " << (superStarMarket.dailyProfit == 0 ? "Yes" : "No") << "\n";
+
+    University programmingSchoolUniversity;
+    programmingSchoolUniversity.calculatedHoursPerSemester();
+
+    Computer miniPC;
+    miniPC.calculatePCWattsPerHour();
+
+    AudioMixer superMix;
+    superMix.dreamFutureMixer();
+
+    ADSR impulsive;
+    impulsive.followTheImpulse();
+
+    LFO phaseChanger;
+    phaseChanger.findThePhase();
+
+    Oscillator pureTone;
+    pureTone.tuneWithThePianoMainFreq();    
+
+    Filter lowPass;
+    lowPass.usePianoTuningFrequency();
+
+    Reverb justALittleBit;
+    justALittleBit.addMoreReverb();
+
+    Synthesizer allTogether;
+    allTogether.checkAllIsOK();
     
+    
+
     std::cout << "good to go!" << std::endl;
 }
