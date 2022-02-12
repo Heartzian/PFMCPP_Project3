@@ -86,33 +86,31 @@ struct Market
     {
         int age = 38;
         bool member = true;
-        int visitsPerWeek = 7;
+        int visitsThisWeek = 0;
         std::string gender = "Male";
         int breakfastProds = 4;
         int morningBreakProds = 2;
         int lunchProds = 5;
         int coffeeBreakProds = 2;
         int dinnerProds = 3;
-        int productsToOrder;
-        double productsPrice;
-        double totalToPay;
+        std::string name = "";
+        int productsToOrder = 0;
+        double productsPrice = 0;
+        double totalToPay = 0;
 
         void selectDailyFood(); 
         void calculateOrderPrice(); 
         void orderProducts(bool deliveryRequired = true);
     };
 
-    Customer nick;
-    Customer jack;
-
-    void sellProducts();
-    void adjustInventary();
+    void sellProducts(Customer customerName);
+    void adjustInventary(Customer customerName);
     void computeDailyProfit();
 };
 
 Market::Market()
 {
-    std::cout << "Market being constructed!" << std::endl;
+    std::cout << "\nMarket being constructed!\n" << std::endl;
 }
 
 void Market::Customer::selectDailyFood()
@@ -154,23 +152,25 @@ void Market::Customer::orderProducts(bool requiredDelivery)
     totalToPay = (productsPrice * tax) + deliveryCharge;
 }
 
-void Market::sellProducts() //Nick example
+void Market::sellProducts(Customer customerName) //Nick example
 { 
-    std::cout << "Dear Customer, you ordered " <<  nick.productsToOrder << "products, with a total cost of $" << nick.totalToPay << "which will be Delivered by Tom. Thanks for buying with us!";
-
+    ++customerName.visitsThisWeek;
+    customerName.name = "Carl Sag";
     --numLogisticVehicles;
     --numPeopleWorkingAtStore;
-    dailyIncome += nick.totalToPay;
+    dailyIncome += customerName.totalToPay;
+
+    std::cout << "Dear " << customerName.name << ", you ordered " <<  customerName.productsToOrder << " products, with a total cost of $" << customerName.totalToPay << ", which will be Delivered by Tom." << " this week, you have come to our store " << customerName.visitsThisWeek << " times, Thanks for buying with us!\n" << std::endl;
 }
 
-void Market::adjustInventary()
+void Market::adjustInventary(Customer customerName)
 {
-    numProdLocalInv -= nick.productsToOrder;
+    numProdLocalInv -= customerName.productsToOrder;
 }
 
 void Market::computeDailyProfit()
 {
-    //dailyProfit = dailyIncome - dailyBasicUtilitiesFee;
+    dailyProfit = dailyIncome - dailyBasicUtilitiesFee;
     std::cout << "Market::computeDailyProfit() " << dailyProfit << std::endl;
 }
 
@@ -179,13 +179,13 @@ struct University
     int numClassrooms = 80;
     int numLabs = 36;
     int numProfessors = 95;
-    float semIncome = 5'000'000;
-    int classesPerSemester = 8362;
+    float semIncome = 0;
+    int classesPerSemester = 0;
     University();
 
     struct Professor
     {
-        int age = 58;
+        int age = 30;
         std::string profession = "Engineer";
         std::string postgraduateStudies = "MsC";
         std::string teachingRank = "Band 4";
@@ -202,18 +202,23 @@ struct University
     struct Student
     {
         int age = 18; 
+        std::string name = "";
         std::string department = "Engineer"; 
         std::string career = "AgroIndustrial Engineer";
         std::string hobby = "Play Bass";
         int semestralCredits = 9;
+        int weeklyPresentialStudyHours = 0;
+        int weeklyResearchStudyHours = 0;
+        double semestralStudyTime = 0;
+        double semestralAllowedAbsences = 0;
 
-        float computeWeekStudyTime(int research = 28, int teaching = 16);
+        void computeWeekStudyTime();
+        void computeSemestralAbsences();
+        void displayStudentInfo(Student studentName);
         float computeMonthlyExpenses(float food, 
                                      float fun = 220, 
                                      float other = 350);
     }; 
-
-    Student peter;
 
     float teachStudents();  
     void doCollaborativeResearch(std::string organization = "UCLA",
@@ -227,7 +232,7 @@ struct University
 
 University::University()
 {
-    std::cout << "University being constructed!" << std::endl;
+    std::cout << "University being constructed!\n" << std::endl;
 }
 
 float University::Professor::work(int research, int teaching)
@@ -243,9 +248,22 @@ float University::Professor::computeMonthlyExpenses(float rent,
     return rent + food + fun + other;
 }
 
-float University::Student::computeWeekStudyTime(int research, int teaching)
+void University::Student::computeWeekStudyTime()
 {
-    return research + teaching;
+    weeklyPresentialStudyHours = semestralCredits * 3;
+    weeklyResearchStudyHours = weeklyPresentialStudyHours * 2;
+    semestralStudyTime = (weeklyPresentialStudyHours + weeklyResearchStudyHours) * 16;
+    name = "Frank Kaf";
+}
+
+void University::Student::computeSemestralAbsences()
+{
+    semestralAllowedAbsences = ((weeklyPresentialStudyHours * 16) * 0.1) / 3;
+}
+
+void University::Student::displayStudentInfo(Student studentName)
+{
+    std::cout << "Dear " << studentName.name << ". Welcome to study " << studentName.career << ". This semester you chose " << studentName.semestralCredits << " credits. You'll have " << studentName.weeklyPresentialStudyHours << " weekly presential study hours. Please remember you can only have 10% of class absence, which in your case means " << studentName.semestralAllowedAbsences << " hours per class. Enjoy your time!\n" << std::endl;
 }
 
 float University::Student::computeMonthlyExpenses(float food = 350,
@@ -270,11 +288,11 @@ void University::doCollaborativeResearch(std::string organization,
     std::cout << "This semester the University do Collaborative Research with: " << organization << " from department " << department << " in the project named: " << projectName << std::endl;
 }
 
-void University::performCulturalActivities(Student,
+void University::performCulturalActivities(Student studentName,
                                            std::string category,
                                            std::string activity)
 {
-    std::cout << "This semester the University performed a Cultural Activity with a student from " << peter.career << "which likes: " << peter.hobby << " in the category: " << category << " doing the activity " << activity << std::endl;
+    std::cout << "This semester the University performed a Cultural Activity with " << studentName.name << " from " << studentName.career << " which likes to " << studentName.hobby << " in the category: " << category << " doing the activity " << activity << ".\n" << std::endl;
 }
 
 void University::calculatedHoursPerSemester()
@@ -304,12 +322,12 @@ struct Computer
         bool canTrainAI;
         bool canUseAtOffice;
         
-        void playGames(bool specs = true); 
-        void trainAI(std::string softwareReq = "Keras"); 
-        void workAtOffice(std::string mostlyUsedTask = "Accounting"); 
+        void playGames(); 
+        void trainAI(); 
+        void workAtOffice(); 
     };
 
-    void executePrograms(std::string todayTask = "Programming");  
+    void executePrograms(Hardware specs, std::string installedSoft);  
     void saveInfo(bool diskAvailable = true); 
     void connectToPCs(bool LANavailable = true);
     void calculatePCWattsPerHour();
@@ -317,46 +335,53 @@ struct Computer
 
 Computer::Computer()
 {
-    std::cout << "Computer being constructed!" << std::endl;
+    std::cout << "Computer being constructed!\n" << std::endl;
 }
 
-void Computer::Hardware::playGames(bool specs)
+void Computer::Hardware::playGames()
 {
-    if (specs == true && RAM >= 4 && disk >=256 && CPU >= 3.0 && GPU >= 2)
+    if (RAM >= 4 && disk >=256 && CPU >= 3.0 && GPU >= 2)
     {
-        std::cout << "You can use this computer to play games";  
+        //std::cout << "You can use this computer to play games";  
     
         canPlayGames = true;
     }
 }
 
-void Computer::Hardware::trainAI(std::string softwareReq)
+void Computer::Hardware::trainAI()
 {
     if (canPlayGames == true && GPU > 4)
     {
-        std::cout << "You can use this computer to train AI using" << softwareReq;
+        //std::cout << "You can use this computer to train AI using" << softwareReq;
 
         canTrainAI = true;
     }
     
 }
 
-void Computer::Hardware::workAtOffice(std::string mostlyUsedTask)
+void Computer::Hardware::workAtOffice()
 {
     if (canPlayGames == true)
     {
-        std::cout << "You can use this computer to do " << mostlyUsedTask;
+        //std::cout << "You can use this computer to do " << mostlyUsedTask;
 
         canUseAtOffice = true;
     }
     
 } 
 
-void Computer::executePrograms(std::string todayTask)
+void Computer::executePrograms(Hardware specs, std::string installedSoft)
 {
-    if (programmingSoftwareInstalled == true)
+    if (installedSoft == "GTA")
     {
-        std::cout << "This computer can be used  to" << todayTask;
+        if (specs.canPlayGames == true)
+        {
+            std::cout << "According to the given specs, this computer can be used to play Grand Theft Auto\n" << std::endl;
+        }
+        else
+        {
+            std::cout << "Sorry!! This computer can NOT be used to play Grand Theft Auto becasuse of the specs" << std::endl;
+        }
     }
 }
 
@@ -386,23 +411,24 @@ void Computer::calculatePCWattsPerHour()
 
 struct AudioMixer
 {
-    int inputCh = 256; 
-    int outputCh = 128; 
-    int DSPRacks = 8; 
+    int inputCh = 128; 
+    int outputCh = 64; 
+    int DSPRacks = 16; 
     int parallelProcessingCH = 24; 
     int DSPspeed = 800; 
-    int availableInCh;
-    int availableOutCh;
-    int availableProcessing;
+    int availableInCh = 0;
+    int availableOutCh = 0;
+    int availableProcessing = 0;
     AudioMixer();
 
-    struct ExpandableProtocols
+    struct ExpandableProtocol
     {
         bool MADI;
         bool waves;
         bool AVR;
         bool aviom;
-        bool AES;
+        bool DANTE;
+        std::string protocol;
         float syncFrequency;
 
         void sends(std::string application = "Recording");
@@ -410,28 +436,30 @@ struct AudioMixer
                    float frequency = 96'000); 
     };
 
-    int mixSignals(std::string application = "Touring Live Sound");
-    int splitSignal(std::string destination = "Broadcast");
+    void mixSignals(std::string application = "Touring Live Sound");
+    void splitSignal(std::string destination = "Broadcast");
     void processSignal(int paramEQ = 64,
                        int graphEQ = 16);
-    void dreamFutureMixer();
+    void info(ExpandableProtocol connectionName);
 };
 
 AudioMixer::AudioMixer()
 {
-    std::cout << "AudioMixer being constructed!" << std::endl;
+    std::cout << "AudioMixer being constructed!\n" << std::endl;
 }
-void AudioMixer::ExpandableProtocols::sends(std::string application)
+void AudioMixer::ExpandableProtocol::sends(std::string application)
 {
-    if(application == "Recording")
+    if(application == "Monitors")
     {
-        MADI = true;
-        AVR = true;
-        AES = true;
+        DANTE = true;
+        if (DANTE == true)
+        {
+            protocol = "Dante";
+        }
     }
 }
 
-float AudioMixer::ExpandableProtocols::sync(std::string clockSource,
+float AudioMixer::ExpandableProtocol::sync(std::string clockSource,
                                             float frequency)
 {
     if (clockSource == "External")
@@ -441,7 +469,7 @@ float AudioMixer::ExpandableProtocols::sync(std::string clockSource,
     return syncFrequency;
 }
 
-int AudioMixer::mixSignals(std::string application)
+void AudioMixer::mixSignals(std::string application)
 {
     if (application == "Touring")
     { 
@@ -476,10 +504,9 @@ int AudioMixer::mixSignals(std::string application)
         int usedInCh = drumKit + drums + winds + strings + vocals + effects;
         availableInCh = inputCh - usedInCh;
     }
-    return availableInCh;
 }
 
-int AudioMixer::splitSignal(std::string destination) 
+void AudioMixer::splitSignal(std::string destination) 
 {
     if (destination == "Broadcasting")
     { 
@@ -492,7 +519,17 @@ int AudioMixer::splitSignal(std::string destination)
         int usedOutCh = masterOut + liveOut + subOut + monitorOut + studioOut + recOut;
         availableOutCh = outputCh - usedOutCh;
     }
-    return availableOutCh;
+    else if (destination == "Monitors")
+    {
+        int frontMix = 3;
+        int sideMix = 2;
+        int subOut = 2;
+        int trumpMix = 1;
+        int saxMix = 1;
+        int drumMix = 2;
+        int usedOutCh = frontMix + sideMix + subOut + trumpMix + saxMix + drumMix;
+        availableOutCh = outputCh - usedOutCh;
+    }
 }   
 
 void AudioMixer::processSignal(int paramEQ,
@@ -501,12 +538,12 @@ void AudioMixer::processSignal(int paramEQ,
     int procInCh = paramEQ * (availableInCh - inputCh);
     int procOutCh = graphEQ * (availableOutCh - outputCh);
     availableProcessing = (procInCh + procOutCh) - DSPspeed;
-    std::cout << "Available Processing= " << availableProcessing;
+    //std::cout << "Available Processing= " << availableProcessing;
 }
 
-void AudioMixer::dreamFutureMixer()
+void AudioMixer::info(ExpandableProtocol connectionName)
 {
-    std::cout << "AudioMixer::dreamFutureMixer() [Input/Outputs] " << inputCh << "/" << outputCh << std::endl;
+    std::cout << "The selected mixer have " << inputCh << " inputs channels and " << outputCh << " output channels, which right now still have " << availableInCh << " input channels and " << availableOutCh << " output channels. The Main signal will be splitted with Monitors using " << connectionName.protocol << ".\n" <<std::endl;
 }
 
 struct ADSR
@@ -530,7 +567,7 @@ struct ADSR
 
 ADSR::ADSR()
 {
-    std::cout << "ADSR being constructed!" << std::endl;
+    std::cout << "ADSR being constructed!\n" << std::endl;
 }
 
 void ADSR::modifyLoudness()
@@ -858,17 +895,38 @@ int main()
     Example::main();
     
     Market superStarMarket;
-    superStarMarket.computeDailyProfit();
+    Market::Customer carl;
+    carl.selectDailyFood(); 
+    carl.calculateOrderPrice(); 
+    carl.orderProducts(true);
+    superStarMarket.sellProducts(carl);
+    superStarMarket.adjustInventary(carl);
+    //superStarMarket.computeDailyProfit();
+    
     //std::cout << "Is superStarMarket member var 'dailyProfit' equal to 0? " << (superStarMarket.dailyProfit == 0 ? "Yes" : "No") << "\n";
 
     University programmingSchoolUniversity;
-    programmingSchoolUniversity.calculatedHoursPerSemester();
+    University::Student frank;
+    frank.computeWeekStudyTime();
+    frank.computeSemestralAbsences();
+    frank.displayStudentInfo(frank);
+    programmingSchoolUniversity.performCulturalActivities(frank);
+    //programmingSchoolUniversity.calculatedHoursPerSemester();
 
-    Computer miniPC;
-    miniPC.calculatePCWattsPerHour();
+    Computer gamingPC;
+    Computer::Hardware highSpecs;
+    highSpecs.playGames();
+    gamingPC.executePrograms(highSpecs, "GTA");
+    //gamingPC.calculatePCWattsPerHour();
 
-    AudioMixer superMix;
-    superMix.dreamFutureMixer();
+    AudioMixer FOHMixer;
+    AudioMixer::ExpandableProtocol fohToMonitorConnection;
+    fohToMonitorConnection.sends("Monitors");
+    fohToMonitorConnection.sync("External");
+    FOHMixer.mixSignals("Touring");
+    FOHMixer.splitSignal("Monitors");
+    FOHMixer.processSignal();
+    FOHMixer.info(fohToMonitorConnection);
 
     ADSR impulsive;
     impulsive.followTheImpulse();
