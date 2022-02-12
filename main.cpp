@@ -548,7 +548,7 @@ void AudioMixer::info(ExpandableProtocol connectionName)
 
 struct ADSR
 {
-    double attackTime = 0.000001;
+    double attackTime = 0.01;
     double holdTime = 0.01;
     double decayTime = 0.05;
     double sustainLevel = 0.5;
@@ -575,7 +575,8 @@ void ADSR::modifyLoudness()
     int fs = 44'100;
     double attack = attackTime * fs;
     double sustain = sustainLevel * fs;
-    signal = attack + sustain;  //This is a dummy example (not true)  
+    signal = attack + sustain + releaseTime;  //This is a dummy example (not true)  
+    std::cout << "Loudness Parameters:\n" << "\tAttack Time: " << attackTime << "ms\n" << "\tSustain:" << sustainLevel << std::endl;
 }
 
 void ADSR::modOscillatorPitch(double oscFreq,
@@ -583,6 +584,7 @@ void ADSR::modOscillatorPitch(double oscFreq,
                               double pitchMod)
 {
     signal = (oscFreq * pitch) / pitchMod; //This is a dummy example 
+    std::cout << "Oscillator Pitch Modulation Parameters:\n" << "\tOscillation Frequency: " << oscFreq << "Hz.\n" << "\tPitch: " << pitch << "\n\tPitch Modulation: " << pitchMod << "\n" << std::endl;
 }
 
 void ADSR::modFilterFrequency(int cutoff, 
@@ -607,14 +609,14 @@ struct LFO
     LFO();
 
     void modulateSignal(std::string routeAssign = "Oscillator");
-    bool toggleEnablement(bool shouldBeOn = true);  
+    void toggleEnablement(bool shouldBeOn = true);  
     void changeSignalsInteraction();
     void findThePhase();
 };
 
 LFO::LFO()
 {
-    std::cout << "LFO being constructed!" << std::endl;
+    std::cout << "LFO being constructed!\n" << std::endl;
 }
 
 void LFO::modulateSignal(std::string routeAssign)
@@ -623,16 +625,17 @@ void LFO::modulateSignal(std::string routeAssign)
     {
         double y = 1;
         signal = signal + y; //This is a dummy example
+        std::cout << "LFO Assigned to " << routeAssign << std::endl;
     } 
 }
 
-bool LFO::toggleEnablement(bool shouldBeOn)
+void LFO::toggleEnablement(bool shouldBeOn)
 {
     if (shouldBeOn == false)
     {
         bypassState = true;
     }
-    return bypassState; //This is a dummy example
+    std::cout << "LFO in Bypass Mode: " << bypassState << std::endl;
 }
 
 void LFO::changeSignalsInteraction()
@@ -642,7 +645,7 @@ void LFO::changeSignalsInteraction()
     {
         signal = amount - phaseOffset; //This is a dummy example
     }
-
+    std::cout << "LFO Signals Interaction:\n\tAmount: " << amount << "\n\tPhase Offset: " << phaseOffset << "\n" << std::endl;
 }
 
 void LFO::findThePhase()
@@ -665,7 +668,7 @@ struct Oscillator
     Oscillator();
 
     void generateTone(); 
-    double loadROMSamples(std::string selectStorageDevice = "SD",
+    void loadROMSamples(std::string selectStorageDevice = "SD",
                         bool isAudioFormat = true);
     void playbackROMSamples(bool anyKeyPressed = false);
     void tuneWithThePianoMainFreq();
@@ -673,7 +676,7 @@ struct Oscillator
 
 Oscillator::Oscillator()
 {
-    std::cout << "Oscillator being constructed!" << std::endl;
+    std::cout << "Oscillator being constructed!\n" << std::endl;
 }
 
 void Oscillator::generateTone()
@@ -683,9 +686,10 @@ void Oscillator::generateTone()
         signal = 0.5 * (frequency); //This is a dummy example
         playingTone = true;
     }
+    std::cout << "Oscillator Waveform Shape: " << waveformShape << std::endl;
 }
 
-double Oscillator::loadROMSamples(std::string selectStorageDevice,
+void Oscillator::loadROMSamples(std::string selectStorageDevice,
                                   bool isAudioFormat)
 {
     if (selectStorageDevice == "SD")
@@ -693,7 +697,7 @@ double Oscillator::loadROMSamples(std::string selectStorageDevice,
         if(isAudioFormat == true)
         loadedROM = true;
     }
-    return storedROM;
+    std::cout << "The Audio File is loaded successfully: " << loadedROM << std::endl;
 }
 
 void Oscillator::playbackROMSamples(bool anyKeyPressed)
@@ -702,7 +706,7 @@ void Oscillator::playbackROMSamples(bool anyKeyPressed)
     {
         signal = storedROM + 1;
     }
-    
+    std::cout << "Press PLAY button to reproduce the loaded Audio File.\n" << std::endl;
 }
 
 void Oscillator::tuneWithThePianoMainFreq()
@@ -715,12 +719,13 @@ struct Filter
     double gain = -12; 
     double bandwidth = 0.7; 
     double frequency = 440.0; 
-    std::string type = "Low Shelf"; 
     double drive = 0.0; 
     double pianoIR;
     double signal;
+    std::string filterType = "Low Pass";
     Filter();
 
+    void selectFilter(std::string filterType = "LP");
     void boostCutFreq();
     void overDriveSignal(); 
     void giveSonority(std::string instrument = "Piano");
@@ -729,7 +734,15 @@ struct Filter
 
 Filter::Filter()
 {
-    std::cout << "Filter being constructed!" << std::endl;
+    std::cout << "Filter being constructed!\n" << std::endl;
+}
+
+void Filter::selectFilter(std::string filterName)
+{
+    if (filterName == "LP")
+    {
+        filterType = "Low Pass";
+    }
 }
 
 void Filter::boostCutFreq()
@@ -746,12 +759,14 @@ void Filter::boostCutFreq()
     for (int n = 1; n <= fs; ++n)
     {
         signal = ((a0) + (a1 * xn1) + (a2 * xn2) - (b1 * yn1) - (b2 * yn2));
-    } 
+    }
+    std::cout << "Filter Parameters:\n\tFilter Type : " << filterType << "\n\tGain: " << gain << " dB\n\tCut Frequency: " << frequency << "Hz" <<std::endl;
 }
 
 void Filter::overDriveSignal()
 {
     signal = (2.5 * (0.9 * drive)) + (2.5 * (1 - ((0.9 * drive))))-2.5;
+    std::cout << "\tFilter OverDrive: " << drive << "dB" << std::endl;
 }
 
 void Filter::giveSonority(std::string instrument)
@@ -760,6 +775,7 @@ void Filter::giveSonority(std::string instrument)
     {
         signal = signal * pianoIR;
     }
+    std::cout << "\tPreset Loaded: " << instrument << " \n" << std::endl;
 }
 
 void Filter::usePianoTuningFrequency()
@@ -785,7 +801,7 @@ struct Reverb
 
 Reverb::Reverb()
 {
-    std::cout << "Reverb being constructed!" << std::endl;
+    std::cout << "Reverb being constructed!\n" << std::endl;
 }
 
 void Reverb::simulateSpace()
@@ -929,16 +945,28 @@ int main()
     FOHMixer.info(fohToMonitorConnection);
 
     ADSR impulsive;
-    impulsive.followTheImpulse();
+    impulsive.modifyLoudness();
+    impulsive.modOscillatorPitch(400, 35, 10);
+    //impulsive.followTheImpulse();
 
-    LFO phaseChanger;
-    phaseChanger.findThePhase();
+    LFO assignedToOsc;
+    assignedToOsc.modulateSignal("Oscillator");
+    assignedToOsc.toggleEnablement(true);  
+    assignedToOsc.changeSignalsInteraction();
+    //phaseChanger.findThePhase();
 
     Oscillator pureTone;
-    pureTone.tuneWithThePianoMainFreq();    
+    pureTone.generateTone(); 
+    pureTone.loadROMSamples("SD");
+    pureTone.playbackROMSamples();
+    //pureTone.tuneWithThePianoMainFreq();    
 
     Filter lowPass;
-    lowPass.usePianoTuningFrequency();
+    lowPass.selectFilter("LP");
+    lowPass.boostCutFreq();
+    lowPass.overDriveSignal(); 
+    lowPass.giveSonority("Piano");
+    //lowPass.usePianoTuningFrequency();
 
     Reverb justALittleBit;
     justALittleBit.addMoreReverb();
