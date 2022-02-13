@@ -655,9 +655,8 @@ void LFO::findThePhase()
 
 struct Oscillator
 {
-    double frequency = 440; 
     float finetune = 0.01f; 
-    std::string waveformShape = "Square"; 
+    std::string waveformShape = "Sine"; 
     float pulseWidth = 0.3f; 
     int octave = 2; 
     double loadedROM;
@@ -667,10 +666,10 @@ struct Oscillator
     double signal;
     Oscillator();
 
-    void generateTone(); 
+    void generateTone(std::string waveformShape, double frequency); 
     void loadROMSamples(std::string selectStorageDevice = "SD",
                         bool isAudioFormat = true);
-    void playbackROMSamples(bool anyKeyPressed = false);
+    void playbackROMSamples();
     void tuneWithThePianoMainFreq();
 };
 
@@ -679,14 +678,20 @@ Oscillator::Oscillator()
     std::cout << "Oscillator being constructed!\n" << std::endl;
 }
 
-void Oscillator::generateTone()
+void Oscillator::generateTone(std::string waveformShapeName, double freq = 1000)
 {
-    if (waveformShape == "Square")
+    if (waveformShapeName == "Sine")
     {
-        signal = 0.5 * (frequency); //This is a dummy example
+        signal = 0.5 * (freq); //This is a dummy example
         playingTone = true;
+        std::cout << "A " << waveformShapeName << " tone on " << freq << " Hz was generated." << std::endl;
     }
-    std::cout << "Oscillator Waveform Shape: " << waveformShape << std::endl;
+    else if (waveformShapeName == "None")
+    {
+        std::cout << "No waveform selected!" << std::endl;
+        playingTone = false;
+    }
+
 }
 
 void Oscillator::loadROMSamples(std::string selectStorageDevice,
@@ -700,18 +705,16 @@ void Oscillator::loadROMSamples(std::string selectStorageDevice,
     std::cout << "The Audio File is loaded successfully: " << loadedROM << std::endl;
 }
 
-void Oscillator::playbackROMSamples(bool anyKeyPressed)
+void Oscillator::playbackROMSamples()
 {
-    if (anyKeyPressed == true)
+    if (playingTone == true)
     {
-        signal = storedROM + 1;
+        std::cout << "The tone is still playing, please press ESC to stop it, then push PLAY button. \n" << std::endl;
     }
-    std::cout << "Press PLAY button to reproduce the loaded Audio File.\n" << std::endl;
-}
-
-void Oscillator::tuneWithThePianoMainFreq()
-{
-    std::cout << "Oscillator::tuneWithThePianoMainFreq() " << frequency << std::endl;
+    else 
+    {
+        std::cout << "The loaded Audio File is now being reproduced.\n" << std::endl;
+    }
 }
 
 struct Filter 
@@ -789,14 +792,14 @@ struct Reverb
     double mix = 20.0; 
     std::string type = "Plate";
     double preDelay = 0.1; 
-    double size = 200; 
+    double spaceSize = 200; 
     double signal;
     Reverb();
     
     void simulateSpace();
     void giveBetterSound(std::string instrument = "Trumpets");
-    void giveDepth(double pan = 75, bool stereo = true); 
-    void addMoreReverb();
+    void giveDepthOnSpace(double pan = 75, bool stereo = true); 
+    void reverbInfo();
 };
 
 Reverb::Reverb()
@@ -806,29 +809,33 @@ Reverb::Reverb()
 
 void Reverb::simulateSpace()
 {
-    signal = signal * (time + mix);
+    signal = signal * (time + preDelay);
+    std::cout << "Reverb Parameters:\n\tReverb Time: "<< time <<  " ms\n"<< "\tPre-Delay Time:" << preDelay << std::endl;
 }
 
-void Reverb::giveBetterSound(std::string instrument)
+void Reverb::giveBetterSound(std::string instrumentName)
 {
-    if (instrument == "Trumpets")
+    if (instrumentName == "Trumpets")
     {
-        signal = signal * (preDelay + size);
+        type = "Plate";
+        signal = signal * (preDelay + spaceSize);
     }
+    std::cout << "\tReverb for used for this instrument (Preset Name): " << type <<std::endl;
 } 
 
-void Reverb::giveDepth(double pan, bool stereo)
+void Reverb::giveDepthOnSpace(double pan, bool stereo)
 {
     if (stereo == true)
     {
         double x1 = 1;
         signal =  signal + (x1 * pan) / 100;
     }
+    std::cout << "\tReverb Spaceness Quantity: " << spaceSize << " \n" << std::endl;
 }
 
-void Reverb::addMoreReverb()
+void Reverb::reverbInfo()
 {
-    std::cout << "addMoreReverb() " << size << "s. (just in case)" << std::endl;
+    std::cout << "addMoreReverb() " << 1 << "s. (just in case)" << std::endl;
 }
 
 struct Synthesizer
@@ -840,7 +847,7 @@ struct Synthesizer
     Reverb plate; 
     Synthesizer();
 
-    void startSignal();
+    void startSignal(std::string toneDef = "Tone");
     void modifySignal(); 
     void processSignal();
     void checkAllIsOK();
@@ -851,16 +858,16 @@ Synthesizer::Synthesizer()
     std::cout << "Synthesizer being constructed!" << std::endl;
 }
 
-void Synthesizer::startSignal()
+void Synthesizer::startSignal(std::string toneOrSample)
 {
-    if (aMaj.playingTone == true)
+    if (toneOrSample == "Tone")
     {
-        aMaj.generateTone(); 
+        aMaj.generateTone("Sine", 1000); 
     }
-    else
+    else if (toneOrSample == "Sample")
     {
         aMaj.loadROMSamples("SD", true);
-        aMaj.playbackROMSamples(false);
+        aMaj.playbackROMSamples();
     }
     
     violinADSR.modifyLoudness();
@@ -883,7 +890,7 @@ void Synthesizer::processSignal()
 
     plate.simulateSpace();
     plate.giveBetterSound("Trumpets");
-    plate.giveDepth(75, true); 
+    plate.giveDepthOnSpace(75, true); 
 }
 
 void Synthesizer::checkAllIsOK()
@@ -956,10 +963,10 @@ int main()
     //phaseChanger.findThePhase();
 
     Oscillator pureTone;
-    pureTone.generateTone(); 
-    pureTone.loadROMSamples("SD");
-    pureTone.playbackROMSamples();
-    //pureTone.tuneWithThePianoMainFreq();    
+    Oscillator sampleOnSD;
+    pureTone.generateTone("Sine"); 
+    sampleOnSD.loadROMSamples("SD");
+    sampleOnSD.playbackROMSamples(); 
 
     Filter lowPass;
     lowPass.selectFilter("LP");
@@ -968,13 +975,17 @@ int main()
     lowPass.giveSonority("Piano");
     //lowPass.usePianoTuningFrequency();
 
-    Reverb justALittleBit;
-    justALittleBit.addMoreReverb();
+    Reverb trumpetPlate;
+    trumpetPlate.simulateSpace();
+    trumpetPlate.giveBetterSound("Trumpets");
+    trumpetPlate.giveDepthOnSpace(75, true); 
+    //trumpetPlate.reverbInfo();
 
     Synthesizer allTogether;
-    allTogether.checkAllIsOK();
+    allTogether.startSignal("Sample");
+    allTogether.modifySignal(); 
+    allTogether.processSignal();
+    //allTogether.checkAllIsOK();  
     
-    
-
     std::cout << "good to go!" << std::endl;
 }
