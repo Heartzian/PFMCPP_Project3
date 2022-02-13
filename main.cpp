@@ -942,14 +942,14 @@ int main()
     gamingPC.executePrograms(highSpecs, "GTA");
     //gamingPC.calculatePCWattsPerHour();
 
-    AudioMixer FOHMixer;
+    AudioMixer fohMixer;
     AudioMixer::ExpandableProtocol fohToMonitorConnection;
     fohToMonitorConnection.sends("Monitors");
     fohToMonitorConnection.sync("External");
-    FOHMixer.mixSignals("Touring");
-    FOHMixer.splitSignal("Monitors");
-    FOHMixer.processSignal();
-    FOHMixer.info(fohToMonitorConnection);
+    fohMixer.mixSignals("Touring");
+    fohMixer.splitSignal("Monitors");
+    fohMixer.processSignal();
+    fohMixer.info(fohToMonitorConnection);
 
     ADSR impulsive;
     impulsive.modifyLoudness();
