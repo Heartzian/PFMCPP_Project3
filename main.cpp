@@ -51,6 +51,7 @@ struct Market
     double dailyBasicUtilitiesFee = 320.53;  
     double dailyIncome = 0; 
     double dailyProfit = 0;
+    std::string marketName {"Asia SuperMarket"};
     Market();
 
     struct Customer
@@ -65,6 +66,7 @@ struct Market
         int coffeeBreakProds = 2;
         int dinnerProds = 3;
         std::string name = "";
+        std::string customerName {"Frederick Carl Steinhaus"};
         int productsToOrder = 0;
         double productsPrice = 0;
         double totalToPay = 0;
@@ -73,11 +75,12 @@ struct Market
         void selectDailyFood(); 
         void calculateOrderPrice(); 
         void orderProducts(bool deliveryRequired = true);
+        void printMarketCustomerInitVar();
     };
 
     void sellProducts(Customer customerName);
     void adjustInventary(Customer customerName);
-    void computeDailyProfit();
+    void printMarketInitVar();
 };
 
 Market::Market()
@@ -129,6 +132,11 @@ void Market::Customer::orderProducts(bool requiredDelivery)
     totalToPay = (productsPrice * tax) + deliveryCharge;
 }
 
+void Market::Customer::printMarketCustomerInitVar()
+{
+    std::cout << "\tMarket::Customer::printMarketCustomerInitVar()\n\t\t" << customerName << std::endl;
+}
+
 void Market::sellProducts(Customer customerName) //Nick example
 { 
     ++customerName.visitsThisWeek;
@@ -145,10 +153,9 @@ void Market::adjustInventary(Customer customerName)
     numProdLocalInv -= customerName.productsToOrder;
 }
 
-void Market::computeDailyProfit()
+void Market::printMarketInitVar()
 {
-    dailyProfit = dailyIncome - dailyBasicUtilitiesFee;
-    std::cout << "Market::computeDailyProfit() " << dailyProfit << std::endl;
+    std::cout << "Market::printMarketInitVar()\n\t\t" << marketName << std::endl;
 }
 
 struct University
@@ -158,6 +165,7 @@ struct University
     int numProfessors = 95;
     float semIncome = 0;
     int classesPerSemester = 0;
+    std::string universityName {"Programming Technology University"};
     University();
 
     struct Professor
@@ -167,6 +175,7 @@ struct University
         std::string profession = "Engineer";
         std::string postgraduateStudies = "MsC";
         std::string teachingRank = "Band 4";
+        std::string professorName {"Joseph Abraham Stern"};
         int yearsExperience = 15;
         int teachedClasses;
         Professor();
@@ -176,6 +185,7 @@ struct University
                                      float food = 550,
                                      float fun = 120, 
                                      float other = 150);
+        void printUniversityProfessorInitVar();
     };
 
     struct Student
@@ -185,6 +195,7 @@ struct University
         std::string department = "Engineer"; 
         std::string career = "AgroIndustrial Engineer";
         std::string courseName = "Managing a Field of Corn";
+        std::string studentCompleteName {"Frank Kaf"};
         float courseID = 001;
         std::string hobby = "Play Bass";
         int semestralCredits = 9;
@@ -198,6 +209,7 @@ struct University
         void computeSemestralAbsences();
         void displayStudentInfo(Student studentName);
         void subscribeCourse(Student studentName, Professor professorName);
+        void printUniversityStudentInitVar();
     }; 
 
     float teachStudents();  
@@ -207,7 +219,7 @@ struct University
     void performCulturalActivities(Student name,
                                    std::string category = "Arts",
                                    std::string activity = "Music Museum Visit"); 
-    void calculatedHoursPerSemester();
+    void printUniversityInitVar();
 };
 
 University::University()
@@ -218,6 +230,11 @@ University::University()
 University::Professor::Professor()
 {
     std::cout << "University Professor being constructed!" << std::endl;
+}
+
+void University::Professor::printUniversityProfessorInitVar()
+{
+    std::cout << "\tUniversity::Professor::printUniversityProfessorInitVar()\n\t\t" << professorName << std::endl;
 }
 
 University::Student::Student()
@@ -261,6 +278,11 @@ void University::Student::subscribeCourse(Student studentName, Professor profess
     std::cout << "Dear " << studentName.name << " you've successfully subscribed the assignature " << courseName << ". Which will have Professor " << professorName.name << " as Main Professor for this class.\n" << std::endl;
 }
 
+void University::Student::printUniversityStudentInitVar()
+{
+    std::cout << "\tUniversity::Student::printUniversityStudentInitVar()\n\t\t" << studentCompleteName << std::endl;
+}
+
 float University::teachStudents() 
 {
     int calculus = 8;
@@ -283,9 +305,9 @@ void University::performCulturalActivities(Student studentName,
     std::cout << "This semester the University performed a Cultural Activity with " << studentName.name << " from " << studentName.career << " which likes to " << studentName.hobby << " in the category: " << category << " doing the activity " << activity << ".\n" << std::endl;
 }
 
-void University::calculatedHoursPerSemester()
+void University::printUniversityInitVar()
 {
-    std::cout << "University::calculatedHoursPerSemester() " << classesPerSemester << std::endl;
+    std::cout << "University::printUniversityInitVar()\n\t\t" << universityName << std::endl;
 }
 
 struct Computer
@@ -297,6 +319,7 @@ struct Computer
     int execTask = 25;
     bool programmingSoftwareInstalled = false;
     bool canSaveInfo;
+    std::string computerName {"Republic of Gamers Strix Scar"};
     Computer();
 
     struct Hardware  
@@ -319,7 +342,7 @@ struct Computer
     void executePrograms(Hardware specs, std::string installedSoft);  
     void saveInfo(bool diskAvailable = true); 
     void connectToPCs(bool LANavailable = true);
-    void calculatePCWattsPerHour();
+    void printComputerInitVar();
 };
 
 Computer::Computer()
@@ -398,9 +421,9 @@ void Computer::connectToPCs(bool LANavailable)
     }
 }
 
-void Computer::calculatePCWattsPerHour()
+void Computer::printComputerInitVar()
 {
-    std::cout << "Computer::calculatePCWattsPerHour() " << energyConsumption << std::endl;
+    std::cout << "Computer::printComputerInitVar()\n\t" << computerName << std::endl;
 }
 
 struct AudioMixer
@@ -413,6 +436,7 @@ struct AudioMixer
     int availableInCh = 0;
     int availableOutCh = 0;
     int availableProcessing = 0;
+    std::string mixerName {"Allen & Heath S7000"};
     AudioMixer();
 
     struct ExpandableProtocol
@@ -436,6 +460,7 @@ struct AudioMixer
     void processSignal(int paramEQ = 64,
                        int graphEQ = 16);
     void info(ExpandableProtocol connectionName);
+    void printAudioMixerInitVar();
 };
 
 AudioMixer::AudioMixer()
@@ -547,6 +572,11 @@ void AudioMixer::info(ExpandableProtocol connectionName)
     std::cout << "The selected mixer have " << inputCh << " inputs channels and " << outputCh << " output channels, which right now still have " << availableInCh << " input channels and " << availableOutCh << " output channels. The Main signal will be splitted with Monitors using " << connectionName.protocol << ".\n" <<std::endl;
 }
 
+void AudioMixer::printAudioMixerInitVar()
+{
+    std::cout << "AudioMixer::printAudioMixerInitVar()\n\t" << mixerName << std::endl;
+}
+
 struct ADSR
 {
     double attackTime = 0.01;
@@ -555,6 +585,7 @@ struct ADSR
     double sustainLevel = 0.5;
     double releaseTime = 0.5;
     double signal;
+    std::string adsrName {"Impulsive Transient Signal"};
     ADSR();
 
     void modifyLoudness();
@@ -563,7 +594,7 @@ struct ADSR
                               double pitchMod = 0.35);
     void modFilterFrequency(int cutoff = 2'500, 
                               double cutoffMod = 0.35);
-    void followTheImpulse();
+    void printADSRInitVar();
 };
 
 ADSR::ADSR()
@@ -594,9 +625,9 @@ void ADSR::modFilterFrequency(int cutoff,
     signal = cutoff * cutoffMod; //This is a dummy example
 }
 
-void ADSR::followTheImpulse()
+void ADSR::printADSRInitVar()
 {
-    std::cout << "ADSR::followTheImpulse() " << attackTime << std::endl;
+    std::cout << "ADSR::printADSRInitVar()\n\t" << adsrName << std::endl;
 }
 
 struct LFO
@@ -607,12 +638,13 @@ struct LFO
     std::string shapeWaveform  = "Sine"; 
     bool bypassState = false; 
     double signal;
+    std::string lfoName {"Low Frequency Oscillator"};
     LFO();
 
     void modulateSignal(std::string routeAssign = "Oscillator");
     void toggleEnablement(bool shouldBeOn = true);  
     void changeSignalsInteraction();
-    void findThePhase();
+    void printLFOInitVar();
 };
 
 LFO::LFO()
@@ -649,9 +681,9 @@ void LFO::changeSignalsInteraction()
     std::cout << "LFO Signals Interaction:\n\tAmount: " << amount << "\n\tPhase Offset: " << phaseOffset << "\n" << std::endl;
 }
 
-void LFO::findThePhase()
+void LFO::printLFOInitVar()
 {
-    std::cout << "LFO::findThePhase() " << phaseOffset << std::endl;
+    std::cout << "LFO::printLFOInitVar()\n\t" << lfoName << std::endl;
 }
 
 struct Oscillator
@@ -665,13 +697,14 @@ struct Oscillator
     bool playingTone;
     bool playButton;
     double signal;
+    std::string oscillatorName {"Signal Wave Generator"};
     Oscillator();
 
     void generateTone(std::string waveformShape, double frequency); 
     void loadROMSamples(std::string selectStorageDevice = "SD",
                         bool isAudioFormat = true);
     void playbackROMSamples();
-    void tuneWithThePianoMainFreq();
+    void printOscInitVar();
 };
 
 Oscillator::Oscillator()
@@ -718,6 +751,11 @@ void Oscillator::playbackROMSamples()
     }
 }
 
+void Oscillator::printOscInitVar()
+{
+    std::cout << "Oscillator::printOscInitVar()\n\t" << oscillatorName << std::endl;
+}
+
 struct Filter 
 {
     double gain = -12; 
@@ -726,14 +764,15 @@ struct Filter
     double drive = 0.0; 
     double pianoIR;
     double signal;
-    std::string filterType = "Low Pass";
+    std::string Type = "Low Pass";
+    std::string filterName {"Low Pass Filter"};
     Filter();
 
     void selectFilter(std::string filterType = "LP");
     void boostCutFreq();
     void overDriveSignal(); 
     void giveSonority(std::string instrument = "Piano");
-    void usePianoTuningFrequency();
+    void printFilterInitVar();
 };
 
 Filter::Filter()
@@ -741,11 +780,11 @@ Filter::Filter()
     std::cout << "Filter being constructed!\n" << std::endl;
 }
 
-void Filter::selectFilter(std::string filterName)
+void Filter::selectFilter(std::string filterType)
 {
-    if (filterName == "LP")
+    if (filterType == "LP")
     {
-        filterType = "Low Pass";
+        Type = "Low Pass";
     }
 }
 
@@ -764,7 +803,7 @@ void Filter::boostCutFreq()
     {
         signal = ((a0) + (a1 * xn1) + (a2 * xn2) - (b1 * yn1) - (b2 * yn2));
     }
-    std::cout << "Filter Parameters:\n\tFilter Type : " << filterType << "\n\tGain: " << gain << " dB\n\tCut Frequency: " << frequency << "Hz" <<std::endl;
+    std::cout << "Filter Parameters:\n\tFilter Type : " << Type << "\n\tGain: " << gain << " dB\n\tCut Frequency: " << frequency << "Hz" <<std::endl;
 }
 
 void Filter::overDriveSignal()
@@ -782,9 +821,9 @@ void Filter::giveSonority(std::string instrument)
     std::cout << "\tPreset Loaded: " << instrument << " \n" << std::endl;
 }
 
-void Filter::usePianoTuningFrequency()
+void Filter::printFilterInitVar()
 {
-    std::cout << "Filter::useTheSameFrequency() " << frequency << std::endl;
+    std::cout << "Filter::useTheSameFrequency()\n\t" << filterName << std::endl;
 }
 
 struct Reverb
@@ -795,12 +834,13 @@ struct Reverb
     double preDelay = 0.1; 
     double spaceSize = 200; 
     double signal;
+    std::string reverbName {"Plate Reverb for Trumpets"};
     Reverb();
     
     void simulateSpace();
     void giveBetterSound(std::string instrument = "Trumpets");
     void giveDepthOnSpace(double pan = 75, bool stereo = true); 
-    void reverbInfo();
+    void printReverbInitVar();
 };
 
 Reverb::Reverb()
@@ -834,9 +874,9 @@ void Reverb::giveDepthOnSpace(double pan, bool stereo)
     std::cout << "\tReverb Spaceness Quantity: " << spaceSize << " \n" << std::endl;
 }
 
-void Reverb::reverbInfo()
+void Reverb::printReverbInitVar()
 {
-    std::cout << "addMoreReverb() " << 1 << "s. (just in case)" << std::endl;
+    std::cout << "Reverb::printReverbInitVar()\n\t" << reverbName << std::endl;
 }
 
 struct Synthesizer
@@ -925,7 +965,6 @@ int main()
     carl.orderProducts(true);
     superStarMarket.sellProducts(carl);
     superStarMarket.adjustInventary(carl);
-    //superStarMarket.computeDailyProfit();
     
     //std::cout << "Is superStarMarket member var 'dailyProfit' equal to 0? " << (superStarMarket.dailyProfit == 0 ? "Yes" : "No") << "\n";
 
@@ -938,13 +977,11 @@ int main()
     frank.displayStudentInfo(frank);
     frank.subscribeCourse(frank, joseph);
     programmingSchoolUniversity.performCulturalActivities(frank);
-    //programmingSchoolUniversity.calculatedHoursPerSemester();
 
     Computer gamingPC;
     Computer::Hardware highSpecs;
     highSpecs.playGames();
     gamingPC.executePrograms(highSpecs, "GTA");
-    //gamingPC.calculatePCWattsPerHour();
 
     AudioMixer fohMixer;
     AudioMixer::ExpandableProtocol fohToMonitorConnection;
@@ -958,13 +995,11 @@ int main()
     ADSR impulsive;
     impulsive.modifyLoudness();
     impulsive.modOscillatorPitch(400, 35, 10);
-    //impulsive.followTheImpulse();
 
     LFO assignedToOsc;
     assignedToOsc.modulateSignal("Oscillator");
     assignedToOsc.toggleEnablement(true);  
     assignedToOsc.changeSignalsInteraction();
-    //phaseChanger.findThePhase();
 
     Oscillator pureTone;
     Oscillator sampleOnSD;
@@ -977,19 +1012,31 @@ int main()
     lowPass.boostCutFreq();
     lowPass.overDriveSignal(); 
     lowPass.giveSonority("Piano");
-    //lowPass.usePianoTuningFrequency();
 
     Reverb trumpetPlate;
     trumpetPlate.simulateSpace();
     trumpetPlate.giveBetterSound("Trumpets");
     trumpetPlate.giveDepthOnSpace(75, true); 
-    //trumpetPlate.reverbInfo();
 
     Synthesizer allTogether;
     allTogether.startSignal("Sample");
     allTogether.modifySignal(); 
     allTogether.processSignal();
     //allTogether.checkAllIsOK();  
+
+    //Here starts the Part4 work!
+    superStarMarket.printMarketInitVar();
+    carl.printMarketCustomerInitVar();
+    programmingSchoolUniversity.printUniversityInitVar();
+    joseph.printUniversityProfessorInitVar();
+    frank.printUniversityStudentInitVar();
+    gamingPC.printComputerInitVar();
+    fohMixer.printAudioMixerInitVar();
+    impulsive.printADSRInitVar();
+    assignedToOsc.printLFOInitVar();
+    pureTone.printOscInitVar();
+    lowPass.printFilterInitVar();
+    trumpetPlate.printReverbInitVar();
     
     std::cout << "good to go!" << std::endl;
 }
