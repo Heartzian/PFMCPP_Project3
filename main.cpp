@@ -80,34 +80,44 @@ struct Market
     double dailyBasicUtilitiesFee = 320.53;  
     double dailyIncome = 0; 
     double dailyProfit = 0;
+    Market();
 
     struct Customer
     {
         int age = 38;
         bool member = true;
-        int visitsPerWeek = 7;
+        int visitsThisWeek = 0;
         std::string gender = "Male";
         int breakfastProds = 4;
         int morningBreakProds = 2;
         int lunchProds = 5;
         int coffeeBreakProds = 2;
         int dinnerProds = 3;
-        int productsToOrder;
-        double productsPrice;
-        double totalToPay;
+        std::string name = "";
+        int productsToOrder = 0;
+        double productsPrice = 0;
+        double totalToPay = 0;
+        Customer();
 
         void selectDailyFood(); 
         void calculateOrderPrice(); 
         void orderProducts(bool deliveryRequired = true);
     };
 
-    Customer nick;
-    Customer jack;
-
-    void sellProducts();
-    void adjustInventary();
+    void sellProducts(Customer customerName);
+    void adjustInventary(Customer customerName);
     void computeDailyProfit();
 };
+
+Market::Market()
+{
+    std::cout << "\nMarket being constructed!" << std::endl;
+}
+
+Market::Customer::Customer()
+{
+    std::cout << "Customer Market being constructed!\n" << std::endl;
+}
 
 void Market::Customer::selectDailyFood()
 {
@@ -148,23 +158,26 @@ void Market::Customer::orderProducts(bool requiredDelivery)
     totalToPay = (productsPrice * tax) + deliveryCharge;
 }
 
-void Market::sellProducts() //Nick example
+void Market::sellProducts(Customer customerName) //Nick example
 { 
-    std::cout << "Dear Customer, you ordered " <<  nick.productsToOrder << "products, with a total cost of $" << nick.totalToPay << "which will be Delivered by Tom. Thanks for buying with us!";
-
+    ++customerName.visitsThisWeek;
+    customerName.name = "Carl Sag";
     --numLogisticVehicles;
     --numPeopleWorkingAtStore;
-    dailyIncome += nick.totalToPay;
+    dailyIncome += customerName.totalToPay;
+
+    std::cout << "Dear " << customerName.name << ", you ordered " <<  customerName.productsToOrder << " products, with a total cost of $" << customerName.totalToPay << ", which will be Delivered by Tom." << " this week, you have come to our store " << customerName.visitsThisWeek << " times, Thanks for buying with us!\n" << std::endl;
 }
 
-void Market::adjustInventary()
+void Market::adjustInventary(Customer customerName)
 {
-    numProdLocalInv -= nick.productsToOrder;
+    numProdLocalInv -= customerName.productsToOrder;
 }
 
 void Market::computeDailyProfit()
 {
     dailyProfit = dailyIncome - dailyBasicUtilitiesFee;
+    std::cout << "Market::computeDailyProfit() " << dailyProfit << std::endl;
 }
 
 struct University
@@ -172,40 +185,49 @@ struct University
     int numClassrooms = 80;
     int numLabs = 36;
     int numProfessors = 95;
-    float semIncome = 5'000'000;
-    int classesPerSemester = 8362;
+    float semIncome = 0;
+    int classesPerSemester = 0;
+    University();
 
     struct Professor
     {
-        int age = 58;
+        int age = 30;
+        std::string name = "";
         std::string profession = "Engineer";
         std::string postgraduateStudies = "MsC";
         std::string teachingRank = "Band 4";
         int yearsExperience = 15;
         int teachedClasses;
+        Professor();
 
-        float work(int research = 28, int teaching = 16);
+        void checkSubscribedStudents();
         float computeMonthlyExpenses(float rent = 1800,
                                      float food = 550,
                                      float fun = 120, 
-                                     float other = 150); 
+                                     float other = 150);
     };
 
     struct Student
     {
         int age = 18; 
+        std::string name = "";
         std::string department = "Engineer"; 
         std::string career = "AgroIndustrial Engineer";
+        std::string courseName = "Managing a Field of Corn";
+        float courseID = 001;
         std::string hobby = "Play Bass";
         int semestralCredits = 9;
+        int weeklyPresentialStudyHours = 0;
+        int weeklyResearchStudyHours = 0;
+        double semestralStudyTime = 0;
+        double semestralAllowedAbsences = 0;
+        Student();
 
-        float computeWeekStudyTime(int research = 28, int teaching = 16);
-        float computeMonthlyExpenses(float food, 
-                                     float fun = 220, 
-                                     float other = 350);
+        void computeWeekStudyTime();
+        void computeSemestralAbsences();
+        void displayStudentInfo(Student studentName);
+        void subscribeCourse(Student studentName, Professor professorName);
     }; 
-
-    Student peter;
 
     float teachStudents();  
     void doCollaborativeResearch(std::string organization = "UCLA",
@@ -214,11 +236,27 @@ struct University
     void performCulturalActivities(Student name,
                                    std::string category = "Arts",
                                    std::string activity = "Music Museum Visit"); 
+    void calculatedHoursPerSemester();
 };
 
-float University::Professor::work(int research, int teaching)
+University::University()
 {
-    return research + teaching;
+    std::cout << "University being constructed!" << std::endl;
+}
+
+University::Professor::Professor()
+{
+    std::cout << "University Professor being constructed!" << std::endl;
+}
+
+University::Student::Student()
+{
+    std::cout << "University Student being constructed!\n" << std::endl;
+}
+
+void University::Professor::checkSubscribedStudents()
+{
+    return ;
 }
 
 float University::Professor::computeMonthlyExpenses(float rent,
@@ -229,16 +267,27 @@ float University::Professor::computeMonthlyExpenses(float rent,
     return rent + food + fun + other;
 }
 
-float University::Student::computeWeekStudyTime(int research, int teaching)
+void University::Student::computeWeekStudyTime()
 {
-    return research + teaching;
+    weeklyPresentialStudyHours = semestralCredits * 3;
+    weeklyResearchStudyHours = weeklyPresentialStudyHours * 2;
+    semestralStudyTime = (weeklyPresentialStudyHours + weeklyResearchStudyHours) * 16;
+    name = "Frank Kaf";
 }
 
-float University::Student::computeMonthlyExpenses(float food = 350,
-                                                  float fun, 
-                                                  float other)
+void University::Student::computeSemestralAbsences()
 {
-    return food + fun + other;
+    semestralAllowedAbsences = ((weeklyPresentialStudyHours * 16) * 0.1) / 3;
+}
+
+void University::Student::displayStudentInfo(Student studentName)
+{
+    std::cout << "Dear " << studentName.name << ". Welcome to study " << studentName.career << ". This semester you chose " << studentName.semestralCredits << " credits. You'll have " << studentName.weeklyPresentialStudyHours << " weekly presential study hours. Please remember you can only have 10% of class absence, which in your case means " << studentName.semestralAllowedAbsences << " hours per class. Enjoy your time!\n" << std::endl;
+}
+
+void University::Student::subscribeCourse(Student studentName, Professor professorName)
+{
+    std::cout << "Dear " << studentName.name << " you've successfully subscribed the assignature " << courseName << ". Which will have Professor " << professorName.name << " as Main Professor for this class.\n" << std::endl;
 }
 
 float University::teachStudents() 
@@ -256,11 +305,16 @@ void University::doCollaborativeResearch(std::string organization,
     std::cout << "This semester the University do Collaborative Research with: " << organization << " from department " << department << " in the project named: " << projectName << std::endl;
 }
 
-void University::performCulturalActivities(Student,
+void University::performCulturalActivities(Student studentName,
                                            std::string category,
                                            std::string activity)
 {
-    std::cout << "This semester the University performed a Cultural Activity with a student from " << peter.career << "which likes: " << peter.hobby << " in the category: " << category << " doing the activity " << activity << std::endl;
+    std::cout << "This semester the University performed a Cultural Activity with " << studentName.name << " from " << studentName.career << " which likes to " << studentName.hobby << " in the category: " << category << " doing the activity " << activity << ".\n" << std::endl;
+}
+
+void University::calculatedHoursPerSemester()
+{
+    std::cout << "University::calculatedHoursPerSemester() " << classesPerSemester << std::endl;
 }
 
 struct Computer
@@ -272,6 +326,7 @@ struct Computer
     int execTask = 25;
     bool programmingSoftwareInstalled = false;
     bool canSaveInfo;
+    Computer();
 
     struct Hardware  
     { 
@@ -283,56 +338,73 @@ struct Computer
         bool canPlayGames;
         bool canTrainAI;
         bool canUseAtOffice;
+        Hardware();
         
-        void playGames(bool specs = true); 
-        void trainAI(std::string softwareReq = "Keras"); 
-        void workAtOffice(std::string mostlyUsedTask = "Accounting"); 
+        void playGames(); 
+        void trainAI(); 
+        void workAtOffice(); 
     };
 
-    void executePrograms(std::string todayTask = "Programming");  
+    void executePrograms(Hardware specs, std::string installedSoft);  
     void saveInfo(bool diskAvailable = true); 
     void connectToPCs(bool LANavailable = true);
+    void calculatePCWattsPerHour();
 };
 
-//Computer OfficeDesktop;
-
-void Computer::Hardware::playGames(bool specs)
+Computer::Computer()
 {
-    if (specs == true && RAM >= 4 && disk >=256 && CPU >= 3.0 && GPU >= 2)
+    std::cout << "Computer being constructed!" << std::endl;
+}
+
+Computer::Hardware::Hardware()
+{
+    std::cout << "Computer Hardware being constructed!\n" << std::endl;
+}
+
+void Computer::Hardware::playGames()
+{
+    if (RAM >= 4 && disk >=256 && CPU >= 3.0 && GPU >= 2)
     {
-        std::cout << "You can use this computer to play games";  
+        //std::cout << "You can use this computer to play games";  
     
         canPlayGames = true;
     }
 }
 
-void Computer::Hardware::trainAI(std::string softwareReq)
+void Computer::Hardware::trainAI()
 {
     if (canPlayGames == true && GPU > 4)
     {
-        std::cout << "You can use this computer to train AI using" << softwareReq;
+        //std::cout << "You can use this computer to train AI using" << softwareReq;
 
         canTrainAI = true;
     }
     
 }
 
-void Computer::Hardware::workAtOffice(std::string mostlyUsedTask)
+void Computer::Hardware::workAtOffice()
 {
     if (canPlayGames == true)
     {
-        std::cout << "You can use this computer to do " << mostlyUsedTask;
+        //std::cout << "You can use this computer to do " << mostlyUsedTask;
 
         canUseAtOffice = true;
     }
     
 } 
 
-void Computer::executePrograms(std::string todayTask)
+void Computer::executePrograms(Hardware specs, std::string installedSoft)
 {
-    if (programmingSoftwareInstalled == true)
+    if (installedSoft == "GTA")
     {
-        std::cout << "This computer can be used  to" << todayTask;
+        if (specs.canPlayGames == true)
+        {
+            std::cout << "According to the given specs, this computer can be used to play Grand Theft Auto\n" << std::endl;
+        }
+        else
+        {
+            std::cout << "Sorry!! This computer can NOT be used to play Grand Theft Auto becasuse of the specs" << std::endl;
+        }
     }
 }
 
@@ -355,48 +427,69 @@ void Computer::connectToPCs(bool LANavailable)
     }
 }
 
+void Computer::calculatePCWattsPerHour()
+{
+    std::cout << "Computer::calculatePCWattsPerHour() " << energyConsumption << std::endl;
+}
+
 struct AudioMixer
 {
-    int inputCh = 64; 
-    int outputCh = 16; 
-    int DSPRacks = 8; 
+    int inputCh = 128; 
+    int outputCh = 64; 
+    int DSPRacks = 16; 
     int parallelProcessingCH = 24; 
     int DSPspeed = 800; 
-    int availableInCh;
-    int availableOutCh;
-    int availableProcessing;
+    int availableInCh = 0;
+    int availableOutCh = 0;
+    int availableProcessing = 0;
+    AudioMixer();
 
-    struct ExpandableProtocols
+    struct ExpandableProtocol
     {
         bool MADI;
         bool waves;
         bool AVR;
         bool aviom;
-        bool AES;
+        bool DANTE;
+        std::string protocol;
         float syncFrequency;
+        ExpandableProtocol();
 
         void sends(std::string application = "Recording");
         float sync(std::string clockSource = "External",
                    float frequency = 96'000); 
     };
 
-    int mixSignals(std::string application = "Touring Live Sound");
-    int splitSignal(std::string destination = "Broadcast");
+    void mixSignals(std::string application = "Touring Live Sound");
+    void splitSignal(std::string destination = "Broadcast");
     void processSignal(int paramEQ = 64,
                        int graphEQ = 16);
+    void info(ExpandableProtocol connectionName);
 };
 
-void AudioMixer::ExpandableProtocols::sends(std::string application)
+AudioMixer::AudioMixer()
 {
-    if(application == "Recording")
+    std::cout << "AudioMixer being constructed!" << std::endl;
+}
+
+AudioMixer::ExpandableProtocol::ExpandableProtocol()
+{
+    std::cout << "AudioMixer ExpandableProtocol being constructed!\n" << std::endl;
+}
+
+void AudioMixer::ExpandableProtocol::sends(std::string application)
+{
+    if(application == "Monitors")
     {
-        MADI = true;
-        AVR = true;
-        AES = true;
+        DANTE = true;
+        if (DANTE == true)
+        {
+            protocol = "Dante";
+        }
     }
 }
 
-float AudioMixer::ExpandableProtocols::sync(std::string clockSource,
+float AudioMixer::ExpandableProtocol::sync(std::string clockSource,
                                             float frequency)
 {
     if (clockSource == "External")
@@ -406,7 +499,7 @@ float AudioMixer::ExpandableProtocols::sync(std::string clockSource,
     return syncFrequency;
 }
 
-int AudioMixer::mixSignals(std::string application)
+void AudioMixer::mixSignals(std::string application)
 {
     if (application == "Touring")
     { 
@@ -441,10 +534,9 @@ int AudioMixer::mixSignals(std::string application)
         int usedInCh = drumKit + drums + winds + strings + vocals + effects;
         availableInCh = inputCh - usedInCh;
     }
-    return availableInCh;
 }
 
-int AudioMixer::splitSignal(std::string destination) 
+void AudioMixer::splitSignal(std::string destination) 
 {
     if (destination == "Broadcasting")
     { 
@@ -457,7 +549,17 @@ int AudioMixer::splitSignal(std::string destination)
         int usedOutCh = masterOut + liveOut + subOut + monitorOut + studioOut + recOut;
         availableOutCh = outputCh - usedOutCh;
     }
-    return availableOutCh;
+    else if (destination == "Monitors")
+    {
+        int frontMix = 3;
+        int sideMix = 2;
+        int subOut = 2;
+        int trumpMix = 1;
+        int saxMix = 1;
+        int drumMix = 2;
+        int usedOutCh = frontMix + sideMix + subOut + trumpMix + saxMix + drumMix;
+        availableOutCh = outputCh - usedOutCh;
+    }
 }   
 
 void AudioMixer::processSignal(int paramEQ,
@@ -466,7 +568,12 @@ void AudioMixer::processSignal(int paramEQ,
     int procInCh = paramEQ * (availableInCh - inputCh);
     int procOutCh = graphEQ * (availableOutCh - outputCh);
     availableProcessing = (procInCh + procOutCh) - DSPspeed;
-    std::cout << "Available Processing= " << availableProcessing;
+    //std::cout << "Available Processing= " << availableProcessing;
+}
+
+void AudioMixer::info(ExpandableProtocol connectionName)
+{
+    std::cout << "The selected mixer have " << inputCh << " inputs channels and " << outputCh << " output channels, which right now still have " << availableInCh << " input channels and " << availableOutCh << " output channels. The Main signal will be splitted with Monitors using " << connectionName.protocol << ".\n" <<std::endl;
 }
 
 struct ADSR
@@ -477,6 +584,7 @@ struct ADSR
     double sustainLevel = 0.5;
     double releaseTime = 0.5;
     double signal;
+    ADSR();
 
     void modifyLoudness();
     void modOscillatorPitch(double oscFreq = 440.0,
@@ -484,14 +592,21 @@ struct ADSR
                               double pitchMod = 0.35);
     void modFilterFrequency(int cutoff = 2'500, 
                               double cutoffMod = 0.35);
+    void followTheImpulse();
 };
+
+ADSR::ADSR()
+{
+    std::cout << "ADSR being constructed!\n" << std::endl;
+}
 
 void ADSR::modifyLoudness()
 {
     int fs = 44'100;
     double attack = attackTime * fs;
     double sustain = sustainLevel * fs;
-    signal = attack + sustain;  //This is a dummy example (not true)  
+    signal = attack + sustain + releaseTime;  //This is a dummy example (not true)  
+    std::cout << "Loudness Parameters:\n" << "\tAttack Time: " << attackTime << "ms\n" << "\tSustain:" << sustainLevel << std::endl;
 }
 
 void ADSR::modOscillatorPitch(double oscFreq,
@@ -499,12 +614,18 @@ void ADSR::modOscillatorPitch(double oscFreq,
                               double pitchMod)
 {
     signal = (oscFreq * pitch) / pitchMod; //This is a dummy example 
+    std::cout << "Oscillator Pitch Modulation Parameters:\n" << "\tOscillation Frequency: " << oscFreq << "Hz.\n" << "\tPitch: " << pitch << "\n\tPitch Modulation: " << pitchMod << "\n" << std::endl;
 }
 
 void ADSR::modFilterFrequency(int cutoff, 
                               double cutoffMod)
 {
     signal = cutoff * cutoffMod; //This is a dummy example
+}
+
+void ADSR::followTheImpulse()
+{
+    std::cout << "ADSR::followTheImpulse() " << attackTime << std::endl;
 }
 
 struct LFO
@@ -515,11 +636,18 @@ struct LFO
     std::string shapeWaveform  = "Sine"; 
     bool bypassState = false; 
     double signal;
+    LFO();
 
     void modulateSignal(std::string routeAssign = "Oscillator");
-    bool toggleEnablement(bool shouldBeOn = true);  
+    void toggleEnablement(bool shouldBeOn = true);  
     void changeSignalsInteraction();
+    void findThePhase();
 };
+
+LFO::LFO()
+{
+    std::cout << "LFO being constructed!\n" << std::endl;
+}
 
 void LFO::modulateSignal(std::string routeAssign)
 {
@@ -527,16 +655,17 @@ void LFO::modulateSignal(std::string routeAssign)
     {
         double y = 1;
         signal = signal + y; //This is a dummy example
+        std::cout << "LFO Assigned to " << routeAssign << std::endl;
     } 
 }
 
-bool LFO::toggleEnablement(bool shouldBeOn)
+void LFO::toggleEnablement(bool shouldBeOn)
 {
     if (shouldBeOn == false)
     {
         bypassState = true;
     }
-    return bypassState; //This is a dummy example
+    std::cout << "LFO in Bypass Mode: " << bypassState << std::endl;
 }
 
 void LFO::changeSignalsInteraction()
@@ -546,14 +675,18 @@ void LFO::changeSignalsInteraction()
     {
         signal = amount - phaseOffset; //This is a dummy example
     }
+    std::cout << "LFO Signals Interaction:\n\tAmount: " << amount << "\n\tPhase Offset: " << phaseOffset << "\n" << std::endl;
+}
 
+void LFO::findThePhase()
+{
+    std::cout << "LFO::findThePhase() " << phaseOffset << std::endl;
 }
 
 struct Oscillator
 {
-    double frequency = 440; 
     float finetune = 0.01f; 
-    std::string waveformShape = "Square"; 
+    std::string waveformShape = "Sine"; 
     float pulseWidth = 0.3f; 
     int octave = 2; 
     double loadedROM;
@@ -561,23 +694,37 @@ struct Oscillator
     bool playingTone;
     bool playButton;
     double signal;
+    Oscillator();
 
-    void generateTone(); 
-    double loadROMSamples(std::string selectStorageDevice = "SD",
+    void generateTone(std::string waveformShape, double frequency); 
+    void loadROMSamples(std::string selectStorageDevice = "SD",
                         bool isAudioFormat = true);
-    void playbackROMSamples(bool anyKeyPressed = false);
+    void playbackROMSamples();
+    void tuneWithThePianoMainFreq();
 };
 
-void Oscillator::generateTone()
+Oscillator::Oscillator()
 {
-    if (waveformShape == "Square")
-    {
-        signal = 0.5 * (frequency); //This is a dummy example
-        playingTone = true;
-    }
+    std::cout << "Oscillator being constructed!\n" << std::endl;
 }
 
-double Oscillator::loadROMSamples(std::string selectStorageDevice,
+void Oscillator::generateTone(std::string waveformShapeName, double freq = 1000)
+{
+    if (waveformShapeName == "Sine")
+    {
+        signal = 0.5 * (freq); //This is a dummy example
+        playingTone = true;
+        std::cout << "A " << waveformShapeName << " tone on " << freq << " Hz was generated." << std::endl;
+    }
+    else if (waveformShapeName == "None")
+    {
+        std::cout << "No waveform selected!" << std::endl;
+        playingTone = false;
+    }
+
+}
+
+void Oscillator::loadROMSamples(std::string selectStorageDevice,
                                   bool isAudioFormat)
 {
     if (selectStorageDevice == "SD")
@@ -585,36 +732,54 @@ double Oscillator::loadROMSamples(std::string selectStorageDevice,
         if(isAudioFormat == true)
         loadedROM = true;
     }
-    return storedROM;
+    std::cout << "The Audio File is loaded successfully: " << loadedROM << std::endl;
 }
 
-void Oscillator::playbackROMSamples(bool anyKeyPressed)
+void Oscillator::playbackROMSamples()
 {
-    if (anyKeyPressed == true)
+    if (playingTone == true)
     {
-        signal = storedROM + 1;
+        std::cout << "The tone is still playing, please press ESC to stop it, then push PLAY button. \n" << std::endl;
     }
-    
+    else 
+    {
+        std::cout << "The loaded Audio File is now being reproduced.\n" << std::endl;
+    }
 }
 
 struct Filter 
 {
-    double gain; 
+    double gain = -12; 
     double bandwidth = 0.7; 
-    double frequency = 100.0; 
-    std::string type = "Low Shelf"; 
+    double frequency = 440.0; 
     double drive = 0.0; 
     double pianoIR;
     double signal;
+    std::string filterType = "Low Pass";
+    Filter();
 
+    void selectFilter(std::string filterType = "LP");
     void boostCutFreq();
     void overDriveSignal(); 
     void giveSonority(std::string instrument = "Piano");
+    void usePianoTuningFrequency();
 };
+
+Filter::Filter()
+{
+    std::cout << "Filter being constructed!\n" << std::endl;
+}
+
+void Filter::selectFilter(std::string filterName)
+{
+    if (filterName == "LP")
+    {
+        filterType = "Low Pass";
+    }
+}
 
 void Filter::boostCutFreq()
 {
-    gain = -12;
     double fs = 44'100;
     double theta = (2 * 3.1416 * frequency) / fs;
     double miu = 10 * (gain/20);
@@ -627,12 +792,14 @@ void Filter::boostCutFreq()
     for (int n = 1; n <= fs; ++n)
     {
         signal = ((a0) + (a1 * xn1) + (a2 * xn2) - (b1 * yn1) - (b2 * yn2));
-    } 
+    }
+    std::cout << "Filter Parameters:\n\tFilter Type : " << filterType << "\n\tGain: " << gain << " dB\n\tCut Frequency: " << frequency << "Hz" <<std::endl;
 }
 
 void Filter::overDriveSignal()
 {
     signal = (2.5 * (0.9 * drive)) + (2.5 * (1 - ((0.9 * drive))))-2.5;
+    std::cout << "\tFilter OverDrive: " << drive << "dB" << std::endl;
 }
 
 void Filter::giveSonority(std::string instrument)
@@ -641,6 +808,12 @@ void Filter::giveSonority(std::string instrument)
     {
         signal = signal * pianoIR;
     }
+    std::cout << "\tPreset Loaded: " << instrument << " \n" << std::endl;
+}
+
+void Filter::usePianoTuningFrequency()
+{
+    std::cout << "Filter::useTheSameFrequency() " << frequency << std::endl;
 }
 
 struct Reverb
@@ -649,34 +822,50 @@ struct Reverb
     double mix = 20.0; 
     std::string type = "Plate";
     double preDelay = 0.1; 
-    double size = 0.1; 
+    double spaceSize = 200; 
     double signal;
+    Reverb();
     
     void simulateSpace();
     void giveBetterSound(std::string instrument = "Trumpets");
-    void giveDepth(double pan = 75, bool stereo = true); 
+    void giveDepthOnSpace(double pan = 75, bool stereo = true); 
+    void reverbInfo();
 };
+
+Reverb::Reverb()
+{
+    std::cout << "Reverb being constructed!\n" << std::endl;
+}
 
 void Reverb::simulateSpace()
 {
-    signal = signal * (time + mix);
+    signal = signal * (time + preDelay);
+    std::cout << "Reverb Parameters:\n\tReverb Time: "<< time <<  " ms\n"<< "\tPre-Delay Time:" << preDelay << std::endl;
 }
 
-void Reverb::giveBetterSound(std::string instrument)
+void Reverb::giveBetterSound(std::string instrumentName)
 {
-    if (instrument == "Trumpets")
+    if (instrumentName == "Trumpets")
     {
-        signal = signal * (preDelay + size);
+        type = "Plate";
+        signal = signal * (preDelay + spaceSize);
     }
+    std::cout << "\tReverb for used for this instrument (Preset Name): " << type <<std::endl;
 } 
 
-void Reverb::giveDepth(double pan, bool stereo)
+void Reverb::giveDepthOnSpace(double pan, bool stereo)
 {
     if (stereo == true)
     {
         double x1 = 1;
         signal =  signal + (x1 * pan) / 100;
     }
+    std::cout << "\tReverb Spaceness Quantity: " << spaceSize << " \n" << std::endl;
+}
+
+void Reverb::reverbInfo()
+{
+    std::cout << "addMoreReverb() " << 1 << "s. (just in case)" << std::endl;
 }
 
 struct Synthesizer
@@ -686,22 +875,29 @@ struct Synthesizer
     Oscillator aMaj; 
     Filter lowShelf; 
     Reverb plate; 
+    Synthesizer();
 
-    void startSignal();
+    void startSignal(std::string toneDef = "Tone");
     void modifySignal(); 
     void processSignal();
+    void checkAllIsOK();
 };
 
-void Synthesizer::startSignal()
+Synthesizer::Synthesizer()
 {
-    if (aMaj.playingTone == true)
+    std::cout << "Synthesizer being constructed!" << std::endl;
+}
+
+void Synthesizer::startSignal(std::string toneOrSample)
+{
+    if (toneOrSample == "Tone")
     {
-        aMaj.generateTone(); 
+        aMaj.generateTone("Sine", 1000); 
     }
-    else
+    else if (toneOrSample == "Sample")
     {
         aMaj.loadROMSamples("SD", true);
-        aMaj.playbackROMSamples(false);
+        aMaj.playbackROMSamples();
     }
     
     violinADSR.modifyLoudness();
@@ -724,7 +920,12 @@ void Synthesizer::processSignal()
 
     plate.simulateSpace();
     plate.giveBetterSound("Trumpets");
-    plate.giveDepth(75, true); 
+    plate.giveDepthOnSpace(75, true); 
+}
+
+void Synthesizer::checkAllIsOK()
+{
+    std::cout << "Synthesizer::checkAllIsOK() " << "I don't know what should I write here!! :(" << std::endl;
 }
 
 /*
@@ -746,6 +947,78 @@ int main()
 {
     Example::main();
     
+    Market superStarMarket;
+    Market::Customer carl;
+    carl.selectDailyFood(); 
+    carl.calculateOrderPrice(); 
+    carl.orderProducts(true);
+    superStarMarket.sellProducts(carl);
+    superStarMarket.adjustInventary(carl);
+    //superStarMarket.computeDailyProfit();
+    
+    //std::cout << "Is superStarMarket member var 'dailyProfit' equal to 0? " << (superStarMarket.dailyProfit == 0 ? "Yes" : "No") << "\n";
+
+    University programmingSchoolUniversity;
+    University::Professor joseph;
+    University::Student frank;
+    joseph.name = "Joseph Stewart";
+    frank.computeWeekStudyTime();
+    frank.computeSemestralAbsences();
+    frank.displayStudentInfo(frank);
+    frank.subscribeCourse(frank, joseph);
+    programmingSchoolUniversity.performCulturalActivities(frank);
+    //programmingSchoolUniversity.calculatedHoursPerSemester();
+
+    Computer gamingPC;
+    Computer::Hardware highSpecs;
+    highSpecs.playGames();
+    gamingPC.executePrograms(highSpecs, "GTA");
+    //gamingPC.calculatePCWattsPerHour();
+
+    AudioMixer fohMixer;
+    AudioMixer::ExpandableProtocol fohToMonitorConnection;
+    fohToMonitorConnection.sends("Monitors");
+    fohToMonitorConnection.sync("External");
+    fohMixer.mixSignals("Touring");
+    fohMixer.splitSignal("Monitors");
+    fohMixer.processSignal();
+    fohMixer.info(fohToMonitorConnection);
+
+    ADSR impulsive;
+    impulsive.modifyLoudness();
+    impulsive.modOscillatorPitch(400, 35, 10);
+    //impulsive.followTheImpulse();
+
+    LFO assignedToOsc;
+    assignedToOsc.modulateSignal("Oscillator");
+    assignedToOsc.toggleEnablement(true);  
+    assignedToOsc.changeSignalsInteraction();
+    //phaseChanger.findThePhase();
+
+    Oscillator pureTone;
+    Oscillator sampleOnSD;
+    pureTone.generateTone("Sine"); 
+    sampleOnSD.loadROMSamples("SD");
+    sampleOnSD.playbackROMSamples(); 
+
+    Filter lowPass;
+    lowPass.selectFilter("LP");
+    lowPass.boostCutFreq();
+    lowPass.overDriveSignal(); 
+    lowPass.giveSonority("Piano");
+    //lowPass.usePianoTuningFrequency();
+
+    Reverb trumpetPlate;
+    trumpetPlate.simulateSpace();
+    trumpetPlate.giveBetterSound("Trumpets");
+    trumpetPlate.giveDepthOnSpace(75, true); 
+    //trumpetPlate.reverbInfo();
+
+    Synthesizer allTogether;
+    allTogether.startSignal("Sample");
+    allTogether.modifySignal(); 
+    allTogether.processSignal();
+    //allTogether.checkAllIsOK();  
     
     std::cout << "good to go!" << std::endl;
 }
