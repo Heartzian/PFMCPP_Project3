@@ -97,6 +97,7 @@ struct Market
         int productsToOrder = 0;
         double productsPrice = 0;
         double totalToPay = 0;
+        Customer();
 
         void selectDailyFood(); 
         void calculateOrderPrice(); 
@@ -110,7 +111,12 @@ struct Market
 
 Market::Market()
 {
-    std::cout << "\nMarket being constructed!\n" << std::endl;
+    std::cout << "\nMarket being constructed!" << std::endl;
+}
+
+Market::Customer::Customer()
+{
+    std::cout << "Customer Market being constructed!\n" << std::endl;
 }
 
 void Market::Customer::selectDailyFood()
@@ -186,13 +192,15 @@ struct University
     struct Professor
     {
         int age = 30;
+        std::string name = "";
         std::string profession = "Engineer";
         std::string postgraduateStudies = "MsC";
         std::string teachingRank = "Band 4";
         int yearsExperience = 15;
         int teachedClasses;
+        Professor();
 
-        float work(int research = 28, int teaching = 16);
+        void checkSubscribedStudents();
         float computeMonthlyExpenses(float rent = 1800,
                                      float food = 550,
                                      float fun = 120, 
@@ -205,19 +213,20 @@ struct University
         std::string name = "";
         std::string department = "Engineer"; 
         std::string career = "AgroIndustrial Engineer";
+        std::string courseName = "Managing a Field of Corn";
+        float courseID = 001;
         std::string hobby = "Play Bass";
         int semestralCredits = 9;
         int weeklyPresentialStudyHours = 0;
         int weeklyResearchStudyHours = 0;
         double semestralStudyTime = 0;
         double semestralAllowedAbsences = 0;
+        Student();
 
         void computeWeekStudyTime();
         void computeSemestralAbsences();
         void displayStudentInfo(Student studentName);
-        float computeMonthlyExpenses(float food, 
-                                     float fun = 220, 
-                                     float other = 350);
+        void subscribeCourse(Student studentName, Professor professorName);
     }; 
 
     float teachStudents();  
@@ -232,12 +241,22 @@ struct University
 
 University::University()
 {
-    std::cout << "University being constructed!\n" << std::endl;
+    std::cout << "University being constructed!" << std::endl;
 }
 
-float University::Professor::work(int research, int teaching)
+University::Professor::Professor()
 {
-    return research + teaching;
+    std::cout << "University Professor being constructed!" << std::endl;
+}
+
+University::Student::Student()
+{
+    std::cout << "University Student being constructed!\n" << std::endl;
+}
+
+void University::Professor::checkSubscribedStudents()
+{
+    return ;
 }
 
 float University::Professor::computeMonthlyExpenses(float rent,
@@ -266,11 +285,9 @@ void University::Student::displayStudentInfo(Student studentName)
     std::cout << "Dear " << studentName.name << ". Welcome to study " << studentName.career << ". This semester you chose " << studentName.semestralCredits << " credits. You'll have " << studentName.weeklyPresentialStudyHours << " weekly presential study hours. Please remember you can only have 10% of class absence, which in your case means " << studentName.semestralAllowedAbsences << " hours per class. Enjoy your time!\n" << std::endl;
 }
 
-float University::Student::computeMonthlyExpenses(float food = 350,
-                                                  float fun, 
-                                                  float other)
+void University::Student::subscribeCourse(Student studentName, Professor professorName)
 {
-    return food + fun + other;
+    std::cout << "Dear " << studentName.name << " you've successfully subscribed the assignature " << courseName << ". Which will have Professor " << professorName.name << " as Main Professor for this class.\n" << std::endl;
 }
 
 float University::teachStudents() 
@@ -321,6 +338,7 @@ struct Computer
         bool canPlayGames;
         bool canTrainAI;
         bool canUseAtOffice;
+        Hardware();
         
         void playGames(); 
         void trainAI(); 
@@ -335,7 +353,12 @@ struct Computer
 
 Computer::Computer()
 {
-    std::cout << "Computer being constructed!\n" << std::endl;
+    std::cout << "Computer being constructed!" << std::endl;
+}
+
+Computer::Hardware::Hardware()
+{
+    std::cout << "Computer Hardware being constructed!\n" << std::endl;
 }
 
 void Computer::Hardware::playGames()
@@ -430,6 +453,7 @@ struct AudioMixer
         bool DANTE;
         std::string protocol;
         float syncFrequency;
+        ExpandableProtocol();
 
         void sends(std::string application = "Recording");
         float sync(std::string clockSource = "External",
@@ -445,8 +469,14 @@ struct AudioMixer
 
 AudioMixer::AudioMixer()
 {
-    std::cout << "AudioMixer being constructed!\n" << std::endl;
+    std::cout << "AudioMixer being constructed!" << std::endl;
 }
+
+AudioMixer::ExpandableProtocol::ExpandableProtocol()
+{
+    std::cout << "AudioMixer ExpandableProtocol being constructed!\n" << std::endl;
+}
+
 void AudioMixer::ExpandableProtocol::sends(std::string application)
 {
     if(application == "Monitors")
@@ -929,10 +959,13 @@ int main()
     //std::cout << "Is superStarMarket member var 'dailyProfit' equal to 0? " << (superStarMarket.dailyProfit == 0 ? "Yes" : "No") << "\n";
 
     University programmingSchoolUniversity;
+    University::Professor joseph;
     University::Student frank;
+    joseph.name = "Joseph Stewart";
     frank.computeWeekStudyTime();
     frank.computeSemestralAbsences();
     frank.displayStudentInfo(frank);
+    frank.subscribeCourse(frank, joseph);
     programmingSchoolUniversity.performCulturalActivities(frank);
     //programmingSchoolUniversity.calculatedHoursPerSemester();
 
