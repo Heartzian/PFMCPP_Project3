@@ -764,11 +764,11 @@ struct Filter
     double drive = 0.0; 
     double pianoIR;
     double signal;
-    std::string Type = "Low Pass";
+    std::string filterType = "Low Pass";
     std::string filterName {"Low Pass Filter"};
     Filter();
 
-    void selectFilter(std::string filterType = "LP");
+    void selectFilter(std::string filterCall = "LP");
     void boostCutFreq();
     void overDriveSignal(); 
     void giveSonority(std::string instrument = "Piano");
@@ -780,11 +780,11 @@ Filter::Filter()
     std::cout << "Filter being constructed!\n" << std::endl;
 }
 
-void Filter::selectFilter(std::string filterType)
+void Filter::selectFilter(std::string filterCall)
 {
-    if (filterType == "LP")
+    if (filterCall == "LP")
     {
-        Type = "Low Pass";
+        filterType = "Low Pass";
     }
 }
 
@@ -803,7 +803,7 @@ void Filter::boostCutFreq()
     {
         signal = ((a0) + (a1 * xn1) + (a2 * xn2) - (b1 * yn1) - (b2 * yn2));
     }
-    std::cout << "Filter Parameters:\n\tFilter Type : " << Type << "\n\tGain: " << gain << " dB\n\tCut Frequency: " << frequency << "Hz" <<std::endl;
+    std::cout << "Filter Parameters:\n\tFilter Type : " << filterType << "\n\tGain: " << gain << " dB\n\tCut Frequency: " << frequency << "Hz" <<std::endl;
 }
 
 void Filter::overDriveSignal()
