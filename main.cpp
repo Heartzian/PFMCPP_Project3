@@ -70,7 +70,7 @@ int main()
 //call Example::main() in main()
 
 //***************************************************************
-namespace StudentWork1
+/*namespace StudentWork1
 {
 struct Filter
 { 
@@ -105,7 +105,7 @@ int main()
 }
 
 
-//***************************************************************
+
 namespace StudentWork2
 {
 struct Filter
@@ -130,14 +130,14 @@ struct EQ
     Filter highFreq;
     EQ();
 
-    void increaseGain(Filter filterName, int maxGain = 6, int startingVal = 0);
+    int increaseGain(Filter filterName, int maxGain = 6, int startingVal = 0);
     void increaseFrequency(Filter filterName);
     void increaseBandwidth(Filter filterName);    
 };
 
 EQ::EQ() {}
 
-void EQ::increaseGain(Filter filterName, int maxGain, int startingVal)
+int EQ::increaseGain(Filter filterName, int maxGain, int startingVal)
 {
     filterName.gain = startingVal;
     while( filterName.gain < maxGain )
@@ -145,6 +145,7 @@ void EQ::increaseGain(Filter filterName, int maxGain, int startingVal)
         filterName.addOneToGain();                    
         std::cout << "  increasing lowFreq.gain: " << filterName.gain << std::endl; 
     }
+    return filterName.gain;
 }
 
 
@@ -152,15 +153,14 @@ int main()
 {
     Filter lowFreq;
     EQ lowParamEQ;
-    lowParamEQ.increaseGain(lowFreq, 6, 0);     
-    
-    std::cout << "lowFreq.gain: " << lowParamEQ.lowFreq.gain << std::endl;
+    auto lowGain = lowParamEQ.increaseGain(lowFreq, 6, 0);     
+    std::cout << "lowFreq.gain: " << lowGain << std::endl;
     return 0;
 }
-}
+}*/
 
 
-/*struct Market
+struct Market
 {
     double numProdLocalInv = 215;
     int numLogisticVehicles = 5; 
@@ -168,9 +168,9 @@ int main()
     double dailyBasicUtilitiesFee = 320.53;  
     double dailyIncome = 0; 
     double dailyProfit = 0;
-    int peopleAtStore = 0; 
-    std::string marketName {"Asia SuperMarket"};
-    Market(int n) : peopleatStore(n)
+    int peopleAtStore = 0;
+    std::string marketCompleteName {"Asia SuperMarket"};
+    Market();
 
     struct Customer
     {
@@ -193,27 +193,13 @@ int main()
         void selectDailyFood(); 
         void calculateOrderPrice(); 
         void orderProducts(bool deliveryRequired = true);
-        void printMarketCustomerInitVar();
-        Market calculateVisitors(int maxPeople, int startValue)
-        {
-            Market northMarket(startValue);
-            while(northMarket.peopleatStore < maxPeople)
-            {
-                Market.peopleAtStore += 1;
-                std::cout << "People at Store: " << Market.peopleAtStore << endl;
-                if( Market.peopleAtStore >= maxPeople )
-                {
-                    std::cout << "Because of COVID19 regulations, no more people is allowed to get in" << endl;
-                }
-                return northMarket;
-            }
-        }    
+        void printMarketCustomerInitVar();            
     };
 
     void sellProducts(Customer customerName);
     void adjustInventary(Customer customerName);
     void printMarketInitVar();
-    void scopeFunction(int threshold);
+    int calculateVisitors(Market marketName, int maxPeople, int startValue);  
 };
 
 Market::Market()
@@ -288,7 +274,22 @@ void Market::adjustInventary(Customer customerName)
 
 void Market::printMarketInitVar()
 {
-    std::cout << "Market::printMarketInitVar()\n\t\t" << marketName << std::endl;
+    std::cout << "Market::printMarketInitVar()\n\t\t" << marketCompleteName << std::endl;
+}
+
+int Market::calculateVisitors(Market marketName, int maxPeople, int startValue)
+{
+    marketName.peopleAtStore = startValue;
+    while(marketName.peopleAtStore < maxPeople)
+    {
+        marketName.peopleAtStore += 1;
+        std::cout << "People at Store: " << marketName.peopleAtStore << std::endl;
+        if( marketName.peopleAtStore >= maxPeople )
+        {
+            std::cout << "Because of COVID19 regulations, no more people is allowed to get in." << std::endl;
+        }
+    }
+    return marketName.peopleAtStore;
 }
 
 struct University
@@ -1070,7 +1071,7 @@ void Synthesizer::processSignal()
 void Synthesizer::checkAllIsOK()
 {
     std::cout << "Synthesizer::checkAllIsOK() " << "I don't know what should I write here!! :(" << std::endl;
-}*/
+}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -1083,24 +1084,26 @@ void Synthesizer::checkAllIsOK()
 
  send me a DM to review your pull request when the project is ready for review.
 
- Wait for my code review.
- */
+ Wait for my code review.*/
+ 
 
 #include <iostream>
 int main()
 {
-    //Example::main();
-    StudentWork1::main();
-    StudentWork2::main();
+    Example::main();
+    //StudentWork1::main();
+    //StudentWork2::main();
     
-    /*Market superStarMarket;
+    Market superStarMarket;
     Market::Customer carl;
     carl.selectDailyFood(); 
     carl.calculateOrderPrice(); 
     carl.orderProducts(true);
     superStarMarket.sellProducts(carl);
     superStarMarket.adjustInventary(carl);
-    auto northMarket = carl.scopeLifetimeFunc(3, 1);
+    auto superStarMarketCustomers = superStarMarket.calculateVisitors(superStarMarket, 10, 2);
+
+    std::cout << "market.peopleAtStore: " <<             superStarMarketCustomers << " \n" << std::endl;     
     
     //std::cout << "Is superStarMarket member var 'dailyProfit' equal to 0? " << (superStarMarket.dailyProfit == 0 ? "Yes" : "No") << "\n";
 
@@ -1126,9 +1129,9 @@ int main()
     fohMixer.mixSignals("Touring");
     fohMixer.splitSignal("Monitors");
     fohMixer.processSignal();
-    fohMixer.info(fohToMonitorConnection);*/
+    fohMixer.info(fohToMonitorConnection);
 
-    /*ADSR impulsive;
+    ADSR impulsive;
     impulsive.modifyLoudness();
     impulsive.modOscillatorPitch(400, 35, 10);
 
@@ -1172,7 +1175,7 @@ int main()
     assignedToOsc.printLFOInitVar();
     pureTone.printOscInitVar();
     lowPass.printFilterInitVar();
-    trumpetPlate.printReverbInitVar();*/
+    trumpetPlate.printReverbInitVar();
     
     std::cout << "good to go!" << std::endl;
 }
