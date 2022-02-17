@@ -60,9 +60,9 @@ struct Foo
 int main()
 {
     Foo foo;
-    auto bar = foo.scopeLifetimeFunc(3, 1);        //3) 
+    auto bar1 = foo.scopeLifetimeFunc(3, 1);        //3) 
     
-    std::cout << "bar.num: " << bar.num << std::endl;     //4) 
+    std::cout << "bar.num: " << bar1.num << std::endl;     //4) 
     return 0;
 }
 }
@@ -193,7 +193,7 @@ struct Market
         void selectDailyFood(); 
         void calculateOrderPrice(); 
         void orderProducts(bool deliveryRequired = true);
-        void printMarketCustomerInitVar();            
+        void printMarketCustomerInitVar();           
     };
 
     void sellProducts(Customer customerName);
@@ -299,6 +299,7 @@ struct University
     int numProfessors = 95;
     float semIncome = 0;
     int classesPerSemester = 0;
+    int inscribedStudents = 0;
     std::string universityName {"Programming Technology University"};
     University();
 
@@ -354,6 +355,7 @@ struct University
                                    std::string category = "Arts",
                                    std::string activity = "Music Museum Visit"); 
     void printUniversityInitVar();
+    int incrementInscribedStudents(University uName, int maxAllowedPerRoom = 10);
 };
 
 University::University()
@@ -442,6 +444,19 @@ void University::performCulturalActivities(Student studentName,
 void University::printUniversityInitVar()
 {
     std::cout << "University::printUniversityInitVar()\n\t\t" << universityName << std::endl;
+}
+
+int University::incrementInscribedStudents(University uName, int maxAllowedPerRoom)
+{
+    while (uName.inscribedStudents < maxAllowedPerRoom)
+    {
+        uName.inscribedStudents +=1;
+        std::cout << "Inscribed Students: " << uName.inscribedStudents << std::endl;
+        if( uName.inscribedStudents >= maxAllowedPerRoom )
+        {
+            std::cout << "The maximum allowed students per class is complete." << std::endl;
+    }
+    return inscribedStudents;
 }
 
 struct Computer
@@ -1103,9 +1118,7 @@ int main()
     superStarMarket.adjustInventary(carl);
     auto superStarMarketCustomers = superStarMarket.calculateVisitors(superStarMarket, 10, 2);
 
-    std::cout << "market.peopleAtStore: " <<             superStarMarketCustomers << " \n" << std::endl;     
-    
-    //std::cout << "Is superStarMarket member var 'dailyProfit' equal to 0? " << (superStarMarket.dailyProfit == 0 ? "Yes" : "No") << "\n";
+    std::cout << "Market.peopleAtStore: " <<             superStarMarketCustomers << " \n" << std::endl;     
 
     University programmingSchoolUniversity;
     University::Professor joseph;
@@ -1116,7 +1129,10 @@ int main()
     frank.displayStudentInfo(frank);
     frank.subscribeCourse(frank, joseph);
     programmingSchoolUniversity.performCulturalActivities(frank);
+    auto inscribedStudents = programmingSchoolUniversity.incrementInscribedStudents();
 
+    std::cout << "University.inscribedStudents: " <<             inscribedStudents << " \n" << std::endl;  
+    
     Computer gamingPC;
     Computer::Hardware highSpecs;
     highSpecs.playGames();
