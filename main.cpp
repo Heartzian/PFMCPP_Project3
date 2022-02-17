@@ -60,17 +60,17 @@ struct Foo
 int main()
 {
     Foo foo;
-    auto bar1 = foo.scopeLifetimeFunc(3, 1);        //3) 
+    auto bar = foo.scopeLifetimeFunc(3, 1);        //3) 
     
-    std::cout << "bar.num: " << bar1.num << std::endl;     //4) 
+    std::cout << "bar.num: " << bar.num << std::endl;     //4) 
     return 0;
 }
 }
 
 //call Example::main() in main()
 
-//***************************************************************
-/*namespace StudentWork1
+/*
+namespace StudentWork1
 {
 struct Filter
 { 
@@ -102,10 +102,9 @@ int main()
     std::cout << "lowFreq.gain: " << lowFreq.gain << std::endl;     //4) 
     return 0;
 }
-}
+}*/
 
-
-
+/*
 namespace StudentWork2
 {
 struct Filter
@@ -130,14 +129,14 @@ struct EQ
     Filter highFreq;
     EQ();
 
-    int increaseGain(Filter filterName, int maxGain = 6, int startingVal = 0);
+    void increaseGain(Filter filterName, int maxGain = 6, int startingVal = 0);
     void increaseFrequency(Filter filterName);
     void increaseBandwidth(Filter filterName);    
 };
 
 EQ::EQ() {}
 
-int EQ::increaseGain(Filter filterName, int maxGain, int startingVal)
+void EQ::increaseGain(Filter filterName, int maxGain, int startingVal)
 {
     filterName.gain = startingVal;
     while( filterName.gain < maxGain )
@@ -145,7 +144,6 @@ int EQ::increaseGain(Filter filterName, int maxGain, int startingVal)
         filterName.addOneToGain();                    
         std::cout << "  increasing lowFreq.gain: " << filterName.gain << std::endl; 
     }
-    return filterName.gain;
 }
 
 
@@ -153,8 +151,52 @@ int main()
 {
     Filter lowFreq;
     EQ lowParamEQ;
-    auto lowGain = lowParamEQ.increaseGain(lowFreq, 6, 0);     
-    std::cout << "lowFreq.gain: " << lowGain << std::endl;
+    lowParamEQ.increaseGain(lowFreq, 6, 0);     
+    
+    std::cout << "lowFreq.gain: " << lowParamEQ.lowFreq.gain << std::endl;
+    return 0;
+}
+}*/
+
+/*
+namespace StudentWork3
+{
+struct Filter
+{ 
+    int gain = 0; 
+    //Filter(int n) : gain(n) {} //Constructor style 1
+    Filter(int n); //Constructor style 2
+};
+
+Filter::Filter(int n)
+{
+    gain = n;
+}
+
+struct EQ
+{
+    Filter increaseGain(int maxValue, int initialValue)
+    {
+        Filter lowFreq(initialValue);
+        while(lowFreq.gain < maxValue)
+        {
+            lowFreq.gain += 1;
+            std::cout << "lowFreq.gain" << lowFreq.gain << std::endl;
+            if (initialValue >= maxValue)
+                return lowFreq.gain;
+        }
+        return Filter {-1};
+    }
+};
+
+//EQ::EQ() {}
+
+int main()
+{
+    EQ lowParamEQ;
+    auto lowFreq = lowParamEQ.increaseGain(6, 7);
+    
+    std::cout << "lowFreq.gain: " << lowFreq.gain << std::endl;
     return 0;
 }
 }*/
@@ -168,8 +210,8 @@ struct Market
     double dailyBasicUtilitiesFee = 320.53;  
     double dailyIncome = 0; 
     double dailyProfit = 0;
-    int peopleAtStore = 0;
-    std::string marketCompleteName {"Asia SuperMarket"};
+    int peopleAtStore = 0; 
+    std::string marketName {"Asia SuperMarket"};
     Market();
 
     struct Customer
@@ -193,13 +235,12 @@ struct Market
         void selectDailyFood(); 
         void calculateOrderPrice(); 
         void orderProducts(bool deliveryRequired = true);
-        void printMarketCustomerInitVar();           
+        void printMarketCustomerInitVar();    
     };
 
     void sellProducts(Customer customerName);
     void adjustInventary(Customer customerName);
     void printMarketInitVar();
-    int calculateVisitors(Market marketName, int maxPeople, int startValue);  
 };
 
 Market::Market()
@@ -274,32 +315,16 @@ void Market::adjustInventary(Customer customerName)
 
 void Market::printMarketInitVar()
 {
-    std::cout << "Market::printMarketInitVar()\n\t\t" << marketCompleteName << std::endl;
+    std::cout << "Market::printMarketInitVar()\n\t\t" << marketName << std::endl;
 }
 
-int Market::calculateVisitors(Market marketName, int maxPeople, int startValue)
-{
-    marketName.peopleAtStore = startValue;
-    while(marketName.peopleAtStore < maxPeople)
-    {
-        marketName.peopleAtStore += 1;
-        std::cout << "People at Store: " << marketName.peopleAtStore << std::endl;
-        if( marketName.peopleAtStore >= maxPeople )
-        {
-            std::cout << "Because of COVID19 regulations, no more people is allowed to get in." << std::endl;
-        }
-    }
-    return marketName.peopleAtStore;
-}
-
-struct University
+/*struct University
 {
     int numClassrooms = 80;
     int numLabs = 36;
     int numProfessors = 95;
     float semIncome = 0;
     int classesPerSemester = 0;
-    int inscribedStudents = 0;
     std::string universityName {"Programming Technology University"};
     University();
 
@@ -355,7 +380,6 @@ struct University
                                    std::string category = "Arts",
                                    std::string activity = "Music Museum Visit"); 
     void printUniversityInitVar();
-    int incrementInscribedStudents(University uName, int maxAllowedPerRoom = 10);
 };
 
 University::University()
@@ -444,19 +468,6 @@ void University::performCulturalActivities(Student studentName,
 void University::printUniversityInitVar()
 {
     std::cout << "University::printUniversityInitVar()\n\t\t" << universityName << std::endl;
-}
-
-int University::incrementInscribedStudents(University uName, int maxAllowedPerRoom)
-{
-    while (uName.inscribedStudents < maxAllowedPerRoom)
-    {
-        uName.inscribedStudents +=1;
-        std::cout << "Inscribed Students: " << uName.inscribedStudents << std::endl;
-        if( uName.inscribedStudents >= maxAllowedPerRoom )
-        {
-            std::cout << "The maximum allowed students per class is complete." << std::endl;
-    }
-    return inscribedStudents;
 }
 
 struct Computer
@@ -1086,7 +1097,7 @@ void Synthesizer::processSignal()
 void Synthesizer::checkAllIsOK()
 {
     std::cout << "Synthesizer::checkAllIsOK() " << "I don't know what should I write here!! :(" << std::endl;
-}
+}*/
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -1099,8 +1110,8 @@ void Synthesizer::checkAllIsOK()
 
  send me a DM to review your pull request when the project is ready for review.
 
- Wait for my code review.*/
- 
+ Wait for my code review.
+ */
 
 #include <iostream>
 int main()
@@ -1108,6 +1119,7 @@ int main()
     Example::main();
     //StudentWork1::main();
     //StudentWork2::main();
+    //StudentWork3::main();
     
     Market superStarMarket;
     Market::Customer carl;
@@ -1116,11 +1128,11 @@ int main()
     carl.orderProducts(true);
     superStarMarket.sellProducts(carl);
     superStarMarket.adjustInventary(carl);
-    auto superStarMarketCustomers = superStarMarket.calculateVisitors(superStarMarket, 10, 2);
+    //auto northMarket = carl.scopeLifetimeFunc(3, 1);
+    
+    //std::cout << "Is superStarMarket member var 'dailyProfit' equal to 0? " << (superStarMarket.dailyProfit == 0 ? "Yes" : "No") << "\n";
 
-    std::cout << "Market.peopleAtStore: " <<             superStarMarketCustomers << " \n" << std::endl;     
-
-    University programmingSchoolUniversity;
+    /*University programmingSchoolUniversity;
     University::Professor joseph;
     University::Student frank;
     joseph.name = "Joseph Stewart";
@@ -1129,10 +1141,7 @@ int main()
     frank.displayStudentInfo(frank);
     frank.subscribeCourse(frank, joseph);
     programmingSchoolUniversity.performCulturalActivities(frank);
-    auto inscribedStudents = programmingSchoolUniversity.incrementInscribedStudents();
 
-    std::cout << "University.inscribedStudents: " <<             inscribedStudents << " \n" << std::endl;  
-    
     Computer gamingPC;
     Computer::Hardware highSpecs;
     highSpecs.playGames();
@@ -1191,7 +1200,7 @@ int main()
     assignedToOsc.printLFOInitVar();
     pureTone.printOscInitVar();
     lowPass.printFilterInitVar();
-    trumpetPlate.printReverbInitVar();
+    trumpetPlate.printReverbInitVar();*/
     
     std::cout << "good to go!" << std::endl;
 }
