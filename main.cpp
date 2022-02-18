@@ -332,7 +332,7 @@ void Market::adjustInventary(Customer customerName)
 void Market::printMarketInitVar()
 {
     std::cout << "Market::printMarketInitVar()\n\t\t" << marketName << std::endl;
-}*/
+}
 
 struct University
 {
@@ -500,9 +500,9 @@ void University::performCulturalActivities(Student studentName,
 void University::printUniversityInitVar()
 {
     std::cout << "University::printUniversityInitVar()\n\t\t" << universityName << std::endl;
-}
+}*/
 
-/*struct Computer
+struct Computer
 {
     float energyConsumption = 35.5f;
     float requiredRAM = 6.9f;
@@ -514,7 +514,7 @@ void University::printUniversityInitVar()
     std::string computerName {"Republic of Gamers Strix Scar"};
     Computer();
 
-    struct Hardware  
+    struct Hardware
     { 
         double RAM = 16.0; 
         double disk = 1024.0; 
@@ -524,6 +524,7 @@ void University::printUniversityInitVar()
         bool canPlayGames;
         bool canTrainAI;
         bool canUseAtOffice;
+        int gamesAtRAM = 0;
         Hardware();
         
         void playGames(); 
@@ -531,10 +532,28 @@ void University::printUniversityInitVar()
         void workAtOffice(); 
     };
 
-    void executePrograms(Hardware specs, std::string installedSoft);  
+    bool executePrograms(Hardware specs, std::string installedSoft);  
     void saveInfo(bool diskAvailable = true); 
     void connectToPCs(bool LANavailable = true);
     void printComputerInitVar();
+    Hardware addGamesToRAM(Hardware pcType, bool abilityToPlay)
+    {
+        if (abilityToPlay == true)
+        {
+            int maxAllowedGames= 5;
+            while(pcType.gamesAtRAM < maxAllowedGames)
+            {
+                pcType.gamesAtRAM += 1;
+                std::cout << "Games loaded at RAM: " << pcType.gamesAtRAM << std::endl;
+                if (pcType.gamesAtRAM >= maxAllowedGames)
+                {
+                    std::cout << "Max. Games Loaded at RAM!\n";
+                    return pcType;
+                }
+            }
+        }
+        return Hardware {};
+    }
 };
 
 Computer::Computer()
@@ -579,7 +598,7 @@ void Computer::Hardware::workAtOffice()
     
 } 
 
-void Computer::executePrograms(Hardware specs, std::string installedSoft)
+bool Computer::executePrograms(Hardware specs, std::string installedSoft)
 {
     if (installedSoft == "GTA")
     {
@@ -592,6 +611,7 @@ void Computer::executePrograms(Hardware specs, std::string installedSoft)
             std::cout << "Sorry!! This computer can NOT be used to play Grand Theft Auto becasuse of the specs" << std::endl;
         }
     }
+    return specs.canPlayGames;
 }
 
 void Computer::saveInfo(bool diskAvailable)
@@ -618,7 +638,7 @@ void Computer::printComputerInitVar()
     std::cout << "Computer::printComputerInitVar()\n\t" << computerName << std::endl;
 }
 
-struct AudioMixer
+/*struct AudioMixer
 {
     int inputCh = 128; 
     int outputCh = 64; 
@@ -1162,7 +1182,7 @@ int main()
     superStarMarket.adjustInventary(carl);
     auto phil = superStarMarket.countNoInventoryProducts(5);
         
-    std::cout << "phil.noInventoryProducts: " << phil.noInventoryProducts << "\n";*/
+    std::cout << "phil.noInventoryProducts: " << phil.noInventoryProducts << "\n";
 
     University programmingSchoolUniversity;
     University::Professor joseph;
@@ -1174,14 +1194,16 @@ int main()
     frank.subscribeCourse(frank, joseph);
     auto studentName = programmingSchoolUniversity.calculatePresentations(frank);
 
-    std::cout << "studentName.numberPresentations: " << studentName.numberPresentations << "\n";
+    std::cout << "studentName.numberPresentations: " << studentName.numberPresentations << "\n";*/
 
-    /*Computer gamingPC;
+    Computer gamingPC;
     Computer::Hardware highSpecs;
     highSpecs.playGames();
-    gamingPC.executePrograms(highSpecs, "GTA");
-
-    AudioMixer fohMixer;
+    auto canPlay = gamingPC.executePrograms(highSpecs, "GTA");
+    auto pcType = gamingPC.addGamesToRAM(highSpecs, canPlay);
+    std::cout << "pcType.gamesAtRAM: " << pcType.gamesAtRAM << "\n";
+    
+    /*AudioMixer fohMixer;
     AudioMixer::ExpandableProtocol fohToMonitorConnection;
     fohToMonitorConnection.sends("Monitors");
     fohToMonitorConnection.sync("External");
