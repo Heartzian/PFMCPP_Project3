@@ -230,6 +230,7 @@ struct Market
         int productsToOrder = 0;
         double productsPrice = 0;
         double totalToPay = 0;
+        int noInventoryProducts = 0;
         Customer();
 
         void selectDailyFood(); 
@@ -241,6 +242,21 @@ struct Market
     void sellProducts(Customer customerName);
     void adjustInventary(Customer customerName);
     void printMarketInitVar();
+    Customer countNoInventoryProducts(int maxAllowed)
+    {
+        Customer phil;
+        while(phil.noInventoryProducts < maxAllowed)
+        {
+            phil.noInventoryProducts += 1;
+            std::cout << "noInventoryProducts:" << phil.noInventoryProducts << std::endl;
+            if (phil.noInventoryProducts >= maxAllowed)
+            {
+                std::cout << "Max. Limit NO inventory product was reached" << std::endl;
+                return phil;
+            }
+        }
+        return Customer {};
+    }
 };
 
 Market::Market()
@@ -1128,9 +1144,9 @@ int main()
     carl.orderProducts(true);
     superStarMarket.sellProducts(carl);
     superStarMarket.adjustInventary(carl);
-    //auto northMarket = carl.scopeLifetimeFunc(3, 1);
-    
-    //std::cout << "Is superStarMarket member var 'dailyProfit' equal to 0? " << (superStarMarket.dailyProfit == 0 ? "Yes" : "No") << "\n";
+    auto phil = superStarMarket.countNoInventoryProducts(5);
+        
+    std::cout << "phil.noInventoryProducts: " << phil.noInventoryProducts << "\n";
 
     /*University programmingSchoolUniversity;
     University::Professor joseph;
