@@ -201,7 +201,7 @@ int main()
 }
 }*/
 
-
+/*
 struct Market
 {
     double numProdLocalInv = 215;
@@ -332,9 +332,9 @@ void Market::adjustInventary(Customer customerName)
 void Market::printMarketInitVar()
 {
     std::cout << "Market::printMarketInitVar()\n\t\t" << marketName << std::endl;
-}
+}*/
 
-/*struct University
+struct University
 {
     int numClassrooms = 80;
     int numLabs = 36;
@@ -379,6 +379,7 @@ void Market::printMarketInitVar()
         int weeklyResearchStudyHours = 0;
         double semestralStudyTime = 0;
         double semestralAllowedAbsences = 0;
+        int numberPresentations = 0;
         Student();
 
         void computeWeekStudyTime();
@@ -396,6 +397,21 @@ void Market::printMarketInitVar()
                                    std::string category = "Arts",
                                    std::string activity = "Music Museum Visit"); 
     void printUniversityInitVar();
+    Student calculatePresentations(Student studentName)
+    {
+        //Student phil;
+        int totalPresentations = studentName.semestralCredits * 2;
+        while (studentName.numberPresentations < totalPresentations)
+        {
+            studentName.numberPresentations += 3;
+            std::cout << studentName.studentCompleteName << " this semester your should present " << studentName.numberPresentations << " presentations."<< std::endl;
+            if (studentName.numberPresentations >= totalPresentations)
+            {
+                return studentName;
+            }
+        }
+        return Student {};
+    }
 };
 
 University::University()
@@ -486,7 +502,7 @@ void University::printUniversityInitVar()
     std::cout << "University::printUniversityInitVar()\n\t\t" << universityName << std::endl;
 }
 
-struct Computer
+/*struct Computer
 {
     float energyConsumption = 35.5f;
     float requiredRAM = 6.9f;
@@ -1137,7 +1153,7 @@ int main()
     //StudentWork2::main();
     //StudentWork3::main();
     
-    Market superStarMarket;
+    /*Market superStarMarket;
     Market::Customer carl;
     carl.selectDailyFood(); 
     carl.calculateOrderPrice(); 
@@ -1146,9 +1162,9 @@ int main()
     superStarMarket.adjustInventary(carl);
     auto phil = superStarMarket.countNoInventoryProducts(5);
         
-    std::cout << "phil.noInventoryProducts: " << phil.noInventoryProducts << "\n";
+    std::cout << "phil.noInventoryProducts: " << phil.noInventoryProducts << "\n";*/
 
-    /*University programmingSchoolUniversity;
+    University programmingSchoolUniversity;
     University::Professor joseph;
     University::Student frank;
     joseph.name = "Joseph Stewart";
@@ -1156,9 +1172,11 @@ int main()
     frank.computeSemestralAbsences();
     frank.displayStudentInfo(frank);
     frank.subscribeCourse(frank, joseph);
-    programmingSchoolUniversity.performCulturalActivities(frank);
+    auto studentName = programmingSchoolUniversity.calculatePresentations(frank);
 
-    Computer gamingPC;
+    std::cout << "studentName.numberPresentations: " << studentName.numberPresentations << "\n";
+
+    /*Computer gamingPC;
     Computer::Hardware highSpecs;
     highSpecs.playGames();
     gamingPC.executePrograms(highSpecs, "GTA");
