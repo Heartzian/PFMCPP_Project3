@@ -922,7 +922,7 @@ void LFO::toggleEnablement(bool shouldBeOn)
 void LFO::changeSignalsInteraction()
 {
     int fs = 44'100;
-    for (int i = 0; i < fs; i++)
+    for (int i = 0; i < fs; ++i)
     {
         signal = amount - phaseOffset; //This is a dummy example
     }
