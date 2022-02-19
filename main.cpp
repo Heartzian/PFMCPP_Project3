@@ -69,138 +69,6 @@ int main()
 
 //call Example::main() in main()
 
-/*
-namespace StudentWork1
-{
-struct Filter
-{ 
-    int gain = 0; 
-    Filter(int n) : gain(n) {} 
-};
-struct EQ
-{
-    Filter varyGain( int maxGain, int startingVal )  
-    {
-        Filter lowFreq(startingVal);                
-        while( lowFreq.gain < maxGain )          
-        { 
-            lowFreq.gain += 1;                    
-            std::cout << "  increasing lowFreq.gain: " << lowFreq.gain << std::endl; //4)
-            if( lowFreq.gain >= maxGain )       
-                return lowFreq;
-        }
-        
-        return Filter {-1}; 
-    }
-};
-
-int main()
-{
-    EQ lowParamEQ;
-    auto lowFreq = lowParamEQ.varyGain(6, 0);
-    
-    std::cout << "lowFreq.gain: " << lowFreq.gain << std::endl;     //4) 
-    return 0;
-}
-}*/
-
-/*
-namespace StudentWork2
-{
-struct Filter
-{ 
-    int gain = 0; 
-    Filter(); 
-
-    void addOneToGain();
-};
-
-Filter::Filter() {}
-
-void Filter::addOneToGain()
-{
-    gain += 1;
-}
-
-struct EQ
-{
-    Filter lowFreq;
-    Filter midFreq;
-    Filter highFreq;
-    EQ();
-
-    void increaseGain(Filter filterName, int maxGain = 6, int startingVal = 0);
-    void increaseFrequency(Filter filterName);
-    void increaseBandwidth(Filter filterName);    
-};
-
-EQ::EQ() {}
-
-void EQ::increaseGain(Filter filterName, int maxGain, int startingVal)
-{
-    filterName.gain = startingVal;
-    while( filterName.gain < maxGain )
-    {
-        filterName.addOneToGain();                    
-        std::cout << "  increasing lowFreq.gain: " << filterName.gain << std::endl; 
-    }
-}
-
-
-int main()
-{
-    Filter lowFreq;
-    EQ lowParamEQ;
-    lowParamEQ.increaseGain(lowFreq, 6, 0);     
-    
-    std::cout << "lowFreq.gain: " << lowParamEQ.lowFreq.gain << std::endl;
-    return 0;
-}
-}*/
-
-/*
-namespace StudentWork3
-{
-struct Filter
-{ 
-    int gain = 0; 
-    //Filter(int n) : gain(n) {} //Constructor style 1
-    Filter(int n); //Constructor style 2
-};
-
-Filter::Filter(int n)
-{
-    gain = n;
-}
-
-struct EQ
-{
-    Filter increaseGain(int maxValue, int initialValue)
-    {
-        Filter lowFreq(initialValue);
-        while(lowFreq.gain < maxValue)
-        {
-            lowFreq.gain += 1;
-            std::cout << "lowFreq.gain" << lowFreq.gain << std::endl;
-            if (initialValue >= maxValue)
-                return lowFreq.gain;
-        }
-        return Filter {-1};
-    }
-};
-
-//EQ::EQ() {}
-
-int main()
-{
-    EQ lowParamEQ;
-    auto lowFreq = lowParamEQ.increaseGain(6, 7);
-    
-    std::cout << "lowFreq.gain: " << lowFreq.gain << std::endl;
-    return 0;
-}
-}*/
-
 
 struct Market
 {
@@ -543,7 +411,7 @@ struct Computer
     {
         if (abilityToPlay == true)
         {
-            int maxAllowedGames= 5;
+            int maxAllowedGames = 5;
             while(pcType.gamesAtRAM < maxAllowedGames)
             {
                 ++pcType.gamesAtRAM;
@@ -1256,9 +1124,6 @@ void Synthesizer::checkAllIsOK()
 int main()
 {
     Example::main();
-    //StudentWork1::main();
-    //StudentWork2::main();
-    //StudentWork3::main();
     
     Market superStarMarket;
     Market::Customer carl;
