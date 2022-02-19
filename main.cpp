@@ -38,7 +38,7 @@ namespace Example
 struct Bar 
 { 
     int num = 0; 
-    Bar(int n) : num(n) { } 
+    Bar(int n) : num(n) {} 
 };
 struct Foo
 {
@@ -70,9 +70,6 @@ int main()
 //call Example::main() in main()
 
 
-
-
-
 struct Market
 {
     double numProdLocalInv = 215;
@@ -81,6 +78,7 @@ struct Market
     double dailyBasicUtilitiesFee = 320.53;  
     double dailyIncome = 0; 
     double dailyProfit = 0;
+    int peopleAtStore = 0; 
     std::string marketName {"Asia SuperMarket"};
     Market();
 
@@ -100,17 +98,36 @@ struct Market
         int productsToOrder = 0;
         double productsPrice = 0;
         double totalToPay = 0;
+        int noInventoryProducts = 0;
         Customer();
 
         void selectDailyFood(); 
         void calculateOrderPrice(); 
         void orderProducts(bool deliveryRequired = true);
-        void printMarketCustomerInitVar();
+        void printMarketCustomerInitVar();    
     };
 
     void sellProducts(Customer customerName);
     void adjustInventary(Customer customerName);
     void printMarketInitVar();
+    Customer countNoInventoryProducts(int maxAllowed)
+    {
+        Customer phil;
+        for (int i = 0; i < maxAllowed; ++i)
+        {
+            if (phil.noInventoryProducts < maxAllowed)
+            {
+                ++phil.noInventoryProducts;
+                std::cout << "noInventoryProducts:" << phil.noInventoryProducts << std::endl;
+                if (phil.noInventoryProducts >= maxAllowed)
+                {
+                    std::cout << "Max. Limit NO inventory product was reached" << std::endl;
+                    return phil;
+                }
+            }
+        } 
+        return Customer {};
+    }
 };
 
 Market::Market()
@@ -233,6 +250,7 @@ struct University
         int weeklyResearchStudyHours = 0;
         double semestralStudyTime = 0;
         double semestralAllowedAbsences = 0;
+        int numberPresentations = 0;
         Student();
 
         void computeWeekStudyTime();
@@ -250,6 +268,21 @@ struct University
                                    std::string category = "Arts",
                                    std::string activity = "Music Museum Visit"); 
     void printUniversityInitVar();
+    Student calculatePresentations(Student studentName)
+    {
+        //Student phil;
+        int totalPresentations = studentName.semestralCredits * 2;
+        while (studentName.numberPresentations < totalPresentations)
+        {
+            studentName.numberPresentations += 3;
+            std::cout << studentName.studentCompleteName << " this semester your should present " << studentName.numberPresentations << " presentations."<< std::endl;
+            if (studentName.numberPresentations >= totalPresentations)
+            {
+                return studentName;
+            }
+        }
+        return Student {};
+    }
 };
 
 University::University()
@@ -352,7 +385,7 @@ struct Computer
     std::string computerName {"Republic of Gamers Strix Scar"};
     Computer();
 
-    struct Hardware  
+    struct Hardware
     { 
         double RAM = 16.0; 
         double disk = 1024.0; 
@@ -362,6 +395,7 @@ struct Computer
         bool canPlayGames;
         bool canTrainAI;
         bool canUseAtOffice;
+        int gamesAtRAM = 0;
         Hardware();
         
         void playGames(); 
@@ -369,10 +403,32 @@ struct Computer
         void workAtOffice(); 
     };
 
-    void executePrograms(Hardware specs, std::string installedSoft);  
+    bool executePrograms(Hardware specs, std::string installedSoft);  
     void saveInfo(bool diskAvailable = true); 
     void connectToPCs(bool LANavailable = true);
     void printComputerInitVar();
+    Hardware addGamesToRAM(Hardware pcType, bool abilityToPlay)
+    {
+        if (abilityToPlay == true)
+        {
+            int maxAllowedGames = 5;
+            while(pcType.gamesAtRAM < maxAllowedGames)
+            {
+                ++pcType.gamesAtRAM;
+                std::cout << "Games loaded at RAM: " << pcType.gamesAtRAM << std::endl;
+                if (pcType.gamesAtRAM >= maxAllowedGames)
+                {
+                    std::cout << "Max. Games Loaded at RAM!\n";
+                    return pcType;
+                }
+            }
+        }
+        else
+        {
+            std::cout << "Your computer is not able to play Games, check your Hardware Specs" << std::endl;
+        }
+        return Hardware {};
+    }
 };
 
 Computer::Computer()
@@ -417,7 +473,7 @@ void Computer::Hardware::workAtOffice()
     
 } 
 
-void Computer::executePrograms(Hardware specs, std::string installedSoft)
+bool Computer::executePrograms(Hardware specs, std::string installedSoft)
 {
     if (installedSoft == "GTA")
     {
@@ -430,6 +486,7 @@ void Computer::executePrograms(Hardware specs, std::string installedSoft)
             std::cout << "Sorry!! This computer can NOT be used to play Grand Theft Auto becasuse of the specs" << std::endl;
         }
     }
+    return specs.canPlayGames;
 }
 
 void Computer::saveInfo(bool diskAvailable)
@@ -478,11 +535,13 @@ struct AudioMixer
         bool DANTE;
         std::string protocol;
         float syncFrequency;
+        int availableSendChannels = 0;
+        int sentChannels = 0;
         ExpandableProtocol();
 
-        void sends(std::string application = "Recording");
         float sync(std::string clockSource = "External",
                    float frequency = 96'000); 
+        int sends(std::string application = "Recording");
     };
 
     void mixSignals(std::string application = "Touring Live Sound");
@@ -491,6 +550,25 @@ struct AudioMixer
                        int graphEQ = 16);
     void info(ExpandableProtocol connectionName);
     void printAudioMixerInitVar();
+    ExpandableProtocol calculateSentChannels(ExpandableProtocol expName, int avSendCH)
+    {
+        if (expName.protocol == "Dante")
+            for(int i = 0; i < avSendCH; ++i)
+            {
+                if(expName.sentChannels < avSendCH)
+                {
+                    ++expName.sentChannels;
+                    std::cout << expName.sentChannels <<" Channels are sent via " << expName.protocol << std::endl;
+                    if (expName.sentChannels >= avSendCH)
+                    {
+                        std::cout << "Max. available channels sent!" << std::endl;
+                        return expName;
+                    } 
+                }
+            }
+                
+        return ExpandableProtocol {};
+    }
 };
 
 AudioMixer::AudioMixer()
@@ -503,26 +581,32 @@ AudioMixer::ExpandableProtocol::ExpandableProtocol()
     std::cout << "AudioMixer ExpandableProtocol being constructed!\n" << std::endl;
 }
 
-void AudioMixer::ExpandableProtocol::sends(std::string application)
-{
-    if(application == "Monitors")
-    {
-        DANTE = true;
-        if (DANTE == true)
-        {
-            protocol = "Dante";
-        }
-    }
-}
-
-float AudioMixer::ExpandableProtocol::sync(std::string clockSource,
-                                            float frequency)
+float AudioMixer::ExpandableProtocol::sync(std::string clockSource, float frequency)
 {
     if (clockSource == "External")
     {
         syncFrequency = frequency;
     }
     return syncFrequency;
+}
+
+int AudioMixer::ExpandableProtocol::sends(std::string application)
+{
+    if(application == "Recording")
+    {
+        DANTE = true;
+        if (syncFrequency >= 96000)
+        {
+            protocol = "Dante";
+            availableSendChannels = 24;
+        }
+        else if (syncFrequency <= 48000)
+        {
+            protocol = "Dante";
+            availableSendChannels = 48;
+        }
+    }
+    return availableSendChannels;
 }
 
 void AudioMixer::mixSignals(std::string application)
@@ -615,6 +699,7 @@ struct ADSR
     double sustainLevel = 0.5;
     double releaseTime = 0.5;
     double signal;
+    int checkParam = 0;
     std::string adsrName {"Impulsive Transient Signal"};
     ADSR();
 
@@ -668,6 +753,7 @@ struct LFO
     std::string shapeWaveform  = "Sine"; 
     bool bypassState = false; 
     double signal;
+    int checkParam = 0;
     std::string lfoName {"Low Frequency Oscillator"};
     LFO();
 
@@ -704,7 +790,7 @@ void LFO::toggleEnablement(bool shouldBeOn)
 void LFO::changeSignalsInteraction()
 {
     int fs = 44'100;
-    for (int i = 0; i < fs; i++)
+    for (int i = 0; i < fs; ++i)
     {
         signal = amount - phaseOffset; //This is a dummy example
     }
@@ -727,6 +813,7 @@ struct Oscillator
     bool playingTone;
     bool playButton;
     double signal;
+    int checkParam = 0;
     std::string oscillatorName {"Signal Wave Generator"};
     Oscillator();
 
@@ -794,6 +881,7 @@ struct Filter
     double drive = 0.0; 
     double pianoIR;
     double signal;
+    int checkParam = 0;
     std::string filterType = "Low Pass";
     std::string filterName {"Low Pass Filter"};
     Filter();
@@ -864,6 +952,7 @@ struct Reverb
     double preDelay = 0.1; 
     double spaceSize = 200; 
     double signal;
+    int checkParam = 0;
     std::string reverbName {"Plate Reverb for Trumpets"};
     Reverb();
     
@@ -922,6 +1011,54 @@ struct Synthesizer
     void modifySignal(); 
     void processSignal();
     void checkAllIsOK();
+    void checkParameter(ADSR adsrName, LFO lfoName, Oscillator oscName, Filter filterName, Reverb reverbName, int maxIter)
+    {
+        while(adsrName.checkParam < maxIter)
+        {
+            ++adsrName.checkParam;
+            std::cout << "added 1 to ADSR param" << std::endl;
+            if (adsrName.checkParam >= maxIter)
+            {
+                std::cout << "Maximum Iterations Reached!\nadsr.checkParam:" << adsrName.checkParam << std::endl;
+                while(lfoName.checkParam < maxIter)
+                {
+                    ++lfoName.checkParam;
+                    std::cout << "added 1 to LFO param" << std::endl;
+                    if (lfoName.checkParam >= maxIter)
+                    {
+                        std::cout << "Maximum Iterations Reached!\nlfo.checkParam:" << lfoName.checkParam << std::endl;
+                        while(oscName.checkParam < maxIter)
+                        {
+                            ++oscName.checkParam;
+                            std::cout << "added 1 to OSC param" << std::endl;
+                            if (oscName.checkParam >= maxIter)
+                            {
+                                std::cout << "Maximum Iterations Reached\nosc.checkParam:" << oscName.checkParam << std::endl;
+                                while(filterName.checkParam < maxIter)
+                                {
+                                    ++filterName.checkParam;
+                                    std::cout << "added 1 to Filter param" << std::endl;
+                                    if (filterName.checkParam >= maxIter)
+                                    {
+                                        std::cout << "Maximum Iterations Reached!\nfilter.checkParam:" << filterName.checkParam << std::endl;
+                                        while(reverbName.checkParam < maxIter)
+                                        {
+                                            ++reverbName.checkParam;
+                                            std::cout << "added 1 to Reverb param" << std::endl;
+                                            if (reverbName.checkParam >= maxIter)
+                                            {
+                                                std::cout << "Maximum Iterations Reached!\nreverb.checkParam:" << reverbName.checkParam << "\n" <<std::endl;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }  
+                    }
+                }
+            }
+        }
+    }
 };
 
 Synthesizer::Synthesizer()
@@ -995,8 +1132,9 @@ int main()
     carl.orderProducts(true);
     superStarMarket.sellProducts(carl);
     superStarMarket.adjustInventary(carl);
-    
-    //std::cout << "Is superStarMarket member var 'dailyProfit' equal to 0? " << (superStarMarket.dailyProfit == 0 ? "Yes" : "No") << "\n";
+    auto phil = superStarMarket.countNoInventoryProducts(5);
+        
+    std::cout << "phil.noInventoryProducts: " << phil.noInventoryProducts << "\n";
 
     University programmingSchoolUniversity;
     University::Professor joseph;
@@ -1006,21 +1144,28 @@ int main()
     frank.computeSemestralAbsences();
     frank.displayStudentInfo(frank);
     frank.subscribeCourse(frank, joseph);
-    programmingSchoolUniversity.performCulturalActivities(frank);
+    auto studentName = programmingSchoolUniversity.calculatePresentations(frank);
+
+    std::cout << "studentName.numberPresentations: " << studentName.numberPresentations << "\n";
 
     Computer gamingPC;
     Computer::Hardware highSpecs;
     highSpecs.playGames();
-    gamingPC.executePrograms(highSpecs, "GTA");
-
+    auto canPlay = gamingPC.executePrograms(highSpecs, "GTA");
+    auto pcType = gamingPC.addGamesToRAM(highSpecs, canPlay);
+    std::cout << "pcType.gamesAtRAM: " << pcType.gamesAtRAM << "\n";
+    
     AudioMixer fohMixer;
     AudioMixer::ExpandableProtocol fohToMonitorConnection;
-    fohToMonitorConnection.sends("Monitors");
     fohToMonitorConnection.sync("External");
+    auto availableSendCh = fohToMonitorConnection.sends("Recording");
     fohMixer.mixSignals("Touring");
     fohMixer.splitSignal("Monitors");
     fohMixer.processSignal();
     fohMixer.info(fohToMonitorConnection);
+    auto recording = fohMixer.calculateSentChannels(fohToMonitorConnection, availableSendCh);
+    std::cout << "recording.sentChannels: " << recording.sentChannels << "\n";
+    
 
     ADSR impulsive;
     impulsive.modifyLoudness();
@@ -1052,7 +1197,7 @@ int main()
     allTogether.startSignal("Sample");
     allTogether.modifySignal(); 
     allTogether.processSignal();
-    //allTogether.checkAllIsOK();  
+    allTogether.checkParameter(impulsive, assignedToOsc, pureTone, lowPass, trumpetPlate, 4); 
 
     //Here starts the Part4 work!
     superStarMarket.printMarketInitVar();
