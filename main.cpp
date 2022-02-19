@@ -245,7 +245,7 @@ struct Market
     Customer countNoInventoryProducts(int maxAllowed)
     {
         Customer phil;
-        for (int i = 0; i < maxAllowed; i++)
+        for (int i = 0; i < maxAllowed; ++i)
         {
             if (phil.noInventoryProducts < maxAllowed)
             {
@@ -546,7 +546,7 @@ struct Computer
             int maxAllowedGames= 5;
             while(pcType.gamesAtRAM < maxAllowedGames)
             {
-                pcType.gamesAtRAM++;
+                ++pcType.gamesAtRAM;
                 std::cout << "Games loaded at RAM: " << pcType.gamesAtRAM << std::endl;
                 if (pcType.gamesAtRAM >= maxAllowedGames)
                 {
@@ -685,7 +685,7 @@ struct AudioMixer
     ExpandableProtocol calculateSentChannels(ExpandableProtocol expName, int avSendCH)
     {
         if (expName.protocol == "Dante")
-            for(int i = 0; i < avSendCH; i++)
+            for(int i = 0; i < avSendCH; ++i)
             {
                 if(expName.sentChannels < avSendCH)
                 {
