@@ -245,16 +245,19 @@ struct Market
     Customer countNoInventoryProducts(int maxAllowed)
     {
         Customer phil;
-        while(phil.noInventoryProducts < maxAllowed)
+        for (int i = 0; i < maxAllowed; i++)
         {
-            phil.noInventoryProducts += 1;
-            std::cout << "noInventoryProducts:" << phil.noInventoryProducts << std::endl;
-            if (phil.noInventoryProducts >= maxAllowed)
+            if (phil.noInventoryProducts < maxAllowed)
             {
-                std::cout << "Max. Limit NO inventory product was reached" << std::endl;
-                return phil;
+                ++phil.noInventoryProducts;
+                std::cout << "noInventoryProducts:" << phil.noInventoryProducts << std::endl;
+                if (phil.noInventoryProducts >= maxAllowed)
+                {
+                    std::cout << "Max. Limit NO inventory product was reached" << std::endl;
+                    return phil;
+                }
             }
-        }
+        } 
         return Customer {};
     }
 };
@@ -543,7 +546,7 @@ struct Computer
             int maxAllowedGames= 5;
             while(pcType.gamesAtRAM < maxAllowedGames)
             {
-                pcType.gamesAtRAM += 1;
+                pcType.gamesAtRAM++;
                 std::cout << "Games loaded at RAM: " << pcType.gamesAtRAM << std::endl;
                 if (pcType.gamesAtRAM >= maxAllowedGames)
                 {
@@ -682,16 +685,20 @@ struct AudioMixer
     ExpandableProtocol calculateSentChannels(ExpandableProtocol expName, int avSendCH)
     {
         if (expName.protocol == "Dante")
-            while(expName.sentChannels < avSendCH)
+            for(int i = 0; i < avSendCH; i++)
             {
-                expName.sentChannels += 1;
-                std::cout << expName.sentChannels <<" Channels are sent via " << expName.protocol << std::endl;
-                if (expName.sentChannels >= avSendCH)
+                if(expName.sentChannels < avSendCH)
                 {
-                    std::cout << "Max. available channels sent!" << std::endl;
-                    return expName;
-                } 
+                    ++expName.sentChannels;
+                    std::cout << expName.sentChannels <<" Channels are sent via " << expName.protocol << std::endl;
+                    if (expName.sentChannels >= avSendCH)
+                    {
+                        std::cout << "Max. available channels sent!" << std::endl;
+                        return expName;
+                    } 
+                }
             }
+                
         return ExpandableProtocol {};
     }
 };
@@ -1140,39 +1147,39 @@ struct Synthesizer
     {
         while(adsrName.checkParam < maxIter)
         {
-            adsrName.checkParam += 1;
+            ++adsrName.checkParam;
             std::cout << "added 1 to ADSR param" << std::endl;
             if (adsrName.checkParam >= maxIter)
             {
                 std::cout << "Maximum Iterations Reached!\nadsr.checkParam:" << adsrName.checkParam << std::endl;
                 while(lfoName.checkParam < maxIter)
                 {
-                    lfoName.checkParam += 1;
+                    ++lfoName.checkParam;
                     std::cout << "added 1 to LFO param" << std::endl;
                     if (lfoName.checkParam >= maxIter)
                     {
                         std::cout << "Maximum Iterations Reached!\nlfo.checkParam:" << lfoName.checkParam << std::endl;
                         while(oscName.checkParam < maxIter)
                         {
-                            oscName.checkParam += 1;
+                            ++oscName.checkParam;
                             std::cout << "added 1 to OSC param" << std::endl;
                             if (oscName.checkParam >= maxIter)
                             {
                                 std::cout << "Maximum Iterations Reached\nosc.checkParam:" << oscName.checkParam << std::endl;
                                 while(filterName.checkParam < maxIter)
                                 {
-                                    filterName.checkParam += 1;
+                                    ++filterName.checkParam;
                                     std::cout << "added 1 to Filter param" << std::endl;
                                     if (filterName.checkParam >= maxIter)
                                     {
                                         std::cout << "Maximum Iterations Reached!\nfilter.checkParam:" << filterName.checkParam << std::endl;
                                         while(reverbName.checkParam < maxIter)
                                         {
-                                            reverbName.checkParam += 1;
+                                            ++reverbName.checkParam;
                                             std::cout << "added 1 to Reverb param" << std::endl;
                                             if (reverbName.checkParam >= maxIter)
                                             {
-                                                std::cout << "Maximum Iterations Reached!\nreverb.checkParam:" << reverbName.checkParam << std::endl;
+                                                std::cout << "Maximum Iterations Reached!\nreverb.checkParam:" << reverbName.checkParam << "\n" <<std::endl;
                                             }
                                         }
                                     }
